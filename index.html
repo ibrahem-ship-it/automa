@@ -42,10 +42,12 @@
 </head>
 <body class="text-slate-800">
 
+    <!-- شريط الضمان -->
     <div class="bg-amber-500 text-white text-center py-2 text-xs md:text-sm font-semibold flex justify-center items-center gap-2 px-4" id="warranty-banner">
         <i class="fas fa-shield-alt text-lg"></i><span>خايف من التكنولوجيا؟ مع ضمان 'روبوتك' نضمن استبدال القطع وصيانتها ضد عيوب الصناعة.</span>
     </div>
 
+    <!-- الهيدر -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap">
             <div class="text-xl md:text-2xl font-bold text-blue-600 flex items-center gap-2 cursor-pointer mb-2 md:mb-0" onclick="window.showPage('page-home')">
@@ -140,19 +142,15 @@
             <div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg hidden text-center m-4" id="quiz-result">
                 <div class="inline-block bg-green-100 text-green-600 p-4 rounded-full mb-4"><i class="fas fa-check-circle text-4xl"></i></div>
                 <h2 class="text-2xl md:text-3xl font-bold mb-6">تم تحديد الباقة الأنسب لبيتك!</h2>
-                
                 <div id="recommended-package" class="border-2 border-blue-200 bg-blue-50 rounded-xl p-6 mb-6">
                     <h3 class="text-2xl font-bold text-blue-700 mb-2" id="result-pkg-name"></h3>
                     <p class="text-slate-600 mb-4 text-sm" id="result-pkg-desc"></p>
-                    
                     <div id="result-pkg-contents" class="text-sm bg-white p-4 rounded border border-blue-100 mb-4 h-40 overflow-y-auto custom-scroll text-right"></div>
-                    
                     <div class="text-xl font-bold text-slate-800 flex items-center justify-center gap-4 flex-wrap">
                         <span id="result-pkg-old-price" class="line-through text-slate-400 text-lg hidden"></span>
                         <span class="bg-green-100 text-green-700 px-4 py-2 rounded-lg">السعر بعد الخصم: <span id="result-pkg-price" class="text-2xl">0</span> ج.م</span>
                     </div>
                 </div>
-                
                 <button type="button" onclick="window.sendQuizWhatsApp()" class="w-full bg-green-500 text-white font-bold py-4 rounded-xl flex justify-center items-center gap-2 text-lg shadow-md mb-3"><i class="fab fa-whatsapp text-2xl"></i> إرسال نتيجتي للمهندس للتأكيد!</button>
                 <button type="button" onclick="window.showPage('page-home')" class="w-full text-slate-600 underline text-center block py-2">العودة للرئيسية</button>
             </div>
@@ -221,7 +219,7 @@
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                                 <div><label class="font-bold text-sm">خصم كقيمة (ج.م)</label><input type="number" id="inv-discount" class="w-full border p-2 rounded" value="0" oninput="window.calcInvoiceTotal()"></div>
-                                <div><label class="font-bold text-sm">مصاريف أخرى (عليك)</label><input type="number" id="inv-expenses" class="w-full border p-2 rounded" value="0" oninput="window.calcInvoiceTotal()"></div>
+                                <div><label class="font-bold text-sm">مصاريف أخرى للتركيب (عليك)</label><input type="number" id="inv-expenses" class="w-full border p-2 rounded" value="0" oninput="window.calcInvoiceTotal()"></div>
                             </div>
                             
                             <div class="bg-slate-50 p-4 rounded mb-6 border">
@@ -233,16 +231,16 @@
                             </div>
                             
                             <div class="flex flex-col sm:flex-row gap-3">
-                                <button type="button" onclick="window.generateInvoice()" class="flex-1 bg-slate-800 text-white py-3 rounded font-bold"><i class="fas fa-eye"></i> معاينة وتنزيل PDF</button>
+                                <button type="button" onclick="window.generateInvoice()" class="flex-1 bg-slate-800 text-white py-3 rounded font-bold"><i class="fas fa-eye"></i> معاينة PDF</button>
                                 <button type="button" onclick="window.saveInvoiceToFirestore()" class="flex-1 bg-green-600 text-white py-3 rounded font-bold"><i class="fas fa-save"></i> حفظ بالحسابات</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- PDF Preview -->
+                    <!-- معاينة الفاتورة PDF -->
                     <div id="invoice-preview" class="hidden admin-tab">
                         <div class="flex justify-between items-center mb-4">
-                            <button type="button" onclick="window.switchAdminTab('invoice')" class="text-slate-600 font-bold"><i class="fas fa-arrow-right"></i> عودة للـ POS</button>
+                            <button type="button" onclick="window.switchAdminTab('invoice')" class="text-slate-600 font-bold"><i class="fas fa-arrow-right"></i> عودة</button>
                             <button type="button" onclick="window.downloadInvoicePDF()" class="bg-red-500 text-white px-4 py-2 rounded font-bold shadow"><i class="fas fa-file-pdf"></i> تحميل PDF</button>
                         </div>
                         <div class="bg-white p-8 shadow-sm rounded-xl max-w-3xl mx-auto" id="print-area">
@@ -255,17 +253,17 @@
                                 <div><strong>اسم العميل:</strong> <span id="prev-name"></span></div>
                             </div>
                             <table class="w-full text-right mb-6 border-collapse">
-                                <thead><tr class="bg-slate-50 border-b border-t"><th class="p-2">المنتج / البيان</th><th class="p-2">الكمية</th><th class="p-2">السعر</th><th class="p-2">الإجمالي</th></tr></thead>
+                                <thead><tr class="bg-slate-50 border-b border-t"><th class="p-2">البيان</th><th class="p-2">الكمية</th><th class="p-2">السعر</th><th class="p-2">الإجمالي</th></tr></thead>
                                 <tbody id="prev-items" class="divide-y text-sm"></tbody>
                             </table>
                             <div class="flex justify-end text-sm">
                                 <div class="w-64">
                                     <div class="flex justify-between mb-1"><span>الإجمالي:</span><span id="prev-subtotal"></span></div>
                                     <div id="prev-discount-row" class="flex justify-between mb-1 text-red-500 hidden"><span>الخصم:</span><span id="prev-discount-val"></span></div>
-                                    <div class="flex justify-between font-bold text-lg mt-2 border-t pt-2"><span>الصافي المطلوب:</span><span id="prev-total"></span></div>
+                                    <div class="flex justify-between font-bold text-lg mt-2 border-t pt-2"><span>الصافي:</span><span id="prev-total"></span></div>
                                 </div>
                             </div>
-                            <div class="mt-12 text-xs text-center text-slate-500 border-t pt-4">نضمن لك استبدال القطع وصيانتها ضد عيوب الصناعة.<br>شكراً لثقتكم في RoboTech.</div>
+                            <div class="mt-12 text-xs text-center text-slate-500 border-t pt-4">نضمن استبدال القطع وصيانتها ضد عيوب الصناعة.<br>شكراً لثقتكم.</div>
                         </div>
                     </div>
 
@@ -274,14 +272,8 @@
                         <h2 class="text-2xl md:text-3xl font-bold mb-6">الحسابات والأرباح</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                             <div class="bg-white p-4 shadow-sm rounded-xl border-l-4 border-blue-500">إجمالي المبيعات<br><b class="text-2xl" id="acc-sales">0</b></div>
-                            <div class="bg-white p-4 shadow-sm rounded-xl border-l-4 border-slate-500">
-                                تكلفة ومصاريف <i class="fas fa-lock cursor-pointer float-left text-slate-400 mt-1 p-1" onclick="window.unlockProfit('acc-cost')"></i>
-                                <br><b class="text-2xl blurred-text" id="acc-cost">****</b>
-                            </div>
-                            <div class="bg-green-50 p-4 shadow-sm rounded-xl border-l-4 border-green-500">
-                                صافي الربح <i class="fas fa-lock cursor-pointer float-left text-green-400 mt-1 p-1" onclick="window.unlockProfit('acc-profit')"></i>
-                                <br><b class="text-2xl text-green-700 blurred-text" id="acc-profit">****</b>
-                            </div>
+                            <div class="bg-white p-4 shadow-sm rounded-xl border-l-4 border-slate-500">تكلفة <i class="fas fa-lock cursor-pointer float-left text-slate-400 mt-1 p-1" onclick="window.unlockProfit('acc-cost')"></i><br><b class="text-2xl blurred-text" id="acc-cost">****</b></div>
+                            <div class="bg-green-50 p-4 shadow-sm rounded-xl border-l-4 border-green-500">صافي الربح <i class="fas fa-lock cursor-pointer float-left text-green-400 mt-1 p-1" onclick="window.unlockProfit('acc-profit')"></i><br><b class="text-2xl text-green-700 blurred-text" id="acc-profit">****</b></div>
                         </div>
                         <div class="overflow-x-auto bg-white rounded-xl shadow-sm">
                             <table class="w-full text-right text-sm md:text-base"><thead class="bg-slate-50 border-b"><tr><th class="p-3">العميل</th><th class="p-3">الفاتورة</th><th class="p-3">الربح</th><th class="p-3">إجراء</th></tr></thead><tbody id="accounting-table" class="divide-y"></tbody></table>
@@ -299,7 +291,7 @@
                             </label>
                             <label class="font-bold text-sm block mb-1">تكلفة التركيب (إذا كان غير مجاني)</label>
                             <input type="number" id="setting-install-fee" class="w-full p-3 border rounded mb-6 bg-slate-50">
-                            <button type="button" onclick="window.saveSettingsFirestore()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold w-full shadow"><i class="fas fa-save"></i> حفظ التعديلات</button>
+                            <button type="button" onclick="window.saveSettingsFirestore()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold w-full shadow">حفظ التعديلات</button>
                         </div>
                     </div>
                 </main>
@@ -315,13 +307,14 @@
         <div class="bg-white p-6 rounded-xl shadow-xl max-w-lg w-full text-right flex flex-col max-h-[95vh]">
             <h3 class="text-xl md:text-2xl font-bold mb-4 border-b pb-2" id="modal-prod-title">إضافة/تعديل منتج</h3>
             <div class="space-y-4 overflow-y-auto custom-scroll pr-2 flex-1">
+                
                 <div class="bg-slate-50 p-3 rounded border">
                     <label class="font-bold text-sm block mb-2 text-slate-700">صور المنتج (حتى 3 صور)</label>
                     <div class="grid grid-cols-3 gap-2">
                         <!-- Image 1 -->
                         <div class="border rounded p-2 text-center bg-white relative">
                             <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
-                                <img id="modal-prod-img-preview-0" class="hidden object-cover w-full h-full">
+                                <img id="modal-prod-img-preview-0" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
                                 <i id="modal-prod-img-icon-0" class="fas fa-image text-slate-300 text-2xl"></i>
                             </div>
                             <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100">
@@ -334,7 +327,7 @@
                         <!-- Image 2 -->
                         <div class="border rounded p-2 text-center bg-white relative">
                             <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
-                                <img id="modal-prod-img-preview-1" class="hidden object-cover w-full h-full">
+                                <img id="modal-prod-img-preview-1" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
                                 <i id="modal-prod-img-icon-1" class="fas fa-image text-slate-300 text-2xl"></i>
                             </div>
                             <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100">
@@ -347,7 +340,7 @@
                         <!-- Image 3 -->
                         <div class="border rounded p-2 text-center bg-white relative">
                             <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
-                                <img id="modal-prod-img-preview-2" class="hidden object-cover w-full h-full">
+                                <img id="modal-prod-img-preview-2" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
                                 <i id="modal-prod-img-icon-2" class="fas fa-image text-slate-300 text-2xl"></i>
                             </div>
                             <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100">
@@ -360,70 +353,61 @@
                     </div>
                 </div>
 
-                <div><label class="font-bold text-sm">الاسم الوصفي</label><input type="text" id="modal-prod-name" class="w-full p-2 border rounded font-bold text-blue-800"></div>
+                <div><label class="font-bold text-sm">الاسم</label><input type="text" id="modal-prod-name" class="w-full p-2 border rounded font-bold text-blue-800"></div>
                 <div class="grid grid-cols-2 gap-2">
-                    <div><label class="font-bold text-sm text-slate-500">جملة (عليك)</label><input type="number" id="modal-prod-cost" class="w-full p-2 border rounded bg-slate-50"></div>
-                    <div><label class="font-bold text-sm text-green-600">بيع (للعميل)</label><input type="number" id="modal-prod-price" class="w-full p-2 border-2 rounded border-green-300 font-bold"></div>
+                    <div><label class="font-bold text-sm text-slate-500">جملة</label><input type="number" id="modal-prod-cost" class="w-full p-2 border rounded bg-slate-50"></div>
+                    <div><label class="font-bold text-sm text-green-600">بيع</label><input type="number" id="modal-prod-price" class="w-full p-2 border-2 rounded border-green-300 font-bold"></div>
                 </div>
-                <div><label class="font-bold text-sm">التصنيف</label><select id="modal-prod-cat" class="w-full p-2 border rounded bg-slate-50"><option value="switches">مفاتيح/برايز</option><option value="locks">أقفال أمان</option><option value="sensors">حساسات</option><option value="panels">شاشات/بوابات</option><option value="cameras">كاميرات</option><option value="other">أخرى</option></select></div>
-                <div><label class="font-bold text-sm">وصف الفائدة للعميل</label><textarea id="modal-prod-desc" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
+                <div><label class="font-bold text-sm">التصنيف</label><select id="modal-prod-cat" class="w-full p-2 border rounded bg-slate-50"><option value="switches">مفاتيح</option><option value="locks">أقفال</option><option value="sensors">حساسات</option><option value="panels">شاشات</option><option value="cameras">كاميرات</option><option value="other">أخرى</option></select></div>
+                <div><label class="font-bold text-sm">الوصف</label><textarea id="modal-prod-desc" rows="3" class="w-full p-2 border rounded text-sm"></textarea></div>
             </div>
             <div class="flex justify-end gap-3 mt-4 pt-4 border-t">
                 <button type="button" onclick="document.getElementById('edit-prod-modal').classList.add('hidden')" class="px-5 py-2 border rounded font-bold text-slate-600">إلغاء</button>
-                <button type="button" onclick="window.saveProdToFirestore()" id="btn-save-prod" class="px-5 py-2 bg-blue-600 text-white rounded font-bold shadow">حفظ المنتج</button>
+                <button type="button" onclick="window.saveProdToFirestore()" id="btn-save-prod" class="px-5 py-2 bg-blue-600 text-white rounded font-bold shadow">حفظ</button>
             </div>
         </div>
     </div>
 
-    <!-- مودال إضافة/تعديل الباقة -->
+    <!-- مودال الباقة -->
     <div id="edit-pkg-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-2 md:p-4">
         <div class="bg-white p-4 md:p-6 rounded-xl shadow-xl max-w-2xl w-full text-right flex flex-col max-h-[95vh]">
-            <h3 class="text-xl font-bold mb-3 border-b pb-2">بناء وتعديل الباقة</h3>
+            <h3 class="text-xl font-bold mb-3 border-b pb-2">بناء الباقة</h3>
             <div class="overflow-y-auto pr-1 md:pr-2 custom-scroll flex-1">
-                <div class="mb-3">
-                    <label class="font-bold text-sm">اسم الباقة التسويقي</label>
-                    <input type="text" id="modal-pkg-name" class="w-full p-2 border rounded font-bold text-blue-600">
-                </div>
+                <div class="mb-3"><label class="font-bold text-sm">اسم الباقة</label><input type="text" id="modal-pkg-name" class="w-full p-2 border rounded font-bold text-blue-600"></div>
                 
                 <div class="mb-4 bg-slate-50 border rounded p-2 md:p-3">
-                    <label class="font-bold block border-b pb-2 mb-2 text-sm text-blue-800"><i class="fas fa-boxes"></i> 1. حدد المنتجات والكمية داخل الباقة:</label>
-                    <div id="modal-pkg-products" class="max-h-48 overflow-y-auto custom-scroll text-sm flex flex-col gap-1 border border-slate-200 bg-white p-1 rounded">
-                        <!-- يُضاف بالجافاسكريبت -->
-                    </div>
+                    <label class="font-bold block border-b pb-2 mb-2 text-sm text-blue-800"><i class="fas fa-boxes"></i> 1. حدد المنتجات:</label>
+                    <div id="modal-pkg-products" class="max-h-48 overflow-y-auto custom-scroll text-sm flex flex-col gap-1 border border-slate-200 bg-white p-1 rounded"></div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 mb-4 border-b pb-4">
                     <div class="bg-slate-100 p-2 rounded text-center border">
-                        <label class="font-bold text-slate-500 text-xs block mb-1">إجمالي المنتجات بدون خصم</label>
+                        <label class="font-bold text-slate-500 text-xs block mb-1">الإجمالي بدون خصم</label>
                         <div class="text-lg font-bold text-slate-700 line-through"><span id="modal-pkg-original-price">0</span> ج.م</div>
                     </div>
                     <div class="bg-amber-50 p-2 rounded text-center border border-amber-200">
-                        <label class="font-bold text-xs block text-amber-600 mb-1">2. قيمة الخصم كهدية للعميل (ج.م)</label>
+                        <label class="font-bold text-xs block text-amber-600 mb-1">2. قيمة الخصم (ج.م)</label>
                         <input type="number" id="modal-pkg-discount" value="0" class="w-full p-1 border border-amber-300 rounded font-bold text-center bg-white" oninput="window.calcPkgPrices()">
                     </div>
                 </div>
                 <div class="text-center mb-4 bg-green-50 p-3 rounded-lg border border-green-200">
-                    <span class="font-bold text-sm text-green-800">السعر النهائي الذي يراه العميل: </span>
+                    <span class="font-bold text-sm text-green-800">السعر النهائي للعميل: </span>
                     <span id="modal-pkg-final-price" class="text-2xl font-bold text-green-700">0</span> <span class="font-bold text-green-700 text-sm">ج.م</span>
                 </div>
 
-                <div class="mb-3">
-                    <label class="font-bold text-sm block mb-1">وصف سريع للعميل عن الباقة</label>
-                    <textarea id="modal-pkg-desc" rows="2" class="w-full p-2 border rounded text-sm"></textarea>
-                </div>
+                <div class="mb-3"><label class="font-bold text-sm block mb-1">وصف الباقة</label><textarea id="modal-pkg-desc" rows="2" class="w-full p-2 border rounded text-sm"></textarea></div>
                 
-                <h4 class="font-bold text-sm mb-2 text-slate-600">3. شروط ظهور الباقة في الاستبيان:</h4>
+                <h4 class="font-bold text-sm mb-2 text-slate-600">3. شروط الاستبيان:</h4>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs bg-slate-50 p-2 rounded border">
                     <label><input type="checkbox" class="pkg-target" value="راحة"> هدف الراحة</label>
                     <label><input type="checkbox" class="pkg-target" value="أمان"> هدف الأمان</label>
                     <label><input type="checkbox" class="pkg-target" value="توفير"> هدف التوفير</label>
-                    <label><input type="checkbox" class="pkg-target" value="متكامل"> هدف متكامل</label>
-                    <label><input type="checkbox" class="pkg-target" value="اقتصادية"> ميزانية اقتصادية</label>
-                    <label><input type="checkbox" class="pkg-target" value="متوسطة"> ميزانية متوسطة</label>
-                    <label><input type="checkbox" class="pkg-target" value="مفتوحة"> ميزانية مفتوحة VIP</label>
+                    <label><input type="checkbox" class="pkg-target" value="متكامل"> متكامل</label>
+                    <label><input type="checkbox" class="pkg-target" value="اقتصادية"> اقتصادية</label>
+                    <label><input type="checkbox" class="pkg-target" value="متوسطة"> متوسطة</label>
+                    <label><input type="checkbox" class="pkg-target" value="مفتوحة"> مفتوحة (VIP)</label>
                 </div>
             </div>
-
             <div class="flex justify-end gap-3 mt-3 pt-3 border-t">
                 <button type="button" onclick="document.getElementById('edit-pkg-modal').classList.add('hidden')" class="px-4 py-2 border rounded font-bold text-slate-600 text-sm">إلغاء</button>
                 <button type="button" onclick="window.savePkgToFirestore()" class="px-6 py-2 bg-blue-600 text-white rounded font-bold shadow text-sm">حفظ الباقة</button>
@@ -431,7 +415,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- جافاسكريبت والفايربيس -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -445,26 +429,16 @@
             messagingSenderId: "976062165745",
             appId: "1:976062165745:web:c7a83c66e9a944981f6f50"
         });
-        const auth = getAuth(app); 
-        const db = getFirestore(app);
-        const IMGBB_KEY = "3059d2e8badf18cc80ce82fda1d77011";
+        const auth = getAuth(app); const db = getFirestore(app);
 
         window.siteData = { products: [], packages: [], invoices: [], settings: { whatsappNumber: "201000000000", freeInstall: true, installFee: 500 } };
         window.tempPkgProducts = {}; 
 
-        window.showPage = id => { 
-            document.querySelectorAll('.page-section').forEach(d => d.classList.add('hidden')); 
-            document.getElementById(id).classList.remove('hidden'); 
-            window.scrollTo(0,0); 
-        };
-        
+        window.showPage = id => { document.querySelectorAll('.page-section').forEach(d => d.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); window.scrollTo(0,0); };
         window.openWhatsApp = msg => window.open(`https://wa.me/${window.siteData.settings.whatsappNumber}?text=${encodeURIComponent(msg)}`);
         
         window.showAdminLogin = () => window.showPage('page-admin-login');
-        window.loginAdmin = () => { 
-            signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value)
-            .then(()=>window.showPage('page-admin')).catch(()=>document.getElementById('login-error').classList.remove('hidden')); 
-        };
+        window.loginAdmin = () => { signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).then(()=>window.showPage('page-admin')).catch(()=>document.getElementById('login-error').classList.remove('hidden')); };
         window.logoutAdmin = () => signOut(auth).then(()=>window.showPage('page-home'));
         onAuthStateChanged(auth, u => { if(u) window.showAdminLogin = () => window.showPage('page-admin'); });
 
@@ -491,11 +465,7 @@
                 window.siteData.invoices = []; let tS=0, tC=0, tE=0;
                 invSnap.forEach(d => { let v=d.data(); v.id=d.id; window.siteData.invoices.push(v); tS+=v.total; tC+=v.cost; tE+=v.expenses; });
 
-                window.renderFrontendProducts(); 
-                window.renderFrontendPackages(); 
-                window.renderAdminProducts(); 
-                window.renderAdminPackages(); 
-                window.renderAccounting(tS, tC, tE);
+                window.renderFrontendProducts(); window.renderFrontendPackages(); window.renderAdminProducts(); window.renderAdminPackages(); window.renderAccounting(tS, tC, tE);
             } catch(e) { console.error("Error Fetching Data:", e); }
         };
 
@@ -506,7 +476,7 @@
             if(visProds.length === 0) { cont.innerHTML = '<p class="col-span-full text-center">لا توجد منتجات حالياً.</p>'; return; }
             visProds.forEach(p => {
                 let displayUrl = (p.images && p.images.length > 0) ? p.images[0] : (p.imgUrl ? p.imgUrl : null);
-                let img = displayUrl ? `<img src="${displayUrl}" class="product-img">` : `<div class="product-img-placeholder"><i class="fas fa-box"></i></div>`;
+                let img = displayUrl ? `<img src="${displayUrl}" class="product-img" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Error';">` : `<div class="product-img-placeholder"><i class="fas fa-box"></i></div>`;
                 cont.innerHTML += `<div onclick="window.showProductDetails('${p.id}')" class="cursor-pointer bg-white rounded-xl shadow-sm border border-slate-100 flex flex-col hover:shadow-md transition"><div class="h-48 border-b overflow-hidden rounded-t-xl">${img}</div><div class="p-4 flex-1 flex flex-col"><h3 class="font-bold text-slate-800 text-sm md:text-base leading-tight">${p.name}</h3><div class="text-blue-600 font-bold mt-auto pt-3 text-lg">${p.price} ج.م</div></div></div>`;
             });
         };
@@ -520,14 +490,14 @@
 
         window.showProductDetails = id => {
             let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
-            const p = prods.find(x => x.id === id); if(!p) return;
+            const p = prods.find(x => String(x.id) === String(id)); if(!p) return;
             let imgs = p.images && p.images.length > 0 ? p.images : (p.imgUrl ? [p.imgUrl] : []);
             
             let imgGallery = '';
             if(imgs.length > 0) {
-                imgGallery = `<div class="w-full flex flex-col gap-3"><div class="bg-white h-64 md:h-80 flex items-center justify-center p-2 border rounded-xl shadow-sm overflow-hidden"><img id="detail-main-img" src="${imgs[0]}" class="w-full h-full object-contain rounded"></div>`;
+                imgGallery = `<div class="w-full flex flex-col gap-3"><div class="bg-white h-64 md:h-80 flex items-center justify-center p-2 border rounded-xl shadow-sm overflow-hidden"><img id="detail-main-img" src="${imgs[0]}" class="w-full h-full object-contain rounded" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Error';"></div>`;
                 if(imgs.length > 1) {
-                    imgGallery += `<div class="flex gap-2 justify-center mt-2">` + imgs.map(u => `<img src="${u}" onclick="window.changeMainImg('${u}')" class="w-16 h-16 object-cover border-2 border-transparent hover:border-blue-500 rounded cursor-pointer transition shadow-sm bg-white p-1">`).join('') + `</div>`;
+                    imgGallery += `<div class="flex gap-2 justify-center mt-2">` + imgs.map(u => `<img src="${u}" onclick="window.changeMainImg('${u}')" class="w-16 h-16 object-cover border-2 border-transparent hover:border-blue-500 rounded cursor-pointer transition shadow-sm bg-white p-1" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Error';">`).join('') + `</div>`;
                 }
                 imgGallery += `</div>`;
             } else {
@@ -553,7 +523,7 @@
             let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
             if(Array.isArray(pkg.products)) {
                 pkg.products.forEach(pid => {
-                    let p = prods.find(x => x.id === pid);
+                    let p = prods.find(x => String(x.id) === String(pid));
                     if(p) { originalPrice += (parseFloat(p.price) || 0); counts[p.name] = (counts[p.name] || 0) + 1; }
                 });
             }
@@ -598,19 +568,19 @@
             let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
             prods.forEach(p => { 
                 let dUrl = (p.images && p.images.length > 0) ? p.images[0] : (p.imgUrl ? p.imgUrl : null);
-                let img = dUrl ? `<img src="${dUrl}" class="w-8 h-8 object-cover rounded">` : `<i class="fas fa-box text-slate-300"></i>`;
+                let img = dUrl ? `<img src="${dUrl}" class="w-8 h-8 object-cover rounded" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Error';">` : `<i class="fas fa-box text-slate-300"></i>`;
                 let eye = p.isHidden ? 'fa-eye-slash text-slate-300' : 'fa-eye text-green-500';
                 tb.innerHTML += `<tr class="border-b ${p.isHidden ? 'bg-slate-50 opacity-60' : ''}"><td class="p-2">${img}</td><td class="p-2 text-sm font-bold truncate max-w-[150px]">${p.name}</td><td class="p-2 text-sm text-slate-500">${p.costPrice||0}</td><td class="p-2 font-bold text-blue-600 text-sm">${p.price}</td><td class="p-2 text-left whitespace-nowrap"><button type="button" onclick="window.toggleProdVis('${p.id}', ${!!p.isHidden})" class="mx-1 text-lg" title="إخفاء/إظهار"><i class="fas ${eye}"></i></button><button type="button" onclick="window.openEditProdModal('${p.id}')" class="mx-1 text-lg text-blue-600" title="تعديل"><i class="fas fa-edit"></i></button><button type="button" onclick="window.deleteProduct('${p.id}')" class="mx-1 text-lg text-red-500" title="حذف نهائي"><i class="fas fa-trash"></i></button></td></tr>`; 
             });
         };
 
-        window.toggleProdVis = async (id, isHidden) => { try { await updateDoc(doc(db, "products", id), { isHidden: !isHidden }); window.fetchData(); } catch(e) { console.error(e); } };
-        window.deleteProduct = async (id) => { if(confirm("حذف هذا المنتج نهائياً من قاعدة البيانات؟")) { try { await deleteDoc(doc(db, "products", id)); window.fetchData(); } catch(e) { console.error(e); } } };
+        window.toggleProdVis = async (id, isHidden) => { try { await updateDoc(doc(db, "products", String(id)), { isHidden: !isHidden }); window.fetchData(); } catch(e) { console.error(e); } };
+        window.deleteProduct = async (id) => { if(confirm("حذف هذا المنتج نهائياً من قاعدة البيانات؟")) { try { await deleteDoc(doc(db, "products", String(id))); window.fetchData(); } catch(e) { console.error(e); } } };
 
         let currProdId = null;
         window.openEditProdModal = id => {
             try {
-                currProdId = id; 
+                currProdId = id ? String(id) : null; 
                 for(let i=0; i<3; i++) {
                     let st = document.getElementById(`upload-status-${i}`); if(st) { st.classList.add('hidden'); st.innerText = ''; }
                     let prv = document.getElementById(`modal-prod-img-preview-${i}`); if(prv) { prv.src = ''; prv.classList.add('hidden'); }
@@ -620,7 +590,7 @@
 
                 let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
                 if(id && prods.length > 0) {
-                    let p = prods.find(x => x.id === id);
+                    let p = prods.find(x => String(x.id) === String(id));
                     if(p) {
                         let mn = document.getElementById('modal-prod-name'); if(mn) mn.value=p.name||''; 
                         let mc = document.getElementById('modal-prod-cost'); if(mc) mc.value=p.costPrice||0; 
@@ -665,7 +635,7 @@
                         let fd = new FormData(); fd.append('image', base64data);
                         st.innerText = "جاري الرفع لـ ImgBB...";
                         
-                        let res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: fd });
+                        let res = await fetch(`https://api.imgbb.com/1/upload?key=3059d2e8badf18cc80ce82fda1d77011`, { method: 'POST', body: fd });
                         if(!res.ok) throw new Error("HTTP error");
                         let r = await res.json();
                         if(r.success) { 
@@ -700,7 +670,7 @@
                     desc: (md ? md.value : ""), category: (mt ? mt.value : "other"), images: imgs, imgUrl: imgs.length > 0 ? imgs[0] : "" 
                 };
                 
-                if(currProdId) await updateDoc(doc(db, "products", currProdId), data); 
+                if(currProdId) await updateDoc(doc(db, "products", String(currProdId)), data); 
                 else await addDoc(collection(db, "products"), data);
                 
                 let mod = document.getElementById('edit-prod-modal'); if(mod) mod.classList.add('hidden'); 
@@ -719,12 +689,12 @@
             }); 
         };
 
-        window.togglePkgVis = async (id, isHidden) => { try { await updateDoc(doc(db, "packages", id), { isHidden: !isHidden }); window.fetchData(); } catch(e) { console.error(e); } };
-        window.deletePackage = async (id) => { if(confirm("حذف هذه الباقة نهائياً؟")) { try { await deleteDoc(doc(db, "packages", id)); window.fetchData(); } catch(e) { console.error(e); } } };
+        window.togglePkgVis = async (id, isHidden) => { try { await updateDoc(doc(db, "packages", String(id)), { isHidden: !isHidden }); window.fetchData(); } catch(e) { console.error(e); } };
+        window.deletePackage = async (id) => { if(confirm("حذف هذه الباقة نهائياً؟")) { try { await deleteDoc(doc(db, "packages", String(id))); window.fetchData(); } catch(e) { console.error(e); } } };
 
         window.openEditPkgModal = id => { 
             try {
-                currPkgId = id; window.tempPkgProducts = {}; 
+                currPkgId = id ? String(id) : null; window.tempPkgProducts = {}; 
                 document.querySelectorAll('.pkg-target').forEach(c => c.checked = false);
                 let pList = document.getElementById('modal-pkg-products'); if(pList) pList.innerHTML = '';
 
@@ -732,18 +702,18 @@
                 let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
 
                 if(id) {
-                    let pkg = pkgs.find(x => x.id === id);
+                    let pkg = pkgs.find(x => String(x.id) === String(id));
                     if(pkg) {
                         let nEl = document.getElementById('modal-pkg-name'); if(nEl) nEl.value = pkg.name || ""; 
                         let dEl = document.getElementById('modal-pkg-desc'); if(dEl) dEl.value = pkg.desc || "";
                         
-                        if(Array.isArray(pkg.products)) { pkg.products.forEach(pid => window.tempPkgProducts[pid] = (window.tempPkgProducts[pid] || 0) + 1); }
+                        if(Array.isArray(pkg.products)) { pkg.products.forEach(pid => window.tempPkgProducts[String(pid)] = (window.tempPkgProducts[String(pid)] || 0) + 1); }
                         if(Array.isArray(pkg.target)) { pkg.target.forEach(t => { let cb = document.querySelector(`.pkg-target[value="${t}"]`); if(cb) cb.checked = true; }); }
                         
                         let discount = pkg.discountAmount;
                         if(discount === undefined && pkg.price !== undefined) {
                             let tempOrig = 0; 
-                            if(Array.isArray(pkg.products)) { pkg.products.forEach(pid => { let pr = prods.find(x=>x.id===pid); if(pr) tempOrig += (parseFloat(pr.price)||0); }); }
+                            if(Array.isArray(pkg.products)) { pkg.products.forEach(pid => { let pr = prods.find(x=>String(x.id)===String(pid)); if(pr) tempOrig += (parseFloat(pr.price)||0); }); }
                             discount = tempOrig - pkg.price; if(discount < 0) discount = 0;
                         }
                         let dsEl = document.getElementById('modal-pkg-discount'); if(dsEl) dsEl.value = discount || 0;
@@ -756,7 +726,7 @@
 
                 if(pList) {
                     prods.forEach(p => {
-                        let qty = window.tempPkgProducts[p.id] || 0;
+                        let qty = window.tempPkgProducts[String(p.id)] || 0;
                         let div = document.createElement('div');
                         div.className = "flex justify-between items-center p-2 border-b bg-white";
                         div.innerHTML = `<div class="truncate text-xs md:text-sm font-bold" title="${p.name}">${p.name} <span class="text-blue-500">(${p.price})</span></div><div class="flex items-center gap-2"><button type="button" onclick="window.changePkgItemQty('${p.id}', -1)" class="bg-red-50 text-red-500 w-8 h-8 rounded flex items-center justify-center font-bold border border-red-100 cursor-pointer hover:bg-red-200">-</button><span id="pkg-qty-${p.id}" class="font-bold w-6 text-center text-sm">${qty}</span><button type="button" onclick="window.changePkgItemQty('${p.id}', 1)" class="bg-green-50 text-green-600 w-8 h-8 rounded flex items-center justify-center font-bold border border-green-100 cursor-pointer hover:bg-green-200">+</button></div>`;
@@ -770,8 +740,8 @@
 
         window.changePkgItemQty = (pid, change) => {
             try {
-                let current = window.tempPkgProducts[pid] || 0; let newQty = current + change; if(newQty < 0) newQty = 0;
-                window.tempPkgProducts[pid] = newQty; 
+                let current = window.tempPkgProducts[String(pid)] || 0; let newQty = current + change; if(newQty < 0) newQty = 0;
+                window.tempPkgProducts[String(pid)] = newQty; 
                 let qEl = document.getElementById(`pkg-qty-${pid}`); if(qEl) qEl.innerText = newQty; 
                 window.calcPkgPrices();
             } catch(e) { console.error(e); }
@@ -781,7 +751,7 @@
             try {
                 let orig = 0; let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
                 for (const [pid, qty] of Object.entries(window.tempPkgProducts)) {
-                    if(qty > 0) { let p = prods.find(x => x.id === pid); if(p) orig += (parseFloat(p.price) || 0) * qty; }
+                    if(qty > 0) { let p = prods.find(x => String(x.id) === String(pid)); if(p) orig += (parseFloat(p.price) || 0) * qty; }
                 }
                 let oEl = document.getElementById('modal-pkg-original-price'); if(oEl) oEl.innerText = orig;
                 let dEl = document.getElementById('modal-pkg-discount'); let disc = parseFloat(dEl ? dEl.value : 0) || 0;
@@ -794,7 +764,7 @@
             try {
                 const targets = Array.from(document.querySelectorAll('.pkg-target:checked')).map(c => c.value);
                 let prodsArray = [];
-                for (const [pid, qty] of Object.entries(window.tempPkgProducts)) { for(let i=0; i<qty; i++) prodsArray.push(pid); }
+                for (const [pid, qty] of Object.entries(window.tempPkgProducts)) { for(let i=0; i<qty; i++) prodsArray.push(String(pid)); }
                 
                 let nEl = document.getElementById('modal-pkg-name'); let dEl = document.getElementById('modal-pkg-discount');
                 let deEl = document.getElementById('modal-pkg-desc'); let fEl = document.getElementById('modal-pkg-final-price');
@@ -805,7 +775,7 @@
                     price: parseFloat(fEl ? fEl.innerText : 0) || 0
                 }; 
                 
-                if(currPkgId) await updateDoc(doc(db,"packages",currPkgId),d); else await addDoc(collection(db,"packages"),d); 
+                if(currPkgId) await updateDoc(doc(db,"packages",String(currPkgId)),d); else await addDoc(collection(db,"packages"),d); 
                 let mod = document.getElementById('edit-pkg-modal'); if(mod) mod.classList.add('hidden'); window.fetchData(); 
             } catch(e) { console.error(e); alert("حدث خطأ أثناء الحفظ."); }
         };
@@ -901,7 +871,7 @@
 
         window.deleteInvoice = async (id) => {
             if(!window.isProfitUnlocked) { alert("يجب فك قفل الأرباح أولاً!"); return; }
-            if(confirm("مسح الفاتورة نهائياً؟")) { try { await deleteDoc(doc(db, "invoices", id)); window.fetchData(); } catch(e) { console.error(e); } }
+            if(confirm("مسح الفاتورة نهائياً؟")) { try { await deleteDoc(doc(db, "invoices", String(id))); window.fetchData(); } catch(e) { console.error(e); } }
         };
 
         window.renderAccounting = (ts,tc,te) => { 
