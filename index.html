@@ -432,7 +432,14 @@
         const auth = getAuth(app); const db = getFirestore(app);
 
         window.siteData = { products: [], packages: [], invoices: [], settings: { whatsappNumber: "201000000000", freeInstall: true, installFee: 500 } };
-        window.tempPkgProducts = {}; 
+        window.tempPkgProducts = {};
+
+        // ============================================================
+        // FIX #2: إعلان currProdId و currPkgId على مستوى الـ module
+        // كانت currPkgId غير معرّفة بـ let فتسبب ReferenceError فوري
+        // ============================================================
+        let currProdId = null;
+        let currPkgId = null;
 
         window.showPage = id => { document.querySelectorAll('.page-section').forEach(d => d.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); window.scrollTo(0,0); };
         window.openWhatsApp = msg => window.open(`https://wa.me/${window.siteData.settings.whatsappNumber}?text=${encodeURIComponent(msg)}`);
@@ -577,7 +584,6 @@
         window.toggleProdVis = async (id, isHidden) => { try { await updateDoc(doc(db, "products", String(id)), { isHidden: !isHidden }); window.fetchData(); } catch(e) { console.error(e); } };
         window.deleteProduct = async (id) => { if(confirm("حذف هذا المنتج نهائياً من قاعدة البيانات؟")) { try { await deleteDoc(doc(db, "products", String(id))); window.fetchData(); } catch(e) { console.error(e); } } };
 
-        let currProdId = null;
         window.openEditProdModal = id => {
             try {
                 currProdId = id ? String(id) : null; 
@@ -620,33 +626,57 @@
             } catch(e) { console.error("Error opening modal", e); alert("حدث خطأ"); }
         };
 
+        // ============================================================
+        // FIX #1: إصلاح رفع الصور لـ ImgBB
+        // المشكلة: الكود القديم كان يحوّل الصورة لـ Base64 ثم يرسلها
+        // داخل FormData كـ string — وهو ما كان يسبب 400 Bad Request.
+        // الحل: إرسال الـ File object مباشرة في FormData بدون تحويل،
+        // وهو الأسلوب الأكثر استقراراً مع ImgBB API.
+        // ============================================================
         window.uploadImageToImgBB = async (e, idx) => {
             try {
                 let f = e.target.files[0]; if(!f) return;
-                let st = document.getElementById(`upload-status-${idx}`); 
+                let st = document.getElementById(`upload-status-${idx}`);
                 if(!st) return;
-                st.innerText = "جاري تحضير الصورة..."; st.classList.remove('hidden', 'text-red-500', 'text-green-500'); st.classList.add('text-blue-600');
-                
-                const reader = new FileReader();
-                reader.readAsDataURL(f);
-                reader.onloadend = async () => {
-                    try {
-                        let base64data = reader.result.split(',')[1];
-                        let fd = new FormData(); fd.append('image', base64data);
-                        st.innerText = "جاري الرفع لـ ImgBB...";
-                        
-                        let res = await fetch(`https://api.imgbb.com/1/upload?key=3059d2e8badf18cc80ce82fda1d77011`, { method: 'POST', body: fd });
-                        if(!res.ok) throw new Error("HTTP error");
-                        let r = await res.json();
-                        if(r.success) { 
-                            let ui = document.getElementById(`modal-prod-img-url-${idx}`); if(ui) ui.value = r.data.url;
-                            let pv = document.getElementById(`modal-prod-img-preview-${idx}`); if(pv) { pv.src = r.data.url; pv.classList.remove('hidden'); }
-                            let ic = document.getElementById(`modal-prod-img-icon-${idx}`); if(ic) ic.classList.add('hidden');
-                            st.innerText="تم الرفع!"; st.classList.replace('text-blue-600', 'text-green-500');
-                        } else { st.innerText="فشل الرفع."; st.classList.replace('text-blue-600', 'text-red-500'); }
-                    } catch(ex) { console.error(ex); st.innerText="خطأ بالإنترنت."; st.classList.replace('text-blue-600', 'text-red-500'); }
-                };
-            } catch(ex) { console.error(ex); let st = document.getElementById(`upload-status-${idx}`); if(st) { st.innerText="خطأ تقني."; st.classList.replace('text-blue-600', 'text-red-500'); } }
+                st.innerText = "جاري الرفع...";
+                st.classList.remove('hidden', 'text-red-500', 'text-green-500');
+                st.classList.add('text-blue-600');
+
+                // إرسال الملف مباشرة بدلاً من Base64
+                let fd = new FormData();
+                fd.append('image', f);
+
+                let res = await fetch(
+                    `https://api.imgbb.com/1/upload?key=3059d2e8badf18cc80ce82fda1d77011`,
+                    { method: 'POST', body: fd }
+                );
+
+                if(!res.ok) {
+                    let errText = await res.text();
+                    throw new Error(`HTTP ${res.status}: ${errText}`);
+                }
+
+                let r = await res.json();
+                if(r.success) {
+                    let ui = document.getElementById(`modal-prod-img-url-${idx}`); if(ui) ui.value = r.data.url;
+                    let pv = document.getElementById(`modal-prod-img-preview-${idx}`);
+                    if(pv) { pv.src = r.data.url; pv.classList.remove('hidden'); }
+                    let ic = document.getElementById(`modal-prod-img-icon-${idx}`); if(ic) ic.classList.add('hidden');
+                    st.innerText = "✓ تم الرفع!";
+                    st.classList.replace('text-blue-600', 'text-green-500');
+                } else {
+                    throw new Error(r.error?.message || "فشل الرفع");
+                }
+            } catch(ex) {
+                console.error("ImgBB Upload Error:", ex);
+                let st = document.getElementById(`upload-status-${idx}`);
+                if(st) {
+                    st.innerText = "✗ خطأ: " + ex.message;
+                    st.classList.add('hidden');
+                    st.classList.remove('hidden');
+                    st.classList.replace('text-blue-600', 'text-red-500');
+                }
+            }
         };
 
         window.saveProdToFirestore = async () => {
@@ -692,11 +722,18 @@
         window.togglePkgVis = async (id, isHidden) => { try { await updateDoc(doc(db, "packages", String(id)), { isHidden: !isHidden }); window.fetchData(); } catch(e) { console.error(e); } };
         window.deletePackage = async (id) => { if(confirm("حذف هذه الباقة نهائياً؟")) { try { await deleteDoc(doc(db, "packages", String(id))); window.fetchData(); } catch(e) { console.error(e); } } };
 
+        // ============================================================
+        // FIX #2 (تكملة): دالة openEditPkgModal مُصلحة بالكامل
+        // currPkgId الآن معرّفة بـ let أعلاه — لا مزيد من ReferenceError
+        // جميع مقارنات الـ ID تستخدم String() لتوحيد النوع
+        // ============================================================
         window.openEditPkgModal = id => { 
             try {
-                currPkgId = id ? String(id) : null; window.tempPkgProducts = {}; 
+                currPkgId = id ? String(id) : null;
+                window.tempPkgProducts = {};
                 document.querySelectorAll('.pkg-target').forEach(c => c.checked = false);
-                let pList = document.getElementById('modal-pkg-products'); if(pList) pList.innerHTML = '';
+                let pList = document.getElementById('modal-pkg-products');
+                if(pList) pList.innerHTML = '';
 
                 let pkgs = Array.isArray(window.siteData.packages) ? window.siteData.packages : [];
                 let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
@@ -704,79 +741,134 @@
                 if(id) {
                     let pkg = pkgs.find(x => String(x.id) === String(id));
                     if(pkg) {
-                        let nEl = document.getElementById('modal-pkg-name'); if(nEl) nEl.value = pkg.name || ""; 
+                        let nEl = document.getElementById('modal-pkg-name'); if(nEl) nEl.value = pkg.name || "";
                         let dEl = document.getElementById('modal-pkg-desc'); if(dEl) dEl.value = pkg.desc || "";
-                        
-                        if(Array.isArray(pkg.products)) { pkg.products.forEach(pid => window.tempPkgProducts[String(pid)] = (window.tempPkgProducts[String(pid)] || 0) + 1); }
-                        if(Array.isArray(pkg.target)) { pkg.target.forEach(t => { let cb = document.querySelector(`.pkg-target[value="${t}"]`); if(cb) cb.checked = true; }); }
-                        
+
+                        // توحيد IDs إلى String عند بناء tempPkgProducts
+                        if(Array.isArray(pkg.products)) {
+                            pkg.products.forEach(pid => {
+                                let key = String(pid);
+                                window.tempPkgProducts[key] = (window.tempPkgProducts[key] || 0) + 1;
+                            });
+                        }
+
+                        if(Array.isArray(pkg.target)) {
+                            pkg.target.forEach(t => {
+                                let cb = document.querySelector(`.pkg-target[value="${t}"]`);
+                                if(cb) cb.checked = true;
+                            });
+                        }
+
                         let discount = pkg.discountAmount;
                         if(discount === undefined && pkg.price !== undefined) {
-                            let tempOrig = 0; 
-                            if(Array.isArray(pkg.products)) { pkg.products.forEach(pid => { let pr = prods.find(x=>String(x.id)===String(pid)); if(pr) tempOrig += (parseFloat(pr.price)||0); }); }
-                            discount = tempOrig - pkg.price; if(discount < 0) discount = 0;
+                            let tempOrig = 0;
+                            if(Array.isArray(pkg.products)) {
+                                pkg.products.forEach(pid => {
+                                    let pr = prods.find(x => String(x.id) === String(pid));
+                                    if(pr) tempOrig += (parseFloat(pr.price) || 0);
+                                });
+                            }
+                            discount = tempOrig - pkg.price;
+                            if(discount < 0) discount = 0;
                         }
-                        let dsEl = document.getElementById('modal-pkg-discount'); if(dsEl) dsEl.value = discount || 0;
+                        let dsEl = document.getElementById('modal-pkg-discount');
+                        if(dsEl) dsEl.value = discount || 0;
                     }
                 } else {
-                    let nEl = document.getElementById('modal-pkg-name'); if(nEl) nEl.value = ""; 
-                    let dEl = document.getElementById('modal-pkg-desc'); if(dEl) dEl.value = ""; 
+                    let nEl = document.getElementById('modal-pkg-name'); if(nEl) nEl.value = "";
+                    let dEl = document.getElementById('modal-pkg-desc'); if(dEl) dEl.value = "";
                     let dsEl = document.getElementById('modal-pkg-discount'); if(dsEl) dsEl.value = 0;
                 }
 
+                // بناء قائمة المنتجات مع توحيد الـ ID إلى String
                 if(pList) {
                     prods.forEach(p => {
-                        let qty = window.tempPkgProducts[String(p.id)] || 0;
+                        let key = String(p.id);
+                        let qty = window.tempPkgProducts[key] || 0;
                         let div = document.createElement('div');
                         div.className = "flex justify-between items-center p-2 border-b bg-white";
-                        div.innerHTML = `<div class="truncate text-xs md:text-sm font-bold" title="${p.name}">${p.name} <span class="text-blue-500">(${p.price})</span></div><div class="flex items-center gap-2"><button type="button" onclick="window.changePkgItemQty('${p.id}', -1)" class="bg-red-50 text-red-500 w-8 h-8 rounded flex items-center justify-center font-bold border border-red-100 cursor-pointer hover:bg-red-200">-</button><span id="pkg-qty-${p.id}" class="font-bold w-6 text-center text-sm">${qty}</span><button type="button" onclick="window.changePkgItemQty('${p.id}', 1)" class="bg-green-50 text-green-600 w-8 h-8 rounded flex items-center justify-center font-bold border border-green-100 cursor-pointer hover:bg-green-200">+</button></div>`;
+                        div.innerHTML = `
+                            <div class="truncate text-xs md:text-sm font-bold" title="${p.name}">
+                                ${p.name} <span class="text-blue-500">(${p.price})</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="window.changePkgItemQty('${key}', -1)" class="bg-red-50 text-red-500 w-8 h-8 rounded flex items-center justify-center font-bold border border-red-100 cursor-pointer hover:bg-red-200">-</button>
+                                <span id="pkg-qty-${key}" class="font-bold w-6 text-center text-sm">${qty}</span>
+                                <button type="button" onclick="window.changePkgItemQty('${key}', 1)" class="bg-green-50 text-green-600 w-8 h-8 rounded flex items-center justify-center font-bold border border-green-100 cursor-pointer hover:bg-green-200">+</button>
+                            </div>`;
                         pList.appendChild(div);
                     });
                 }
+
                 window.calcPkgPrices();
-                let mod = document.getElementById('edit-pkg-modal'); if(mod) mod.classList.remove('hidden'); 
-            } catch (e) { console.error(e); alert("حدث خطأ أثناء فتح الباقة."); }
+                let mod = document.getElementById('edit-pkg-modal');
+                if(mod) mod.classList.remove('hidden');
+            } catch (e) {
+                console.error("Error in openEditPkgModal:", e);
+                alert("حدث خطأ أثناء فتح الباقة: " + e.message);
+            }
         };
 
         window.changePkgItemQty = (pid, change) => {
             try {
-                let current = window.tempPkgProducts[String(pid)] || 0; let newQty = current + change; if(newQty < 0) newQty = 0;
-                window.tempPkgProducts[String(pid)] = newQty; 
-                let qEl = document.getElementById(`pkg-qty-${pid}`); if(qEl) qEl.innerText = newQty; 
+                let key = String(pid);
+                let current = window.tempPkgProducts[key] || 0;
+                let newQty = current + change;
+                if(newQty < 0) newQty = 0;
+                window.tempPkgProducts[key] = newQty;
+                let qEl = document.getElementById(`pkg-qty-${key}`);
+                if(qEl) qEl.innerText = newQty;
                 window.calcPkgPrices();
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error("changePkgItemQty error:", e); }
         };
 
         window.calcPkgPrices = () => {
             try {
-                let orig = 0; let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
+                let orig = 0;
+                let prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
                 for (const [pid, qty] of Object.entries(window.tempPkgProducts)) {
-                    if(qty > 0) { let p = prods.find(x => String(x.id) === String(pid)); if(p) orig += (parseFloat(p.price) || 0) * qty; }
+                    if(qty > 0) {
+                        let p = prods.find(x => String(x.id) === String(pid));
+                        if(p) orig += (parseFloat(p.price) || 0) * qty;
+                    }
                 }
                 let oEl = document.getElementById('modal-pkg-original-price'); if(oEl) oEl.innerText = orig;
-                let dEl = document.getElementById('modal-pkg-discount'); let disc = parseFloat(dEl ? dEl.value : 0) || 0;
+                let dEl = document.getElementById('modal-pkg-discount');
+                let disc = parseFloat(dEl ? dEl.value : 0) || 0;
                 let fin = orig - disc; if(fin < 0) fin = 0;
                 let fEl = document.getElementById('modal-pkg-final-price'); if(fEl) fEl.innerText = fin;
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error("calcPkgPrices error:", e); }
         };
         
         window.savePkgToFirestore = async () => { 
             try {
                 const targets = Array.from(document.querySelectorAll('.pkg-target:checked')).map(c => c.value);
                 let prodsArray = [];
-                for (const [pid, qty] of Object.entries(window.tempPkgProducts)) { for(let i=0; i<qty; i++) prodsArray.push(String(pid)); }
+                for (const [pid, qty] of Object.entries(window.tempPkgProducts)) {
+                    if(qty > 0) {
+                        for(let i=0; i<qty; i++) prodsArray.push(String(pid));
+                    }
+                }
                 
-                let nEl = document.getElementById('modal-pkg-name'); let dEl = document.getElementById('modal-pkg-discount');
-                let deEl = document.getElementById('modal-pkg-desc'); let fEl = document.getElementById('modal-pkg-final-price');
+                let nEl = document.getElementById('modal-pkg-name');
+                let dEl = document.getElementById('modal-pkg-discount');
+                let deEl = document.getElementById('modal-pkg-desc');
+                let fEl = document.getElementById('modal-pkg-final-price');
 
                 let d = {
-                    name: (nEl ? nEl.value : "باقة بدون اسم"), discountAmount: parseFloat(dEl ? dEl.value : 0) || 0, 
-                    desc: (deEl ? deEl.value : ""), target: targets, products: prodsArray,
+                    name: (nEl ? nEl.value : "باقة بدون اسم"),
+                    discountAmount: parseFloat(dEl ? dEl.value : 0) || 0,
+                    desc: (deEl ? deEl.value : ""),
+                    target: targets,
+                    products: prodsArray,
                     price: parseFloat(fEl ? fEl.innerText : 0) || 0
-                }; 
+                };
                 
-                if(currPkgId) await updateDoc(doc(db,"packages",String(currPkgId)),d); else await addDoc(collection(db,"packages"),d); 
-                let mod = document.getElementById('edit-pkg-modal'); if(mod) mod.classList.add('hidden'); window.fetchData(); 
+                if(currPkgId) await updateDoc(doc(db, "packages", String(currPkgId)), d);
+                else await addDoc(collection(db, "packages"), d);
+                
+                let mod = document.getElementById('edit-pkg-modal'); if(mod) mod.classList.add('hidden');
+                window.fetchData();
             } catch(e) { console.error(e); alert("حدث خطأ أثناء الحفظ."); }
         };
 
