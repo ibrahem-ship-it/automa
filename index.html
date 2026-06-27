@@ -22,7 +22,6 @@
         .product-img { object-fit: cover; width: 100%; height: 100%; }
         .product-img-placeholder { display: flex; align-items: center; justify-content: center; background-color: #f1f5f9; color: #93c5fd; font-size: 4rem; width: 100%; height: 100%; }
         .blurred-text { filter: blur(5px); cursor: pointer; user-select: none; }
-        /* Suppress browser print — PDFs are generated programmatically */
         @media print { body { display: none; } }
     </style>
 </head>
@@ -30,17 +29,15 @@
 
 <!-- =====================================================================
      HIDDEN PDF INVOICE TEMPLATE
-     Uses 100% inline CSS + table-based layout so html2canvas renders
-     it accurately regardless of Tailwind purging or cascade issues.
-     Positioned off-screen; toggled to display:block temporarily for PDF.
+     FIX: Removed z-index:-999. Initial state is display:none only.
+     The JS function sets full cssText to make it renderable off-screen.
 ====================================================================== -->
 <div id="pdf-invoice-template" dir="rtl"
-     style="display:none; position:fixed; left:-9999px; top:0; z-index:-999;
+     style="display:none; position:absolute; left:-9999px; top:0;
             width:794px; padding:50px 58px; box-sizing:border-box;
             background:#ffffff; color:#1e293b;
             font-family:'Cairo',Arial,sans-serif; line-height:1.65;">
 
-    <!-- Company Header -->
     <div style="text-align:center; padding-bottom:22px; margin-bottom:28px; border-bottom:3px solid #2563eb;">
         <div style="font-size:36px; font-weight:700; color:#2563eb; margin:0 0 5px 0; letter-spacing:-0.5px;">
             RoboTech <span style="font-size:24px; color:#334155; font-weight:600;">روبوتك</span>
@@ -48,7 +45,6 @@
         <div style="font-size:13px; color:#64748b; font-weight:400;">للأنظمة الذكية والتشطيبات</div>
     </div>
 
-    <!-- Invoice Meta: Client | Number | Date -->
     <table cellpadding="0" cellspacing="0"
            style="width:100%; border-collapse:collapse; font-size:14px; margin-bottom:22px;">
         <tr>
@@ -67,10 +63,8 @@
         </tr>
     </table>
 
-    <!-- Thin divider -->
     <div style="height:1px; background:#e2e8f0; margin-bottom:22px;"></div>
 
-    <!-- Items Table -->
     <table cellpadding="0" cellspacing="0"
            style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:30px;">
         <thead>
@@ -85,7 +79,6 @@
         <tbody id="pdf-inv-items"></tbody>
     </table>
 
-    <!-- Totals Block (right-aligned table) -->
     <table cellpadding="0" cellspacing="0"
            style="width:310px; border-collapse:collapse; font-size:14px; margin-right:0; margin-left:auto;">
         <tr>
@@ -110,7 +103,6 @@
         </tr>
     </table>
 
-    <!-- Footer -->
     <div style="margin-top:58px; padding-top:14px; border-top:1px solid #e2e8f0; text-align:center; font-size:12px; color:#94a3b8; line-height:2;">
         نضمن استبدال القطع وصيانتها ضد عيوب الصناعة
         &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -174,7 +166,6 @@
             </div>
         </section>
 
-        <!-- Packages -->
         <section id="packages-section" class="py-16 bg-white border-t hidden">
             <div class="container mx-auto px-4">
                 <h2 id="packages-heading" class="text-3xl font-bold text-slate-800 mb-10 text-center">عروض الباقات المتكاملة</h2>
@@ -182,7 +173,6 @@
             </div>
         </section>
 
-        <!-- Products -->
         <section id="products-section" class="py-16 bg-slate-50 border-t">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
@@ -301,10 +291,9 @@
                 </div>
 
                 <!-- ============================================================
-                     POS TAB — UPDATED
-                     Removed "معاينة PDF" button entirely.
-                     Now a single "Save to Accounting" button.
-                     saveInvoiceToFirestore stores full item details.
+                     POS TAB
+                     TASK 2: Added discount type selector (fixed / %)
+                     No PDF preview here — PDF only from Accounting tab.
                 ============================================================ -->
                 <div id="admin-invoice" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">إنشاء فاتورة (POS)</h2>
@@ -316,9 +305,21 @@
                             <i class="fas fa-plus-circle"></i> إضافة منتج للفاتورة
                         </button>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <!-- TASK 2: Discount with type selector -->
                             <div>
-                                <label class="font-bold text-sm text-red-500 block mb-1"><i class="fas fa-tag ml-1"></i>خصم كقيمة (ج.م)</label>
-                                <input type="number" id="inv-discount" class="w-full border p-2 rounded-lg" value="0" oninput="window.calcInvoiceTotal()">
+                                <label class="font-bold text-sm text-red-500 block mb-1">
+                                    <i class="fas fa-tag ml-1"></i>الخصم
+                                    <span id="discount-type-label" class="text-xs font-normal text-slate-400 mr-1">(قيمة ثابتة)</span>
+                                </label>
+                                <div class="flex gap-2">
+                                    <select id="inv-discount-type"
+                                            class="border p-2 rounded-lg bg-white font-bold text-sm text-slate-700 flex-shrink-0 cursor-pointer"
+                                            onchange="window.updateDiscountLabel(); window.calcInvoiceTotal()">
+                                        <option value="fixed">ج.م ثابت</option>
+                                        <option value="percent">نسبة %</option>
+                                    </select>
+                                    <input type="number" id="inv-discount" class="flex-1 border p-2 rounded-lg" value="0" min="0" oninput="window.calcInvoiceTotal()">
+                                </div>
                             </div>
                             <div>
                                 <label class="font-bold text-sm text-slate-500 block mb-1"><i class="fas fa-tools ml-1"></i>مصاريف تركيب (عليك)</label>
@@ -326,7 +327,14 @@
                             </div>
                         </div>
                         <div class="bg-gradient-to-l from-blue-50 to-slate-50 p-5 rounded-xl mb-6 border border-blue-100">
-                            <div class="font-bold text-xl mb-3 text-center text-slate-700">
+                            <div class="font-bold text-xl mb-1 text-center text-slate-700">
+                                الإجمالي الفرعي:
+                                <span id="inv-subtotal-display" class="text-slate-500 text-lg mx-2">0</span> ج.م
+                            </div>
+                            <div class="font-bold text-sm text-red-400 text-center mb-3" id="inv-discount-display" style="display:none;">
+                                الخصم: <span id="inv-discount-amount-display">0</span> ج.م
+                            </div>
+                            <div class="font-bold text-xl text-center text-slate-700">
                                 الإجمالي المطلوب من العميل:
                                 <span id="inv-total" class="text-blue-600 text-3xl mx-2">0</span> ج.م
                             </div>
@@ -337,7 +345,6 @@
                                 <span id="inv-profit" class="text-green-600 font-bold blurred-text">**** ج.م</span>
                             </div>
                         </div>
-                        <!-- Single action: Save -->
                         <button type="button" id="btn-save-invoice" onclick="window.saveInvoiceToFirestore()"
                             class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg shadow-md transition flex justify-center items-center gap-2">
                             <i class="fas fa-save"></i> حفظ الفاتورة في الحسابات
@@ -346,8 +353,9 @@
                 </div>
 
                 <!-- ============================================================
-                     ACCOUNTING TAB — UPDATED
-                     Added 📄 PDF download button per invoice row.
+                     ACCOUNTING TAB
+                     TASK 1: PDF download per row (only here, not in POS)
+                     TASK 3: View details button per row
                 ============================================================ -->
                 <div id="admin-accounting" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">الحسابات والأرباح</h2>
@@ -486,7 +494,6 @@
         <h3 class="text-xl font-bold mb-3 border-b pb-2">بناء الباقة</h3>
         <div class="overflow-y-auto pr-1 md:pr-2 custom-scroll flex-1">
             <div class="mb-3"><label class="font-bold text-sm">اسم الباقة</label><input type="text" id="modal-pkg-name" class="w-full p-2 border rounded font-bold text-blue-600"></div>
-            <!-- Package Image Upload -->
             <div class="mb-4 bg-slate-50 border rounded p-3">
                 <label class="font-bold text-sm block mb-2 text-blue-800"><i class="fas fa-image ml-1"></i> صورة الباقة (اختياري)</label>
                 <div class="flex items-center gap-3">
@@ -506,7 +513,6 @@
                 </div>
                 <input type="hidden" id="modal-pkg-img-url">
             </div>
-
             <div class="mb-4 bg-slate-50 border rounded p-2 md:p-3">
                 <label class="font-bold block border-b pb-2 mb-2 text-sm text-blue-800"><i class="fas fa-boxes"></i> 1. حدد المنتجات:</label>
                 <div id="modal-pkg-products" class="max-h-48 overflow-y-auto custom-scroll text-sm flex flex-col gap-1 border border-slate-200 bg-white p-1 rounded"></div>
@@ -543,6 +549,29 @@
         </div>
     </div>
 </div>
+
+<!-- ===== TASK 3: VIEW INVOICE MODAL (password-protected) ===== -->
+<div id="view-invoice-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col text-right" dir="rtl">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center p-5 border-b bg-slate-50 rounded-t-2xl flex-shrink-0">
+            <div>
+                <h3 class="text-xl font-bold text-slate-800">تفاصيل الفاتورة</h3>
+                <p class="text-xs text-slate-400 mt-0.5">جميع البيانات سرية وللاستخدام الداخلي فقط</p>
+            </div>
+            <button onclick="document.getElementById('view-invoice-modal').classList.add('hidden')"
+                    class="text-slate-400 hover:text-red-500 text-2xl font-bold w-9 h-9 flex items-center justify-center rounded-lg hover:bg-red-50 transition">✕</button>
+        </div>
+        <!-- Modal Body (scrollable) -->
+        <div id="view-invoice-content" class="overflow-y-auto custom-scroll p-5 flex-1"></div>
+        <!-- Modal Footer -->
+        <div class="p-4 border-t bg-slate-50 rounded-b-2xl flex-shrink-0 text-center">
+            <button onclick="document.getElementById('view-invoice-modal').classList.add('hidden')"
+                    class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-8 py-2 rounded-lg transition text-sm">إغلاق</button>
+        </div>
+    </div>
+</div>
+<!-- END VIEW INVOICE MODAL -->
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -1037,8 +1066,16 @@
 
     // ================================================================
     // POS / INVOICE
+    // TASK 2: updateDiscountLabel + updated calcInvoiceTotal
     // ================================================================
     let invRows = [];
+
+    // TASK 2: Updates the label hint based on selected discount type
+    window.updateDiscountLabel = () => {
+        const type = document.getElementById('inv-discount-type')?.value;
+        const lbl  = document.getElementById('discount-type-label');
+        if (lbl) lbl.innerText = type === 'percent' ? '(نسبة مئوية)' : '(قيمة ثابتة)';
+    };
 
     window.addInvoiceItemRow = () => {
         const prods = Array.isArray(window.siteData.products)?window.siteData.products:[];
@@ -1059,46 +1096,75 @@
         window.calcInvoiceTotal();
     };
 
+    // TASK 2: Updated to handle fixed-amount AND percentage discounts
     window.calcInvoiceTotal = () => {
         try {
-            let t=0, c=0;
-            const dEl=document.getElementById('inv-discount'); const d=parseFloat(dEl?dEl.value:0)||0;
-            const eEl=document.getElementById('inv-expenses'); const e=parseFloat(eEl?eEl.value:0)||0;
+            let subtotal = 0, c = 0;
+            const eEl = document.getElementById('inv-expenses');
+            const expenses = parseFloat(eEl ? eEl.value : 0) || 0;
+
             document.querySelectorAll('.inv-sel').forEach(sel => {
                 if (sel.value !== "0") {
-                    const qtyEl=sel.parentElement.querySelector('.inv-qty'); const qty=parseInt(qtyEl?qtyEl.value:1)||1;
-                    t += (parseFloat(sel.options[sel.selectedIndex].dataset.price||0) * qty);
-                    c += (parseFloat(sel.options[sel.selectedIndex].dataset.cost||0) * qty);
+                    const qtyEl = sel.parentElement.querySelector('.inv-qty');
+                    const qty   = parseInt(qtyEl ? qtyEl.value : 1) || 1;
+                    subtotal += (parseFloat(sel.options[sel.selectedIndex].dataset.price || 0) * qty);
+                    c        += (parseFloat(sel.options[sel.selectedIndex].dataset.cost  || 0) * qty);
                 }
             });
-            const finalT=t-d;
-            const itEl=document.getElementById('inv-total'); if(itEl)itEl.innerText=finalT;
-            const profit=finalT-c-e;
-            const pEl=document.getElementById('inv-profit');
-            if (pEl) { pEl.dataset.realProfit=profit; pEl.innerText=window.isProfitUnlocked?profit+" ج.م":"**** ج.م"; }
-        } catch(e){console.error(e);}
+
+            // Compute actual discount amount from input + type
+            const discVal  = parseFloat(document.getElementById('inv-discount')?.value || 0) || 0;
+            const discType = document.getElementById('inv-discount-type')?.value || 'fixed';
+            const discountAmount = discType === 'percent'
+                ? Math.round((subtotal * discVal / 100) * 100) / 100
+                : discVal;
+
+            // Store computed amount for saveInvoiceToFirestore to use
+            window._computedDiscountAmount = discountAmount;
+
+            const finalTotal = Math.max(subtotal - discountAmount, 0);
+
+            // Update subtotal display
+            const stEl = document.getElementById('inv-subtotal-display');
+            if (stEl) stEl.innerText = subtotal;
+
+            // Show/hide discount line
+            const discDispRow = document.getElementById('inv-discount-display');
+            const discDispAmt = document.getElementById('inv-discount-amount-display');
+            if (discDispRow) discDispRow.style.display = discountAmount > 0 ? 'block' : 'none';
+            if (discDispAmt) discDispAmt.innerText = discountAmount;
+
+            // Total
+            const itEl = document.getElementById('inv-total');
+            if (itEl) itEl.innerText = finalTotal;
+
+            // Profit
+            const profit = finalTotal - c - expenses;
+            const pEl = document.getElementById('inv-profit');
+            if (pEl) {
+                pEl.dataset.realProfit = profit;
+                pEl.innerText = window.isProfitUnlocked ? profit + " ج.م" : "**** ج.م";
+            }
+        } catch(e) { console.error(e); }
     };
 
     // ================================================================
-    // SAVE INVOICE — FULL DETAILS PERSISTED TO FIRESTORE
-    // Stores: client, items[], subtotal, discount, expenses, cost,
-    //         total, profit, timestamp.
-    // This enables PDF re-generation from the Accounting tab later.
+    // SAVE INVOICE — uses _computedDiscountAmount for accuracy
     // ================================================================
     window.saveInvoiceToFirestore = async () => {
         try {
             const btn = document.getElementById('btn-save-invoice');
             if (btn) { btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...'; }
 
-            const nEl=document.getElementById('inv-name');
-            const dEl=document.getElementById('inv-discount');
-            const eEl=document.getElementById('inv-expenses');
-            const pEl=document.getElementById('inv-profit');
-            const itEl=document.getElementById('inv-total');
+            const nEl  = document.getElementById('inv-name');
+            const eEl  = document.getElementById('inv-expenses');
+            const pEl  = document.getElementById('inv-profit');
+            const itEl = document.getElementById('inv-total');
 
-            const discount  = parseFloat(dEl?dEl.value:0)  || 0;
-            const expenses  = parseFloat(eEl?eEl.value:0)  || 0;
-            const total     = parseFloat(itEl?itEl.innerText:0);
+            // Use the pre-computed discount amount (handles both fixed & %)
+            const discount  = window._computedDiscountAmount || 0;
+            const expenses  = parseFloat(eEl ? eEl.value : 0) || 0;
+            const total     = parseFloat(itEl ? itEl.innerText : 0);
 
             if (total <= 0) {
                 alert("الفاتورة فارغة! أضف منتجاً على الأقل.");
@@ -1106,21 +1172,20 @@
                 return;
             }
 
-            // Collect detailed line items
             const items = [];
-            let subtotal = 0;
+            let subtotal  = 0;
             let totalCost = 0;
 
             document.querySelectorAll('.inv-sel').forEach(sel => {
                 if (sel.value !== "0") {
-                    const qtyEl  = sel.parentElement.querySelector('.inv-qty');
-                    const qty    = parseInt(qtyEl?qtyEl.value:1) || 1;
-                    const price  = parseFloat(sel.options[sel.selectedIndex].dataset.price  || 0);
-                    const cost   = parseFloat(sel.options[sel.selectedIndex].dataset.cost   || 0);
-                    const name   = sel.options[sel.selectedIndex].text.split('(')[0].trim();
+                    const qtyEl   = sel.parentElement.querySelector('.inv-qty');
+                    const qty     = parseInt(qtyEl ? qtyEl.value : 1) || 1;
+                    const price   = parseFloat(sel.options[sel.selectedIndex].dataset.price || 0);
+                    const cost    = parseFloat(sel.options[sel.selectedIndex].dataset.cost  || 0);
+                    const name    = sel.options[sel.selectedIndex].text.split('(')[0].trim();
                     const lineTotal = price * qty;
-                    subtotal  += lineTotal;
-                    totalCost += cost * qty;
+                    subtotal   += lineTotal;
+                    totalCost  += cost * qty;
                     items.push({ name, qty, price, lineTotal });
                 }
             });
@@ -1128,8 +1193,8 @@
             const profit = parseFloat(pEl?.dataset?.realProfit ?? 0) || 0;
 
             await addDoc(collection(db, "invoices"), {
-                client:    (nEl?nEl.value:'عميل نقدي') || 'عميل نقدي',
-                items,          // full line-item array for PDF re-generation
+                client:    (nEl ? nEl.value : 'عميل نقدي') || 'عميل نقدي',
+                items,
                 subtotal,
                 discount,
                 expenses,
@@ -1144,9 +1209,10 @@
             // Reset POS form
             const icEl = document.getElementById('invoice-items'); if (icEl) icEl.innerHTML='';
             if (nEl)  nEl.value  = '';
-            if (dEl)  dEl.value  = 0;
+            const dEl = document.getElementById('inv-discount'); if (dEl) dEl.value = 0;
             if (eEl)  eEl.value  = 0;
             invRows = [];
+            window._computedDiscountAmount = 0;
             window.calcInvoiceTotal();
             window.fetchData();
 
@@ -1190,7 +1256,7 @@
         }
     };
 
-    // renderAccounting — now includes a PDF download button per row
+    // renderAccounting — TASK 1: PDF button here only; TASK 3: view button added
     window.renderAccounting = (ts, tc, te) => {
         const sEl=document.getElementById('acc-sales'); if(sEl) sEl.innerText=ts+" ج.م";
         const ec=document.getElementById('acc-cost');
@@ -1210,11 +1276,19 @@
                     <td class="p-3 text-green-600 font-bold blurred-text"
                         data-real-profit="${i.profit||(i.total-i.expenses)}">${pStr}</td>
                     <td class="p-3 text-center whitespace-nowrap">
+                        <!-- TASK 3: View details button -->
+                        <button type="button"
+                            onclick="window.viewInvoiceDetails('${i.id}')"
+                            title="عرض تفاصيل الفاتورة"
+                            class="inline-flex items-center gap-1 bg-slate-50 text-slate-600 hover:bg-slate-100 font-bold text-xs px-3 py-2 rounded-lg border border-slate-200 transition ml-1">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <!-- TASK 1: PDF button stays here only -->
                         <button type="button"
                             id="pdf-dl-btn-${i.id}"
                             onclick="window.downloadPastInvoicePDF('${i.id}')"
                             title="تحميل فاتورة PDF"
-                            class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 hover:bg-blue-100 font-bold text-xs px-3 py-2 rounded-lg border border-blue-100 transition ml-2">
+                            class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 hover:bg-blue-100 font-bold text-xs px-3 py-2 rounded-lg border border-blue-100 transition ml-1">
                             <i class="fas fa-file-pdf"></i> PDF
                         </button>
                         <button type="button"
@@ -1229,33 +1303,28 @@
     };
 
     // ================================================================
-    // PDF GENERATION FROM ACCOUNTING TABLE
-    // Populates the hidden #pdf-invoice-template, then calls html2pdf.
-    // Handles both new invoices (with items[]) and legacy invoices
-    // (which only have a total).
+    // TASK 1: FIXED PDF GENERATION
+    // Key fix: use cssText override to remove z-index:-999 and
+    // position:fixed, then wait for DOM repaint + fonts before capture.
     // ================================================================
     window.downloadPastInvoicePDF = async (invoiceId) => {
         const btn = document.getElementById(`pdf-dl-btn-${invoiceId}`);
         const originalBtnHTML = btn ? btn.innerHTML : '';
+        const template = document.getElementById('pdf-invoice-template');
+
         try {
             const inv = (window.siteData.invoices || []).find(i => String(i.id) === String(invoiceId));
             if (!inv) { alert("لم يتم العثور على الفاتورة!"); return; }
 
-            // Show loading state on the button
             if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...'; btn.disabled = true; }
-
-            const template = document.getElementById('pdf-invoice-template');
             if (!template) { alert("خطأ: قالب الفاتورة غير موجود!"); return; }
 
-            // Helper to safely set text
             const setT = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = String(val ?? ''); };
 
-            // Populate meta fields
             setT('pdf-inv-client', inv.client || 'عميل نقدي');
             setT('pdf-inv-id',     String(invoiceId).slice(-8).toUpperCase());
             setT('pdf-inv-date',   inv.timestamp || new Date().toLocaleDateString('ar-EG'));
 
-            // Populate items table
             const tbody = document.getElementById('pdf-inv-items');
             if (tbody) {
                 tbody.innerHTML = '';
@@ -1268,54 +1337,62 @@
                         const rowBg = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
                         tbody.innerHTML += `
                             <tr style="background-color:${rowBg};">
-                                <td style="padding:10px 10px; border-bottom:1px solid #f1f5f9; text-align:center; color:#94a3b8; font-size:12px;">${idx+1}</td>
-                                <td style="padding:10px 12px; border-bottom:1px solid #f1f5f9; font-weight:600; color:#1e293b;">${item.name || ''}</td>
-                                <td style="padding:10px 10px; border-bottom:1px solid #f1f5f9; text-align:center; color:#475569;">${item.qty ?? 1}</td>
-                                <td style="padding:10px 10px; border-bottom:1px solid #f1f5f9; text-align:center; color:#475569;">${item.price ?? 0} ج.م</td>
-                                <td style="padding:10px 12px; border-bottom:1px solid #f1f5f9; text-align:left; font-weight:700; color:#2563eb;">${lineTotal} ج.م</td>
+                                <td style="padding:10px 10px;border-bottom:1px solid #f1f5f9;text-align:center;color:#94a3b8;font-size:12px;">${idx+1}</td>
+                                <td style="padding:10px 12px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#1e293b;">${item.name||''}</td>
+                                <td style="padding:10px 10px;border-bottom:1px solid #f1f5f9;text-align:center;color:#475569;">${item.qty??1}</td>
+                                <td style="padding:10px 10px;border-bottom:1px solid #f1f5f9;text-align:center;color:#475569;">${item.price??0} ج.م</td>
+                                <td style="padding:10px 12px;border-bottom:1px solid #f1f5f9;text-align:left;font-weight:700;color:#2563eb;">${lineTotal} ج.م</td>
                             </tr>`;
                     });
                     setT('pdf-inv-subtotal', inv.subtotal ?? subtotalCalc);
                 } else {
-                    // Legacy invoice: no line items stored
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="5"
-                                style="padding:18px 12px; text-align:center; color:#94a3b8; font-style:italic; font-size:13px;">
-                                تفاصيل البنود غير متوفرة (فاتورة قديمة)
-                            </td>
-                        </tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" style="padding:18px 12px;text-align:center;color:#94a3b8;font-style:italic;font-size:13px;">تفاصيل البنود غير متوفرة (فاتورة قديمة)</td></tr>`;
                     setT('pdf-inv-subtotal', inv.subtotal ?? inv.total ?? 0);
                 }
             }
 
-            // Discount row — show/hide based on value
             const discount    = inv.discount ?? 0;
             const discountRow = document.getElementById('pdf-discount-row');
             if (discountRow) discountRow.style.display = discount > 0 ? 'table-row' : 'none';
             setT('pdf-inv-discount', discount);
             setT('pdf-inv-total', inv.total ?? 0);
 
-            // Make template visible off-screen for html2canvas capture
-            template.style.display   = 'block';
-            template.style.position  = 'fixed';
-            template.style.left      = '-9999px';
-            template.style.top       = '0';
+            // *** CORE FIX: override ALL inline styles via cssText ***
+            // This removes the problematic z-index:-999 and position:fixed
+            // that prevented html2canvas from rendering the element.
+            template.style.cssText = [
+                'display: block',
+                'visibility: visible',
+                'position: absolute',
+                'left: -9999px',
+                'top: 0',
+                'width: 794px',
+                'padding: 50px 58px',
+                'box-sizing: border-box',
+                'background: #ffffff',
+                'color: #1e293b',
+                'font-family: Cairo, Arial, sans-serif',
+                'line-height: 1.65',
+                'z-index: 99999'
+            ].join('; ');
 
-            // Wait for fonts before rendering
+            // Wait for fonts to load and browser to repaint
             await document.fonts.ready;
+            await new Promise(r => setTimeout(r, 300));
 
             const clientName = (inv.client || 'عميل').replace(/[^\w\u0600-\u06FF]/g, '_');
             const opt = {
-                margin:     [12, 10, 12, 10],
-                filename:   `فاتورة_روبوتك_${clientName}.pdf`,
-                image:      { type: 'jpeg', quality: 0.97 },
+                margin:      [12, 10, 12, 10],
+                filename:    `فاتورة_روبوتك_${clientName}.pdf`,
+                image:       { type: 'jpeg', quality: 0.98 },
                 html2canvas: {
-                    scale:         2,
-                    useCORS:       true,
-                    allowTaint:    false,
+                    scale:           2,
+                    useCORS:         true,
+                    allowTaint:      true,
                     letterRendering: true,
-                    windowWidth:   900
+                    logging:         false,
+                    backgroundColor: '#ffffff',
+                    windowWidth:     900
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
@@ -1326,11 +1403,116 @@
             console.error("downloadPastInvoicePDF error:", e);
             alert("حدث خطأ أثناء توليد الـ PDF. يرجى المحاولة مرة أخرى.");
         } finally {
-            // Always hide the template and restore button
-            const template = document.getElementById('pdf-invoice-template');
-            if (template) template.style.display = 'none';
+            // Always restore template to hidden state
+            if (template) {
+                template.style.cssText = 'display: none; position: absolute; left: -9999px; top: 0; width: 794px;';
+            }
             if (btn) { btn.innerHTML = originalBtnHTML; btn.disabled = false; }
         }
+    };
+
+    // ================================================================
+    // TASK 3: VIEW INVOICE DETAILS MODAL (password: 124578)
+    // ================================================================
+    window.viewInvoiceDetails = (invoiceId) => {
+        const pass = prompt("🔒 أدخل كلمة السر لعرض تفاصيل الفاتورة:");
+        if (pass === null) return; // user cancelled
+        if (pass !== "124578") {
+            alert("⛔ كلمة السر خاطئة!");
+            return;
+        }
+
+        const inv = (window.siteData.invoices || []).find(i => String(i.id) === String(invoiceId));
+        if (!inv) { alert("لم يتم العثور على الفاتورة!"); return; }
+
+        const modal   = document.getElementById('view-invoice-modal');
+        const content = document.getElementById('view-invoice-content');
+        if (!modal || !content) return;
+
+        // Build items table HTML
+        let itemsHtml = '';
+        if (Array.isArray(inv.items) && inv.items.length > 0) {
+            const rows = inv.items.map((item, i) => `
+                <tr style="background:${i % 2 === 0 ? '#fff' : '#f8fafc'};">
+                    <td class="p-2 border border-slate-200 font-semibold text-slate-800">${item.name || ''}</td>
+                    <td class="p-2 border border-slate-200 text-center text-slate-600">${item.qty ?? 1}</td>
+                    <td class="p-2 border border-slate-200 text-center text-slate-600">${item.price ?? 0} ج.م</td>
+                    <td class="p-2 border border-slate-200 text-center font-bold text-blue-600">${item.lineTotal ?? (item.price * item.qty)} ج.م</td>
+                </tr>`).join('');
+            itemsHtml = `
+                <div class="overflow-x-auto rounded-lg border border-slate-200 mb-4">
+                    <table class="w-full text-sm text-right">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="p-2 border border-slate-200 text-slate-700">المنتج</th>
+                                <th class="p-2 border border-slate-200 text-slate-700 text-center">الكمية</th>
+                                <th class="p-2 border border-slate-200 text-slate-700 text-center">سعر الوحدة</th>
+                                <th class="p-2 border border-slate-200 text-slate-700 text-center">الإجمالي</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </div>`;
+        } else {
+            itemsHtml = `<div class="text-center text-slate-400 py-6 bg-slate-50 rounded-lg border mb-4">
+                            <i class="fas fa-info-circle mb-2 text-2xl"></i>
+                            <p class="text-sm">لا تتوفر تفاصيل بنود (فاتورة قديمة)</p>
+                         </div>`;
+        }
+
+        const netProfit  = inv.profit ?? (inv.total - (inv.cost || 0) - (inv.expenses || 0));
+        const profitColor = netProfit >= 0 ? 'text-green-600' : 'text-red-500';
+
+        content.innerHTML = `
+            <!-- Client & Date -->
+            <div class="grid grid-cols-2 gap-3 mb-5 bg-blue-50 p-4 rounded-xl border border-blue-100">
+                <div>
+                    <p class="text-xs text-slate-400 mb-0.5">اسم العميل</p>
+                    <p class="font-bold text-lg text-slate-800">${inv.client || 'عميل نقدي'}</p>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 mb-0.5">التاريخ</p>
+                    <p class="font-bold text-slate-700">${inv.timestamp || '—'}</p>
+                </div>
+            </div>
+
+            <!-- Items -->
+            <p class="font-bold text-sm text-slate-600 mb-2"><i class="fas fa-list-ul ml-1 text-blue-500"></i>المنتجات المباعة</p>
+            ${itemsHtml}
+
+            <!-- Totals summary -->
+            <div class="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
+                <div class="divide-y divide-slate-200">
+                    <div class="flex justify-between items-center px-4 py-3">
+                        <span class="text-slate-600 text-sm font-semibold">الإجمالي الفرعي</span>
+                        <span class="font-bold text-slate-800">${inv.subtotal ?? '—'} ج.م</span>
+                    </div>
+                    ${(inv.discount > 0) ? `
+                    <div class="flex justify-between items-center px-4 py-3 bg-red-50">
+                        <span class="text-red-500 text-sm font-semibold"><i class="fas fa-tag ml-1"></i>الخصم</span>
+                        <span class="font-bold text-red-500">− ${inv.discount} ج.م</span>
+                    </div>` : ''}
+                    <div class="flex justify-between items-center px-4 py-3 bg-blue-50">
+                        <span class="text-blue-700 font-bold">صافي الفاتورة (من العميل)</span>
+                        <span class="font-bold text-blue-700 text-lg">${inv.total ?? '—'} ج.م</span>
+                    </div>
+                    <div class="flex justify-between items-center px-4 py-3">
+                        <span class="text-slate-500 text-sm font-semibold"><i class="fas fa-box ml-1"></i>تكلفة البضاعة</span>
+                        <span class="font-bold text-slate-700">${inv.cost ?? '—'} ج.م</span>
+                    </div>
+                    ${inv.expenses > 0 ? `
+                    <div class="flex justify-between items-center px-4 py-3">
+                        <span class="text-slate-500 text-sm font-semibold"><i class="fas fa-tools ml-1"></i>مصاريف تركيب</span>
+                        <span class="font-bold text-slate-700">${inv.expenses} ج.م</span>
+                    </div>` : ''}
+                    <div class="flex justify-between items-center px-4 py-3 ${netProfit >= 0 ? 'bg-green-50' : 'bg-red-50'}">
+                        <span class="font-bold text-sm ${profitColor}"><i class="fas fa-chart-line ml-1"></i>صافي الربح</span>
+                        <span class="font-bold text-xl ${profitColor}">${netProfit} ج.م</span>
+                    </div>
+                </div>
+            </div>`;
+
+        modal.classList.remove('hidden');
     };
 
     // ================================================================
