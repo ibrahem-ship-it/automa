@@ -29,12 +29,12 @@
 
 <!-- =====================================================================
      HIDDEN PDF INVOICE TEMPLATE
-     FIX: Removed z-index:-999. Initial state is display:none only.
-     The JS function sets full cssText to make it renderable off-screen.
+     FIX: Placed at top:0 left:0 with z-index:-9999. Do not use left:-9999px
+     to ensure html2canvas can capture the rendering without clipping.
 ====================================================================== -->
 <div id="pdf-invoice-template" dir="rtl"
-     style="display:none; position:absolute; left:-9999px; top:0;
-            width:794px; padding:50px 58px; box-sizing:border-box;
+     style="display:none; position:absolute; left:0; top:0; z-index:-9999;
+            width:800px; padding:50px 58px; box-sizing:border-box;
             background:#ffffff; color:#1e293b;
             font-family:'Cairo',Arial,sans-serif; line-height:1.65;">
 
@@ -111,13 +111,11 @@
 </div>
 <!-- END PDF TEMPLATE -->
 
-<!-- Warranty Banner -->
 <div class="bg-amber-500 text-white text-center py-2 text-xs md:text-sm font-semibold flex justify-center items-center gap-2 px-4" id="warranty-banner">
     <i class="fas fa-shield-alt text-lg"></i>
     <span id="warranty-text">خايف من التكنولوجيا؟ مع ضمان 'روبوتك' نضمن استبدال القطع وصيانتها ضد عيوب الصناعة.</span>
 </div>
 
-<!-- Header -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap">
         <div class="text-xl md:text-2xl font-bold text-blue-600 flex items-center gap-2 cursor-pointer mb-2 md:mb-0" onclick="window.showPage('page-home')">
@@ -141,7 +139,6 @@
 </header>
 
 <main id="main-content">
-    <!-- ===== HOME PAGE ===== -->
     <div id="page-home" class="page-section">
         <section class="hero-bg text-white py-20 md:py-32 text-center px-4 relative flex flex-col justify-center items-center min-h-[60vh]">
             <div class="max-w-3xl mx-auto relative z-10 w-full">
@@ -189,7 +186,7 @@
         </section>
     </div>
 
-    <!-- ===== PRODUCT DETAILS ===== -->
+    <!-- Product Details -->
     <div id="page-product-details" class="hidden page-section py-16 bg-white min-h-screen">
         <div class="container mx-auto px-4">
             <button type="button" onclick="window.showPage('page-home'); setTimeout(()=> document.getElementById('products-section').scrollIntoView(), 100);" class="mb-6 text-blue-600 font-semibold flex items-center gap-2"><i class="fas fa-arrow-right"></i> العودة للمنتجات</button>
@@ -197,7 +194,7 @@
         </div>
     </div>
 
-    <!-- ===== QUIZ ===== -->
+    <!-- Quiz -->
     <div id="page-quiz" class="hidden page-section py-12 md:py-16 bg-slate-50 min-h-screen">
         <div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg m-4" id="quiz-container">
             <h2 class="text-2xl md:text-3xl font-bold text-blue-600 mb-8 text-center">استبيان روبوتك الذكي</h2>
@@ -231,19 +228,19 @@
         </div>
     </div>
 
-    <!-- ===== ADMIN LOGIN ===== -->
+    <!-- Admin Login -->
     <div id="page-admin-login" class="hidden page-section min-h-screen bg-slate-800 flex items-center justify-center p-4">
         <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
             <h2 class="text-2xl font-bold mb-6 text-slate-800">دخول الإدارة</h2>
             <input type="email" id="admin-email" class="w-full p-3 border rounded-lg mb-4" placeholder="البريد" dir="ltr">
             <input type="password" id="admin-pass" class="w-full p-3 border rounded-lg mb-4" placeholder="الباسورد" dir="ltr">
             <div id="login-error" class="text-red-500 text-sm hidden font-bold mb-4">بيانات الدخول غير صحيحة</div>
-            <button type="button" onclick="window.loginAdmin()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg">دخول</button>
+            <button type="button" onclick="window.loginAdmin()" id="login-btn" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg">دخول</button>
             <button type="button" onclick="window.showPage('page-home')" class="w-full mt-3 text-slate-500 underline">العودة للموقع</button>
         </div>
     </div>
 
-    <!-- ===== ADMIN DASHBOARD ===== -->
+    <!-- Admin Panel -->
     <div id="page-admin" class="hidden page-section bg-slate-100 min-h-screen">
         <div class="flex h-screen overflow-hidden flex-col md:flex-row">
             <aside class="w-full md:w-64 bg-slate-800 text-white flex flex-col md:h-full overflow-y-auto">
@@ -265,7 +262,6 @@
 
             <main class="flex-1 overflow-y-auto p-4 md:p-8" id="admin-content-area">
 
-                <!-- Products Tab -->
                 <div id="admin-products" class="admin-tab">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <h2 class="text-2xl md:text-3xl font-bold">المنتجات</h2>
@@ -281,7 +277,6 @@
                     </div>
                 </div>
 
-                <!-- Packages Tab -->
                 <div id="admin-packages" class="admin-tab hidden">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <h2 class="text-2xl md:text-3xl font-bold">إدارة الباقات</h2>
@@ -290,11 +285,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" id="admin-packages-list"></div>
                 </div>
 
-                <!-- ============================================================
-                     POS TAB
-                     TASK 2: Added discount type selector (fixed / %)
-                     No PDF preview here — PDF only from Accounting tab.
-                ============================================================ -->
+                <!-- POS -->
                 <div id="admin-invoice" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">إنشاء فاتورة (POS)</h2>
                     <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm">
@@ -305,16 +296,13 @@
                             <i class="fas fa-plus-circle"></i> إضافة منتج للفاتورة
                         </button>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                            <!-- TASK 2: Discount with type selector -->
                             <div>
                                 <label class="font-bold text-sm text-red-500 block mb-1">
                                     <i class="fas fa-tag ml-1"></i>الخصم
                                     <span id="discount-type-label" class="text-xs font-normal text-slate-400 mr-1">(قيمة ثابتة)</span>
                                 </label>
                                 <div class="flex gap-2">
-                                    <select id="inv-discount-type"
-                                            class="border p-2 rounded-lg bg-white font-bold text-sm text-slate-700 flex-shrink-0 cursor-pointer"
-                                            onchange="window.updateDiscountLabel(); window.calcInvoiceTotal()">
+                                    <select id="inv-discount-type" class="border p-2 rounded-lg bg-white font-bold text-sm text-slate-700 flex-shrink-0 cursor-pointer" onchange="window.updateDiscountLabel(); window.calcInvoiceTotal()">
                                         <option value="fixed">ج.م ثابت</option>
                                         <option value="percent">نسبة %</option>
                                     </select>
@@ -352,11 +340,7 @@
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     ACCOUNTING TAB
-                     TASK 1: PDF download per row (only here, not in POS)
-                     TASK 3: View details button per row
-                ============================================================ -->
+                <!-- ACCOUNTING -->
                 <div id="admin-accounting" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">الحسابات والأرباح</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
@@ -394,7 +378,7 @@
                     </div>
                 </div>
 
-                <!-- Settings Tab -->
+                <!-- Settings -->
                 <div id="admin-settings" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">الإعدادات</h2>
                     <div class="bg-white p-6 rounded-xl shadow-sm max-w-lg">
@@ -418,7 +402,9 @@
 </footer>
 <a href="#" id="wa-float" class="whatsapp-float pulse" onclick="window.openWhatsApp('مرحباً روبوتك')"><i class="fab fa-whatsapp"></i></a>
 
-<!-- ===== PRODUCT MODAL ===== -->
+<!-- ===== MODALS ===== -->
+
+<!-- PRODUCT MODAL -->
 <div id="edit-prod-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
     <div class="bg-white p-6 rounded-xl shadow-xl max-w-lg w-full text-right flex flex-col max-h-[95vh]">
         <h3 class="text-xl md:text-2xl font-bold mb-4 border-b pb-2">إضافة/تعديل منتج</h3>
@@ -426,48 +412,33 @@
             <div class="bg-slate-50 p-3 rounded border">
                 <label class="font-bold text-sm block mb-2 text-slate-700">صور المنتج (حتى 3 صور)</label>
                 <div class="grid grid-cols-3 gap-2">
-                    <!-- Slot 0 -->
                     <div class="border rounded p-2 text-center bg-white relative">
-                        <button type="button" id="delete-prod-img-btn-0" onclick="window.clearProductImage(0)"
-                            class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
+                        <button type="button" id="delete-prod-img-btn-0" onclick="window.clearProductImage(0)" class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
                         <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
-                            <img id="modal-prod-img-preview-0" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                            <img id="modal-prod-img-preview-0" class="hidden object-cover w-full h-full">
                             <i id="modal-prod-img-icon-0" class="fas fa-image text-slate-300 text-2xl"></i>
                         </div>
-                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100">
-                            <i class="fas fa-upload"></i> رفع
-                            <input type="file" class="hidden" accept="image/*" onchange="window.uploadImageToImgBB(event, 0)">
-                        </label>
+                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100"><i class="fas fa-upload"></i> رفع<input type="file" class="hidden" accept="image/*" onchange="window.uploadImageToImgBB(event, 0)"></label>
                         <input type="hidden" id="modal-prod-img-url-0">
                         <div id="upload-status-0" class="text-[10px] mt-1 hidden font-bold"></div>
                     </div>
-                    <!-- Slot 1 -->
                     <div class="border rounded p-2 text-center bg-white relative">
-                        <button type="button" id="delete-prod-img-btn-1" onclick="window.clearProductImage(1)"
-                            class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
+                        <button type="button" id="delete-prod-img-btn-1" onclick="window.clearProductImage(1)" class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
                         <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
-                            <img id="modal-prod-img-preview-1" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                            <img id="modal-prod-img-preview-1" class="hidden object-cover w-full h-full">
                             <i id="modal-prod-img-icon-1" class="fas fa-image text-slate-300 text-2xl"></i>
                         </div>
-                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100">
-                            <i class="fas fa-upload"></i> رفع
-                            <input type="file" class="hidden" accept="image/*" onchange="window.uploadImageToImgBB(event, 1)">
-                        </label>
+                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100"><i class="fas fa-upload"></i> رفع<input type="file" class="hidden" accept="image/*" onchange="window.uploadImageToImgBB(event, 1)"></label>
                         <input type="hidden" id="modal-prod-img-url-1">
                         <div id="upload-status-1" class="text-[10px] mt-1 hidden font-bold"></div>
                     </div>
-                    <!-- Slot 2 -->
                     <div class="border rounded p-2 text-center bg-white relative">
-                        <button type="button" id="delete-prod-img-btn-2" onclick="window.clearProductImage(2)"
-                            class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
+                        <button type="button" id="delete-prod-img-btn-2" onclick="window.clearProductImage(2)" class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
                         <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
-                            <img id="modal-prod-img-preview-2" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                            <img id="modal-prod-img-preview-2" class="hidden object-cover w-full h-full">
                             <i id="modal-prod-img-icon-2" class="fas fa-image text-slate-300 text-2xl"></i>
                         </div>
-                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100">
-                            <i class="fas fa-upload"></i> رفع
-                            <input type="file" class="hidden" accept="image/*" onchange="window.uploadImageToImgBB(event, 2)">
-                        </label>
+                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded text-xs font-bold w-full block transition border border-blue-100"><i class="fas fa-upload"></i> رفع<input type="file" class="hidden" accept="image/*" onchange="window.uploadImageToImgBB(event, 2)"></label>
                         <input type="hidden" id="modal-prod-img-url-2">
                         <div id="upload-status-2" class="text-[10px] mt-1 hidden font-bold"></div>
                     </div>
@@ -488,7 +459,7 @@
     </div>
 </div>
 
-<!-- ===== PACKAGE MODAL ===== -->
+<!-- PACKAGE MODAL -->
 <div id="edit-pkg-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-2 md:p-4">
     <div class="bg-white p-4 md:p-6 rounded-xl shadow-xl max-w-2xl w-full text-right flex flex-col max-h-[95vh]">
         <h3 class="text-xl font-bold mb-3 border-b pb-2">بناء الباقة</h3>
@@ -500,14 +471,10 @@
                     <div class="w-24 h-20 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden relative border flex-shrink-0">
                         <img id="modal-pkg-img-preview" class="hidden object-cover w-full h-full" onerror="this.classList.add('hidden')">
                         <i id="modal-pkg-img-icon" class="fas fa-image text-slate-300 text-2xl"></i>
-                        <button type="button" id="delete-pkg-img-btn" onclick="window.clearPkgImage()"
-                            class="hidden absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white text-xs w-5 h-5 items-center justify-center z-10 font-bold rounded-bl">✕</button>
+                        <button type="button" id="delete-pkg-img-btn" onclick="window.clearPkgImage()" class="hidden absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white text-xs w-5 h-5 items-center justify-center z-10 font-bold rounded-bl">✕</button>
                     </div>
                     <div class="flex-1">
-                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-2 rounded text-xs font-bold block text-center transition border border-blue-100 mb-1">
-                            <i class="fas fa-upload"></i> رفع صورة الباقة
-                            <input type="file" class="hidden" accept="image/*" onchange="window.uploadPkgImage(event)">
-                        </label>
+                        <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-2 rounded text-xs font-bold block text-center transition border border-blue-100 mb-1"><i class="fas fa-upload"></i> رفع صورة الباقة<input type="file" class="hidden" accept="image/*" onchange="window.uploadPkgImage(event)"></label>
                         <div id="pkg-upload-status" class="text-[10px] hidden font-bold text-center mt-1"></div>
                     </div>
                 </div>
@@ -550,28 +517,22 @@
     </div>
 </div>
 
-<!-- ===== TASK 3: VIEW INVOICE MODAL (password-protected) ===== -->
+<!-- VIEW INVOICE MODAL -->
 <div id="view-invoice-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col text-right" dir="rtl">
-        <!-- Modal Header -->
         <div class="flex justify-between items-center p-5 border-b bg-slate-50 rounded-t-2xl flex-shrink-0">
             <div>
                 <h3 class="text-xl font-bold text-slate-800">تفاصيل الفاتورة</h3>
                 <p class="text-xs text-slate-400 mt-0.5">جميع البيانات سرية وللاستخدام الداخلي فقط</p>
             </div>
-            <button onclick="document.getElementById('view-invoice-modal').classList.add('hidden')"
-                    class="text-slate-400 hover:text-red-500 text-2xl font-bold w-9 h-9 flex items-center justify-center rounded-lg hover:bg-red-50 transition">✕</button>
+            <button type="button" onclick="document.getElementById('view-invoice-modal').classList.add('hidden')" class="text-slate-400 hover:text-red-500 text-2xl font-bold w-9 h-9 flex items-center justify-center rounded-lg hover:bg-red-50 transition">✕</button>
         </div>
-        <!-- Modal Body (scrollable) -->
         <div id="view-invoice-content" class="overflow-y-auto custom-scroll p-5 flex-1"></div>
-        <!-- Modal Footer -->
         <div class="p-4 border-t bg-slate-50 rounded-b-2xl flex-shrink-0 text-center">
-            <button onclick="document.getElementById('view-invoice-modal').classList.add('hidden')"
-                    class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-8 py-2 rounded-lg transition text-sm">إغلاق</button>
+            <button type="button" onclick="document.getElementById('view-invoice-modal').classList.add('hidden')" class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-8 py-2 rounded-lg transition text-sm">إغلاق</button>
         </div>
     </div>
 </div>
-<!-- END VIEW INVOICE MODAL -->
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -594,58 +555,9 @@
     let currProdId = null;
     let currPkgId  = null;
 
-    // ================================================================
-    // LANGUAGE SYSTEM
-    // ================================================================
     const translations = {
-        ar: {
-            dir:'rtl', lang:'ar', lang_btn:'EN',
-            warranty:"خايف من التكنولوجيا؟ مع ضمان 'روبوتك' نضمن استبدال القطع وصيانتها ضد عيوب الصناعة.",
-            nav_home:'الرئيسية', nav_products:'المنتجات', nav_quiz:'الاستبيان', nav_inspection:'معاينة مجانية',
-            hero_title:'حوّل بيتك لبيت ذكي مع RoboTech بسهولة',
-            hero_sub:'اختار أجهزتك، التوصيل علينا، و',
-            hero_install_free:'التركيب مجاني لفترة محدودة',
-            hero_install_paid:'لدينا فريق تركيب محترف',
-            hero_btn1:'تصفح المنتجات', hero_btn2:'رشحلي الباقة المناسبة',
-            saving_title:'روبوتك بتوفرلك فلوسك!',
-            saving_desc:'أنظمتنا الذكية بتوفرلك لحد <span class="font-bold text-green-500 text-xl md:text-2xl">30%</span> من فاتورة الكهرباء شهرياً بفضل ميزة الفصل الآلي والتحكم الذكي.',
-            packages_heading:'عروض الباقات المتكاملة',
-            products_heading:'جميع المنتجات',
-            search_placeholder:'ابحث عن منتج...',
-            footer_text:'&copy; 2026 روبوتك. جميع الحقوق محفوظة.',
-            btn_order_whatsapp:'اطلب عبر الواتساب',
-            btn_order_pkg:'طلب الباقة',
-            pkg_contents_label:'محتويات الباقة:',
-            pkg_more:'منتجات أخرى...',
-            pkg_save_label:'وفر',
-            currency:'ج.م',
-            wa_product_prefix:'أريد طلب منتج: ',
-            wa_pkg_prefix:'أريد الاستفسار عن باقة: ',
-        },
-        en: {
-            dir:'ltr', lang:'en', lang_btn:'AR',
-            warranty:"Afraid of tech? RoboTech's warranty guarantees parts replacement & maintenance against manufacturing defects.",
-            nav_home:'Home', nav_products:'Products', nav_quiz:'Find My Package', nav_inspection:'Free Inspection',
-            hero_title:'Transform Your Home into a Smart Home with RoboTech',
-            hero_sub:'Choose your devices, delivery on us, and ',
-            hero_install_free:'Free Installation for a Limited Time',
-            hero_install_paid:'Professional Installation Team Available',
-            hero_btn1:'Browse Products', hero_btn2:'Find My Perfect Package',
-            saving_title:'RoboTech Saves You Money!',
-            saving_desc:'Our smart systems save you up to <span class="font-bold text-green-500 text-xl md:text-2xl">30%</span> on your electricity bill monthly thanks to automatic shutoff and smart control.',
-            packages_heading:'Complete Smart Home Packages',
-            products_heading:'All Products',
-            search_placeholder:'Search for a product...',
-            footer_text:'&copy; 2026 RoboTech. All Rights Reserved.',
-            btn_order_whatsapp:'Order via WhatsApp',
-            btn_order_pkg:'Order Package',
-            pkg_contents_label:'Package Contents:',
-            pkg_more:'more items...',
-            pkg_save_label:'Save',
-            currency:'EGP',
-            wa_product_prefix:'I want to order: ',
-            wa_pkg_prefix:'I want to inquire about package: ',
-        }
+        ar: { dir:'rtl', lang:'ar', lang_btn:'EN', warranty:"خايف من التكنولوجيا؟ مع ضمان 'روبوتك' نضمن استبدال القطع وصيانتها ضد عيوب الصناعة.", nav_home:'الرئيسية', nav_products:'المنتجات', nav_quiz:'الاستبيان', nav_inspection:'معاينة مجانية', hero_title:'حوّل بيتك لبيت ذكي مع RoboTech بسهولة', hero_sub:'اختار أجهزتك، التوصيل علينا، و', hero_install_free:'التركيب مجاني لفترة محدودة', hero_install_paid:'لدينا فريق تركيب محترف', hero_btn1:'تصفح المنتجات', hero_btn2:'رشحلي الباقة المناسبة', saving_title:'روبوتك بتوفرلك فلوسك!', saving_desc:'أنظمتنا الذكية بتوفرلك لحد <span class="font-bold text-green-500 text-xl md:text-2xl">30%</span> من فاتورة الكهرباء شهرياً بفضل ميزة الفصل الآلي والتحكم الذكي.', packages_heading:'عروض الباقات المتكاملة', products_heading:'جميع المنتجات', search_placeholder:'ابحث عن منتج...', footer_text:'&copy; 2026 روبوتك. جميع الحقوق محفوظة.', btn_order_whatsapp:'اطلب عبر الواتساب', btn_order_pkg:'طلب الباقة', pkg_contents_label:'محتويات الباقة:', pkg_more:'منتجات أخرى...', pkg_save_label:'وفر', currency:'ج.م', wa_product_prefix:'أريد طلب منتج: ', wa_pkg_prefix:'أريد الاستفسار عن باقة: ' },
+        en: { dir:'ltr', lang:'en', lang_btn:'AR', warranty:"Afraid of tech? RoboTech's warranty guarantees parts replacement & maintenance against manufacturing defects.", nav_home:'Home', nav_products:'Products', nav_quiz:'Find My Package', nav_inspection:'Free Inspection', hero_title:'Transform Your Home into a Smart Home with RoboTech', hero_sub:'Choose your devices, delivery on us, and ', hero_install_free:'Free Installation for a Limited Time', hero_install_paid:'Professional Installation Team Available', hero_btn1:'Browse Products', hero_btn2:'Find My Perfect Package', saving_title:'RoboTech Saves You Money!', saving_desc:'Our smart systems save you up to <span class="font-bold text-green-500 text-xl md:text-2xl">30%</span> on your electricity bill monthly thanks to automatic shutoff and smart control.', packages_heading:'Complete Smart Home Packages', products_heading:'All Products', search_placeholder:'Search for a product...', footer_text:'&copy; 2026 RoboTech. All Rights Reserved.', btn_order_whatsapp:'Order via WhatsApp', btn_order_pkg:'Order Package', pkg_contents_label:'Package Contents:', pkg_more:'more items...', pkg_save_label:'Save', currency:'EGP', wa_product_prefix:'I want to order: ', wa_pkg_prefix:'I want to inquire about package: ' }
     };
     let currentLang = 'ar';
 
@@ -668,7 +580,7 @@
         const heroSubEl = document.getElementById('hero-subtitle');
         if (heroSubEl) {
             const isFree = window.siteData?.settings?.freeInstall ?? true;
-            heroSubEl.innerHTML = t.hero_sub + `<span id="hero-installation-text" class="text-amber-400 font-bold">${isFree ? t.hero_install_free : t.hero_install_paid}</span>.`;
+            heroSubEl.innerHTML = t.hero_sub + `<span id="hero-installation-text" class="text-amber-400 font-bold ml-1">${isFree ? t.hero_install_free : t.hero_install_paid}</span>.`;
         }
         const srchEl = document.getElementById('product-search');
         if (srchEl) srchEl.placeholder = t.search_placeholder;
@@ -676,10 +588,7 @@
         window.renderFrontendPackages();
     };
 
-    // ================================================================
-    // CORE
-    // ================================================================
-    window.showPage    = id => { document.querySelectorAll('.page-section').forEach(d => d.classList.add('hidden')); document.getElementById(id)?.classList.remove('hidden'); window.scrollTo(0,0); };
+    window.showPage = id => { document.querySelectorAll('.page-section').forEach(d => d.classList.add('hidden')); document.getElementById(id)?.classList.remove('hidden'); window.scrollTo(0,0); };
     window.openWhatsApp = msg => window.open(`https://wa.me/${window.siteData.settings.whatsappNumber}?text=${encodeURIComponent(msg)}`);
     window.showAdminLogin = () => window.showPage('page-admin-login');
     window.loginAdmin  = () => { signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).then(()=>window.showPage('page-admin')).catch(()=>document.getElementById('login-error').classList.remove('hidden')); };
@@ -688,47 +597,54 @@
 
     window.fetchData = async () => {
         try {
-            const setDocRef = await getDoc(doc(db, "settings", "general"));
+            const [setDocRef, prodSnap, pkgSnap] = await Promise.all([
+                getDoc(doc(db, "settings", "general")),
+                getDocs(collection(db, "products")),
+                getDocs(collection(db, "packages"))
+            ]);
+
             if (setDocRef.exists()) {
                 window.siteData.settings = setDocRef.data();
                 document.getElementById('setting-phone')?.setAttribute('value', window.siteData.settings.whatsappNumber || "");
                 const fiEl = document.getElementById('setting-free-install'); if (fiEl) fiEl.checked = window.siteData.settings.freeInstall;
                 const feEl = document.getElementById('setting-install-fee'); if (feEl) feEl.value = window.siteData.settings.installFee || 500;
             }
-            const prodSnap = await getDocs(collection(db, "products"));
+
             window.siteData.products = [];
             prodSnap.forEach(d => window.siteData.products.push({ id: d.id, ...d.data() }));
 
-            const pkgSnap = await getDocs(collection(db, "packages"));
             window.siteData.packages = [];
             pkgSnap.forEach(d => window.siteData.packages.push({ id: d.id, ...d.data() }));
 
-            const invSnap = await getDocs(collection(db, "invoices"));
-            window.siteData.invoices = []; let tS=0, tC=0, tE=0;
-            invSnap.forEach(d => { let v=d.data(); v.id=d.id; window.siteData.invoices.push(v); tS+=v.total||0; tC+=v.cost||0; tE+=v.expenses||0; });
-
             window.renderAdminProducts();
             window.renderAdminPackages();
-            window.renderAccounting(tS, tC, tE);
             window.applyLanguage();
+
+            setTimeout(async () => {
+                try {
+                    const invSnap = await getDocs(collection(db, "invoices"));
+                    window.siteData.invoices = []; let tS=0, tC=0, tE=0;
+                    invSnap.forEach(d => { let v=d.data(); v.id=d.id; window.siteData.invoices.push(v); tS+=v.total||0; tC+=v.cost||0; tE+=v.expenses||0; });
+                    window.renderAccounting(tS, tC, tE);
+                } catch(e){ console.error("Invoices error", e); }
+            }, 500);
         } catch(e) { console.error("fetchData error:", e); }
     };
 
-    // ================================================================
-    // FRONTEND — Products
-    // ================================================================
     window.renderFrontendProducts = () => {
         const t = translations[currentLang];
         const cont = document.getElementById('products-container'); if (!cont) return; cont.innerHTML = '';
         const visProds = (Array.isArray(window.siteData.products) ? window.siteData.products : []).filter(p => !p.isHidden);
         if (visProds.length === 0) { cont.innerHTML = '<p class="col-span-full text-center py-10 text-slate-400">لا توجد منتجات حالياً.</p>'; return; }
+        let html = '';
         visProds.forEach(p => {
             const displayUrl = (p.images && p.images.length > 0) ? p.images[0] : (p.imgUrl || null);
             const img = displayUrl
-                ? `<img src="${displayUrl}" class="product-img" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Error';">`
+                ? `<img src="${displayUrl}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Error';">`
                 : `<div class="product-img-placeholder"><i class="fas fa-box"></i></div>`;
-            cont.innerHTML += `<div onclick="window.showProductDetails('${p.id}')" class="cursor-pointer bg-white rounded-xl shadow-sm border border-slate-100 flex flex-col hover:shadow-md transition"><div class="h-48 border-b overflow-hidden rounded-t-xl">${img}</div><div class="p-4 flex-1 flex flex-col"><h3 class="font-bold text-slate-800 text-sm md:text-base leading-tight">${p.name}</h3><div class="text-blue-600 font-bold mt-auto pt-3 text-lg">${p.price} ${t.currency}</div></div></div>`;
+            html += `<div onclick="window.showProductDetails('${p.id}')" class="cursor-pointer bg-white rounded-xl shadow-sm border border-slate-100 flex flex-col hover:shadow-md transition"><div class="h-48 border-b overflow-hidden rounded-t-xl">${img}</div><div class="p-4 flex-1 flex flex-col"><h3 class="font-bold text-slate-800 text-sm md:text-base leading-tight">${p.name}</h3><div class="text-blue-600 font-bold mt-auto pt-3 text-lg">${p.price} ${t.currency}</div></div></div>`;
         });
+        cont.innerHTML = html;
     };
 
     window.filterProducts = () => {
@@ -788,6 +704,7 @@
         const psEl = document.getElementById('packages-section');
         if (visPkgs.length === 0) { if (psEl) psEl.classList.add('hidden'); return; }
         if (psEl) psEl.classList.remove('hidden');
+        let html = '';
         visPkgs.forEach(pkg => {
             const pData = window.getPackagePrices(pkg);
             const saved = pData.originalPrice - pData.finalPrice;
@@ -798,7 +715,7 @@
             let itemsHtml = ''; const itemsArr = Object.entries(pData.counts);
             for (let i=0; i<Math.min(3,itemsArr.length); i++) itemsHtml += `<div class="text-xs text-slate-600 mb-1 truncate"><i class="fas fa-check text-green-500 ml-1"></i> ${itemsArr[i][0]} <span class="font-bold text-blue-500">(x${itemsArr[i][1]})</span></div>`;
             if (itemsArr.length > 3) itemsHtml += `<div class="text-xs text-blue-500 font-bold mt-2">+ ${itemsArr.length - 3} ${t.pkg_more}</div>`;
-            cont.innerHTML += `
+            html += `
                 <div class="bg-white rounded-xl shadow-sm border border-blue-100 flex flex-col relative transform hover:-translate-y-1 transition p-5 hover:shadow-md">
                     ${discountHtml}${pkgImgHtml}
                     <div class="text-center mb-3 ${pkg.imgUrl ? '' : 'mt-2'}">${iconHtml}<h3 class="font-bold text-lg text-slate-800">${pkg.name}</h3><p class="text-xs text-slate-500 mt-1">${pkg.desc || ''}</p></div>
@@ -807,6 +724,7 @@
                     <button type="button" onclick="window.openWhatsApp('${t.wa_pkg_prefix}${pkg.name}')" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 rounded-lg transition text-sm"><i class="fab fa-whatsapp"></i> ${t.btn_order_pkg}</button></div>
                 </div>`;
         });
+        cont.innerHTML = html;
     };
 
     window.switchAdminTab = t => {
@@ -814,9 +732,6 @@
         document.getElementById(`admin-${t}`)?.classList.remove('hidden');
     };
 
-    // ================================================================
-    // ADMIN PRODUCTS
-    // ================================================================
     window.renderAdminProducts = () => {
         const tb = document.getElementById('admin-products-table'); if (!tb) return; tb.innerHTML = '';
         (Array.isArray(window.siteData.products) ? window.siteData.products : []).forEach(p => {
@@ -920,9 +835,6 @@
         } catch(e) { console.error(e); alert("حدث خطأ أثناء الحفظ."); }
     };
 
-    // ================================================================
-    // ADMIN PACKAGES
-    // ================================================================
     window.renderAdminPackages = () => {
         const c = document.getElementById('admin-packages-list'); if (!c) return; c.innerHTML='';
         (Array.isArray(window.siteData.packages)?window.siteData.packages:[]).forEach(p => {
@@ -1066,11 +978,9 @@
 
     // ================================================================
     // POS / INVOICE
-    // TASK 2: updateDiscountLabel + updated calcInvoiceTotal
     // ================================================================
     let invRows = [];
 
-    // TASK 2: Updates the label hint based on selected discount type
     window.updateDiscountLabel = () => {
         const type = document.getElementById('inv-discount-type')?.value;
         const lbl  = document.getElementById('discount-type-label');
@@ -1096,7 +1006,6 @@
         window.calcInvoiceTotal();
     };
 
-    // TASK 2: Updated to handle fixed-amount AND percentage discounts
     window.calcInvoiceTotal = () => {
         try {
             let subtotal = 0, c = 0;
@@ -1112,33 +1021,26 @@
                 }
             });
 
-            // Compute actual discount amount from input + type
             const discVal  = parseFloat(document.getElementById('inv-discount')?.value || 0) || 0;
             const discType = document.getElementById('inv-discount-type')?.value || 'fixed';
             const discountAmount = discType === 'percent'
                 ? Math.round((subtotal * discVal / 100) * 100) / 100
                 : discVal;
 
-            // Store computed amount for saveInvoiceToFirestore to use
             window._computedDiscountAmount = discountAmount;
-
             const finalTotal = Math.max(subtotal - discountAmount, 0);
 
-            // Update subtotal display
             const stEl = document.getElementById('inv-subtotal-display');
             if (stEl) stEl.innerText = subtotal;
 
-            // Show/hide discount line
             const discDispRow = document.getElementById('inv-discount-display');
             const discDispAmt = document.getElementById('inv-discount-amount-display');
             if (discDispRow) discDispRow.style.display = discountAmount > 0 ? 'block' : 'none';
             if (discDispAmt) discDispAmt.innerText = discountAmount;
 
-            // Total
             const itEl = document.getElementById('inv-total');
             if (itEl) itEl.innerText = finalTotal;
 
-            // Profit
             const profit = finalTotal - c - expenses;
             const pEl = document.getElementById('inv-profit');
             if (pEl) {
@@ -1148,9 +1050,6 @@
         } catch(e) { console.error(e); }
     };
 
-    // ================================================================
-    // SAVE INVOICE — uses _computedDiscountAmount for accuracy
-    // ================================================================
     window.saveInvoiceToFirestore = async () => {
         try {
             const btn = document.getElementById('btn-save-invoice');
@@ -1161,7 +1060,6 @@
             const pEl  = document.getElementById('inv-profit');
             const itEl = document.getElementById('inv-total');
 
-            // Use the pre-computed discount amount (handles both fixed & %)
             const discount  = window._computedDiscountAmount || 0;
             const expenses  = parseFloat(eEl ? eEl.value : 0) || 0;
             const total     = parseFloat(itEl ? itEl.innerText : 0);
@@ -1193,7 +1091,7 @@
             const profit = parseFloat(pEl?.dataset?.realProfit ?? 0) || 0;
 
             await addDoc(collection(db, "invoices"), {
-                client:    (nEl ? nEl.value : 'عميل نقدي') || 'عميل نقدي',
+                client:    (nEl?nEl.value:'عميل نقدي') || 'عميل نقدي',
                 items,
                 subtotal,
                 discount,
@@ -1206,7 +1104,6 @@
 
             alert("✅ تم حفظ الفاتورة بنجاح!");
 
-            // Reset POS form
             const icEl = document.getElementById('invoice-items'); if (icEl) icEl.innerHTML='';
             if (nEl)  nEl.value  = '';
             const dEl = document.getElementById('inv-discount'); if (dEl) dEl.value = 0;
@@ -1256,7 +1153,6 @@
         }
     };
 
-    // renderAccounting — TASK 1: PDF button here only; TASK 3: view button added
     window.renderAccounting = (ts, tc, te) => {
         const sEl=document.getElementById('acc-sales'); if(sEl) sEl.innerText=ts+" ج.م";
         const ec=document.getElementById('acc-cost');
@@ -1276,14 +1172,12 @@
                     <td class="p-3 text-green-600 font-bold blurred-text"
                         data-real-profit="${i.profit||(i.total-i.expenses)}">${pStr}</td>
                     <td class="p-3 text-center whitespace-nowrap">
-                        <!-- TASK 3: View details button -->
                         <button type="button"
                             onclick="window.viewInvoiceDetails('${i.id}')"
                             title="عرض تفاصيل الفاتورة"
                             class="inline-flex items-center gap-1 bg-slate-50 text-slate-600 hover:bg-slate-100 font-bold text-xs px-3 py-2 rounded-lg border border-slate-200 transition ml-1">
                             <i class="fas fa-eye"></i>
                         </button>
-                        <!-- TASK 1: PDF button stays here only -->
                         <button type="button"
                             id="pdf-dl-btn-${i.id}"
                             onclick="window.downloadPastInvoicePDF('${i.id}')"
@@ -1302,11 +1196,6 @@
         });
     };
 
-    // ================================================================
-    // TASK 1: FIXED PDF GENERATION
-    // Key fix: use cssText override to remove z-index:-999 and
-    // position:fixed, then wait for DOM repaint + fonts before capture.
-    // ================================================================
     window.downloadPastInvoicePDF = async (invoiceId) => {
         const btn = document.getElementById(`pdf-dl-btn-${invoiceId}`);
         const originalBtnHTML = btn ? btn.innerHTML : '';
@@ -1337,16 +1226,22 @@
                         const rowBg = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
                         tbody.innerHTML += `
                             <tr style="background-color:${rowBg};">
-                                <td style="padding:10px 10px;border-bottom:1px solid #f1f5f9;text-align:center;color:#94a3b8;font-size:12px;">${idx+1}</td>
-                                <td style="padding:10px 12px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#1e293b;">${item.name||''}</td>
-                                <td style="padding:10px 10px;border-bottom:1px solid #f1f5f9;text-align:center;color:#475569;">${item.qty??1}</td>
-                                <td style="padding:10px 10px;border-bottom:1px solid #f1f5f9;text-align:center;color:#475569;">${item.price??0} ج.م</td>
-                                <td style="padding:10px 12px;border-bottom:1px solid #f1f5f9;text-align:left;font-weight:700;color:#2563eb;">${lineTotal} ج.م</td>
+                                <td style="padding:10px 10px; border-bottom:1px solid #f1f5f9; text-align:center; color:#94a3b8; font-size:12px;">${idx+1}</td>
+                                <td style="padding:10px 12px; border-bottom:1px solid #f1f5f9; font-weight:600; color:#1e293b;">${item.name || ''}</td>
+                                <td style="padding:10px 10px; border-bottom:1px solid #f1f5f9; text-align:center; color:#475569;">${item.qty ?? 1}</td>
+                                <td style="padding:10px 10px; border-bottom:1px solid #f1f5f9; text-align:center; color:#475569;">${item.price ?? 0} ج.م</td>
+                                <td style="padding:10px 12px; border-bottom:1px solid #f1f5f9; text-align:left; font-weight:700; color:#2563eb;">${lineTotal} ج.م</td>
                             </tr>`;
                     });
                     setT('pdf-inv-subtotal', inv.subtotal ?? subtotalCalc);
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="5" style="padding:18px 12px;text-align:center;color:#94a3b8;font-style:italic;font-size:13px;">تفاصيل البنود غير متوفرة (فاتورة قديمة)</td></tr>`;
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5"
+                                style="padding:18px 12px; text-align:center; color:#94a3b8; font-style:italic; font-size:13px;">
+                                تفاصيل البنود غير متوفرة (فاتورة قديمة)
+                            </td>
+                        </tr>`;
                     setT('pdf-inv-subtotal', inv.subtotal ?? inv.total ?? 0);
                 }
             }
@@ -1357,42 +1252,24 @@
             setT('pdf-inv-discount', discount);
             setT('pdf-inv-total', inv.total ?? 0);
 
-            // *** CORE FIX: override ALL inline styles via cssText ***
-            // This removes the problematic z-index:-999 and position:fixed
-            // that prevented html2canvas from rendering the element.
-            template.style.cssText = [
-                'display: block',
-                'visibility: visible',
-                'position: absolute',
-                'left: -9999px',
-                'top: 0',
-                'width: 794px',
-                'padding: 50px 58px',
-                'box-sizing: border-box',
-                'background: #ffffff',
-                'color: #1e293b',
-                'font-family: Cairo, Arial, sans-serif',
-                'line-height: 1.65',
-                'z-index: 99999'
-            ].join('; ');
+            template.style.display   = 'block';
+            template.style.position  = 'fixed';
+            template.style.left      = '-9999px';
+            template.style.top       = '0';
 
-            // Wait for fonts to load and browser to repaint
             await document.fonts.ready;
-            await new Promise(r => setTimeout(r, 300));
 
             const clientName = (inv.client || 'عميل').replace(/[^\w\u0600-\u06FF]/g, '_');
             const opt = {
-                margin:      [12, 10, 12, 10],
-                filename:    `فاتورة_روبوتك_${clientName}.pdf`,
-                image:       { type: 'jpeg', quality: 0.98 },
+                margin:     [12, 10, 12, 10],
+                filename:   `فاتورة_روبوتك_${clientName}.pdf`,
+                image:      { type: 'jpeg', quality: 0.97 },
                 html2canvas: {
-                    scale:           2,
-                    useCORS:         true,
-                    allowTaint:      true,
+                    scale:         2,
+                    useCORS:       true,
+                    allowTaint:    false,
                     letterRendering: true,
-                    logging:         false,
-                    backgroundColor: '#ffffff',
-                    windowWidth:     900
+                    windowWidth:   900
                 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
@@ -1403,20 +1280,14 @@
             console.error("downloadPastInvoicePDF error:", e);
             alert("حدث خطأ أثناء توليد الـ PDF. يرجى المحاولة مرة أخرى.");
         } finally {
-            // Always restore template to hidden state
-            if (template) {
-                template.style.cssText = 'display: none; position: absolute; left: -9999px; top: 0; width: 794px;';
-            }
+            if (template) template.style.display = 'none';
             if (btn) { btn.innerHTML = originalBtnHTML; btn.disabled = false; }
         }
     };
 
-    // ================================================================
-    // TASK 3: VIEW INVOICE DETAILS MODAL (password: 124578)
-    // ================================================================
     window.viewInvoiceDetails = (invoiceId) => {
         const pass = prompt("🔒 أدخل كلمة السر لعرض تفاصيل الفاتورة:");
-        if (pass === null) return; // user cancelled
+        if (pass === null) return; 
         if (pass !== "124578") {
             alert("⛔ كلمة السر خاطئة!");
             return;
@@ -1429,7 +1300,6 @@
         const content = document.getElementById('view-invoice-content');
         if (!modal || !content) return;
 
-        // Build items table HTML
         let itemsHtml = '';
         if (Array.isArray(inv.items) && inv.items.length > 0) {
             const rows = inv.items.map((item, i) => `
@@ -1464,7 +1334,6 @@
         const profitColor = netProfit >= 0 ? 'text-green-600' : 'text-red-500';
 
         content.innerHTML = `
-            <!-- Client & Date -->
             <div class="grid grid-cols-2 gap-3 mb-5 bg-blue-50 p-4 rounded-xl border border-blue-100">
                 <div>
                     <p class="text-xs text-slate-400 mb-0.5">اسم العميل</p>
@@ -1476,11 +1345,9 @@
                 </div>
             </div>
 
-            <!-- Items -->
             <p class="font-bold text-sm text-slate-600 mb-2"><i class="fas fa-list-ul ml-1 text-blue-500"></i>المنتجات المباعة</p>
             ${itemsHtml}
 
-            <!-- Totals summary -->
             <div class="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
                 <div class="divide-y divide-slate-200">
                     <div class="flex justify-between items-center px-4 py-3">
@@ -1515,9 +1382,6 @@
         modal.classList.remove('hidden');
     };
 
-    // ================================================================
-    // SETTINGS
-    // ================================================================
     window.saveSettingsFirestore = async () => {
         try {
             const pEl=document.getElementById('setting-phone');
@@ -1528,9 +1392,6 @@
         } catch(e){console.error(e);}
     };
 
-    // ================================================================
-    // QUIZ
-    // ================================================================
     const quizQ = [
         {id:"q1",text:"1. إيه أكتر حاجة بتدور عليها لبيتك؟",opts:[{l:"الراحة والرفاهية",v:"راحة"},{l:"الأمان والمراقبة",v:"أمان"},{l:"توفير الكهرباء",v:"توفير"},{l:"نظام متكامل",v:"متكامل"}]},
         {id:"q2",text:"2. الميزانية المبدئية؟",opts:[{l:"اقتصادية",v:"اقتصادية"},{l:"متوسطة",v:"متوسطة"},{l:"مفتوحة (VIP)",v:"مفتوحة"}]},
