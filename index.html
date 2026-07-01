@@ -552,7 +552,7 @@
             { id: "tMtTxaXlrWki0vnOIhRe", category: "sensors", costPrice: 1100, desc: "احمِ منزلك من الأضرار الناتجة عن تسرب المياه أو تغير مستوى المياه مع مستشعر ذكي يعمل على المراقبة المستمرة وإرسال تنبيهات فورية.", images: ["https://i.ibb.co/8gky9Wyx/Whats-App-Image-2026-06-27-at-12-30-15-PM-19.jpg", "https://i.ibb.co/k66rSq4v/Whats-App-Image-2026-06-27-at-12-30-11-PM-7.jpg"], imgUrl: "https://i.ibb.co/8gky9Wyx/Whats-App-Image-2026-06-27-at-12-30-15-PM-19.jpg", name: "درع الحماية المائي الذكي", price: 6600 },
             { id: "ufaQgffzRsiacIHeeGfi", category: "cameras", costPrice: 1850, desc: "راقب منزلك أو مكتبك بكل وضوح واطمئنان من أي مكان في العالم مع كاميرا ذكية تجمع بين جودة الصورة العالية، والتتبع الذكي، والتواصل المباشر.", images: ["https://i.ibb.co/T9nw7m2/Whats-App-Image-2026-06-27-at-12-30-13-PM-6.jpg", "https://i.ibb.co/qYk2f8m7/Whats-App-Image-2026-06-27-at-12-30-09-PM.jpg"], imgUrl: "https://i.ibb.co/T9nw7m2/Whats-App-Image-2026-06-27-at-12-30-13-PM-6.jpg", name: "العين الذكية للمراقبة", price: 11100 },
             { id: "uy6h6a9yD7Ex5FmTz4hT", category: "switches", costPrice: 1800, desc: "أضف أجواءً مميزة إلى أي مساحة مع شريط إضاءة ذكي يمنحك حرية كاملة في تخصيص الألوان والتأثيرات بما يناسب كل مناسبة.", images: ["https://i.ibb.co/4R7C2k29/Whats-App-Image-2026-06-27-at-12-30-15-PM-16.jpg", "https://i.ibb.co/ks8RddB6/Whats-App-Image-2026-06-27-at-12-30-13-PM-12.jpg"], imgUrl: "https://i.ibb.co/4R7C2k29/Whats-App-Image-2026-06-27-at-12-30-15-PM-16.jpg", name: "شريط الإضاءة الذكي متعدد الألوان (5 متر)", price: 10800 },
-            { id: "zMy3ZxlaKQ9JDrZVERFf", category: "other", costPrice: 1700, desc: "تخلص من تعدد أجهزة التحكم واستمتع بإدارة جميع أجهزتك المنزلية من مكان واحد. يتيح لك هذا المركز الذكي التحكم في مختلف الأجهزة عبر الهاتف.", images: [], imgUrl: "", name: "جهاز تحكم ذكي شامل", price: 3400 }
+            { id: "zMy3ZxlaKQ9JDrZVERFf", category: "other", costPrice: 1700, desc: "تخلص من تعدد أجهزة التحكم واستمتع بإدارة جميع أجهزتك المنزلية من مكان واحد. يتيح لك هذا المركز الذكي التحكم في مختلف الأجهزة عبر الهاتف.", images: ["https://images.unsplash.com/photo-1558089687-f282ffcbc126?auto=format&fit=crop&w=600&q=80"], imgUrl: "https://images.unsplash.com/photo-1558089687-f282ffcbc126?auto=format&fit=crop&w=600&q=80", name: "جهاز تحكم ذكي شامل", price: 3400 }
         ],
         packages: [
             {
@@ -745,12 +745,12 @@
     };
 
     window.saveDataLocal = () => {
-        localStorage.setItem('robotechData_v7', JSON.stringify(window.siteData));
+        localStorage.setItem('robotechData_v8', JSON.stringify(window.siteData));
     };
 
     window.fetchData = () => {
         try {
-            const stored = localStorage.getItem('robotechData_v7');
+            const stored = localStorage.getItem('robotechData_v8');
             if (stored) {
                 window.siteData = JSON.parse(stored);
             } else {
