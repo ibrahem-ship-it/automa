@@ -22,35 +22,23 @@
         .product-img { object-fit: cover; width: 100%; height: 100%; }
         .product-img-placeholder { display: flex; align-items: center; justify-content: center; background-color: #f1f5f9; color: #93c5fd; font-size: 4rem; width: 100%; height: 100%; }
         .blurred-text { filter: blur(5px); cursor: pointer; user-select: none; }
-        /* Suppress browser print — PDFs are generated programmatically */
         @media print { body { display: none; } }
     </style>
 </head>
 <body class="text-slate-800">
 
-<!-- =====================================================================
-     HIDDEN PDF INVOICE TEMPLATE
-     Uses 100% inline CSS + table-based layout so html2canvas renders
-     it accurately regardless of Tailwind purging or cascade issues.
-     Positioned off-screen; toggled to display:block temporarily for PDF.
-====================================================================== -->
+<!-- PDF INVOICE TEMPLATE -->
 <div id="pdf-invoice-template" dir="rtl"
      style="display:none; position:fixed; left:-9999px; top:0; z-index:-999;
             width:794px; padding:50px 58px; box-sizing:border-box;
-            background:#ffffff; color:#1e293b;
-            font-family:'Cairo',Arial,sans-serif; line-height:1.65;">
-
-    <!-- Company Header -->
+            background:#ffffff; color:#1e293b; font-family:'Cairo',Arial,sans-serif; line-height:1.65;">
     <div style="text-align:center; padding-bottom:22px; margin-bottom:28px; border-bottom:3px solid #2563eb;">
         <div style="font-size:36px; font-weight:700; color:#2563eb; margin:0 0 5px 0; letter-spacing:-0.5px;">
             RoboTech <span style="font-size:24px; color:#334155; font-weight:600;">روبوتك</span>
         </div>
         <div style="font-size:13px; color:#64748b; font-weight:400;">للأنظمة الذكية والتشطيبات</div>
     </div>
-
-    <!-- Invoice Meta: Client | Number | Date -->
-    <table cellpadding="0" cellspacing="0"
-           style="width:100%; border-collapse:collapse; font-size:14px; margin-bottom:22px;">
+    <table cellpadding="0" cellspacing="0" style="width:100%; border-collapse:collapse; font-size:14px; margin-bottom:22px;">
         <tr>
             <td style="padding:5px 0; width:42%; vertical-align:top;">
                 <span style="color:#64748b; font-weight:600;">اسم العميل: </span>
@@ -66,13 +54,8 @@
             </td>
         </tr>
     </table>
-
-    <!-- Thin divider -->
     <div style="height:1px; background:#e2e8f0; margin-bottom:22px;"></div>
-
-    <!-- Items Table -->
-    <table cellpadding="0" cellspacing="0"
-           style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:30px;">
+    <table cellpadding="0" cellspacing="0" style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:30px;">
         <thead>
             <tr style="background-color:#f1f5f9;">
                 <th style="padding:11px 10px; text-align:center; border-top:2px solid #cbd5e1; border-bottom:2px solid #cbd5e1; font-weight:700; color:#334155; width:6%;">#</th>
@@ -84,10 +67,7 @@
         </thead>
         <tbody id="pdf-inv-items"></tbody>
     </table>
-
-    <!-- Totals Block (right-aligned table) -->
-    <table cellpadding="0" cellspacing="0"
-           style="width:310px; border-collapse:collapse; font-size:14px; margin-right:0; margin-left:auto;">
+    <table cellpadding="0" cellspacing="0" style="width:310px; border-collapse:collapse; font-size:14px; margin-right:0; margin-left:auto;">
         <tr>
             <td style="padding:9px 8px; border-bottom:1px solid #e2e8f0; color:#475569; font-weight:600;">الإجمالي الفرعي:</td>
             <td style="padding:9px 8px; border-bottom:1px solid #e2e8f0; text-align:left; font-weight:700; color:#1e293b;">
@@ -109,23 +89,16 @@
             </td>
         </tr>
     </table>
-
-    <!-- Footer -->
     <div style="margin-top:58px; padding-top:14px; border-top:1px solid #e2e8f0; text-align:center; font-size:12px; color:#94a3b8; line-height:2;">
-        نضمن استبدال القطع وصيانتها ضد عيوب الصناعة
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        شكراً لثقتكم في <strong style="color:#2563eb;">RoboTech</strong>
+        نضمن استبدال القطع وصيانتها ضد عيوب الصناعة &nbsp;&nbsp;|&nbsp;&nbsp; شكراً لثقتكم في <strong style="color:#2563eb;">RoboTech</strong>
     </div>
 </div>
-<!-- END PDF TEMPLATE -->
 
-<!-- Warranty Banner -->
 <div class="bg-amber-500 text-white text-center py-2 text-xs md:text-sm font-semibold flex justify-center items-center gap-2 px-4" id="warranty-banner">
     <i class="fas fa-shield-alt text-lg"></i>
     <span id="warranty-text">خايف من التكنولوجيا؟ مع ضمان 'روبوتك' نضمن استبدال القطع وصيانتها ضد عيوب الصناعة.</span>
 </div>
 
-<!-- Header -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center flex-wrap">
         <div class="text-xl md:text-2xl font-bold text-blue-600 flex items-center gap-2 cursor-pointer mb-2 md:mb-0" onclick="window.showPage('page-home')">
@@ -149,7 +122,6 @@
 </header>
 
 <main id="main-content">
-    <!-- ===== HOME PAGE ===== -->
     <div id="page-home" class="page-section">
         <section class="hero-bg text-white py-20 md:py-32 text-center px-4 relative flex flex-col justify-center items-center min-h-[60vh]">
             <div class="max-w-3xl mx-auto relative z-10 w-full">
@@ -174,7 +146,6 @@
             </div>
         </section>
 
-        <!-- Packages -->
         <section id="packages-section" class="py-16 bg-white border-t hidden">
             <div class="container mx-auto px-4">
                 <h2 id="packages-heading" class="text-3xl font-bold text-slate-800 mb-10 text-center">عروض الباقات المتكاملة</h2>
@@ -182,7 +153,6 @@
             </div>
         </section>
 
-        <!-- Products -->
         <section id="products-section" class="py-16 bg-slate-50 border-t">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
@@ -199,7 +169,7 @@
         </section>
     </div>
 
-    <!-- ===== PRODUCT DETAILS ===== -->
+    <!-- PRODUCT DETAILS -->
     <div id="page-product-details" class="hidden page-section py-16 bg-white min-h-screen">
         <div class="container mx-auto px-4">
             <button type="button" onclick="window.showPage('page-home'); setTimeout(()=> document.getElementById('products-section').scrollIntoView(), 100);" class="mb-6 text-blue-600 font-semibold flex items-center gap-2"><i class="fas fa-arrow-right"></i> العودة للمنتجات</button>
@@ -207,7 +177,7 @@
         </div>
     </div>
 
-    <!-- ===== QUIZ ===== -->
+    <!-- QUIZ -->
     <div id="page-quiz" class="hidden page-section py-12 md:py-16 bg-slate-50 min-h-screen">
         <div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg m-4" id="quiz-container">
             <h2 class="text-2xl md:text-3xl font-bold text-blue-600 mb-8 text-center">استبيان روبوتك الذكي</h2>
@@ -241,10 +211,14 @@
         </div>
     </div>
 
-    <!-- ===== ADMIN LOGIN ===== -->
+    <!-- ADMIN LOGIN -->
     <div id="page-admin-login" class="hidden page-section min-h-screen bg-slate-800 flex items-center justify-center p-4">
         <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full text-center">
             <h2 class="text-2xl font-bold mb-6 text-slate-800">دخول الإدارة</h2>
+            <div class="mb-4 text-sm text-slate-500 bg-slate-50 p-2 rounded">
+                <p>بيانات الدخول للاختبار:</p>
+                <b>admin</b> / <b>admin</b>
+            </div>
             <input type="email" id="admin-email" class="w-full p-3 border rounded-lg mb-4" placeholder="البريد" dir="ltr">
             <input type="password" id="admin-pass" class="w-full p-3 border rounded-lg mb-4" placeholder="الباسورد" dir="ltr">
             <div id="login-error" class="text-red-500 text-sm hidden font-bold mb-4">بيانات الدخول غير صحيحة</div>
@@ -253,7 +227,7 @@
         </div>
     </div>
 
-    <!-- ===== ADMIN DASHBOARD ===== -->
+    <!-- ADMIN DASHBOARD -->
     <div id="page-admin" class="hidden page-section bg-slate-100 min-h-screen">
         <div class="flex h-screen overflow-hidden flex-col md:flex-row">
             <aside class="w-full md:w-64 bg-slate-800 text-white flex flex-col md:h-full overflow-y-auto">
@@ -274,8 +248,6 @@
             </aside>
 
             <main class="flex-1 overflow-y-auto p-4 md:p-8" id="admin-content-area">
-
-                <!-- Products Tab -->
                 <div id="admin-products" class="admin-tab">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <h2 class="text-2xl md:text-3xl font-bold">المنتجات</h2>
@@ -291,7 +263,6 @@
                     </div>
                 </div>
 
-                <!-- Packages Tab -->
                 <div id="admin-packages" class="admin-tab hidden">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                         <h2 class="text-2xl md:text-3xl font-bold">إدارة الباقات</h2>
@@ -300,19 +271,12 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" id="admin-packages-list"></div>
                 </div>
 
-                <!-- ============================================================
-                     POS TAB — UPDATED
-                     Removed "معاينة PDF" button entirely.
-                     Now a single "Save to Accounting" button.
-                     saveInvoiceToFirestore stores full item details.
-                ============================================================ -->
                 <div id="admin-invoice" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">إنشاء فاتورة (POS)</h2>
                     <div class="bg-white p-4 md:p-6 rounded-xl shadow-sm">
                         <input type="text" id="inv-name" class="w-full p-3 border rounded-lg mb-4 font-bold text-lg" placeholder="اسم العميل">
                         <div id="invoice-items" class="space-y-2 mb-4"></div>
-                        <button type="button" onclick="window.addInvoiceItemRow()"
-                            class="text-sm bg-blue-50 text-blue-600 font-bold p-3 rounded-lg mb-6 w-full border border-blue-200 border-dashed hover:bg-blue-100 transition">
+                        <button type="button" onclick="window.addInvoiceItemRow()" class="text-sm bg-blue-50 text-blue-600 font-bold p-3 rounded-lg mb-6 w-full border border-blue-200 border-dashed hover:bg-blue-100 transition">
                             <i class="fas fa-plus-circle"></i> إضافة منتج للفاتورة
                         </button>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -337,18 +301,12 @@
                                 <span id="inv-profit" class="text-green-600 font-bold blurred-text">**** ج.م</span>
                             </div>
                         </div>
-                        <!-- Single action: Save -->
-                        <button type="button" id="btn-save-invoice" onclick="window.saveInvoiceToFirestore()"
-                            class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg shadow-md transition flex justify-center items-center gap-2">
+                        <button type="button" id="btn-save-invoice" onclick="window.saveInvoiceToFirestore()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg shadow-md transition flex justify-center items-center gap-2">
                             <i class="fas fa-save"></i> حفظ الفاتورة في الحسابات
                         </button>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     ACCOUNTING TAB — UPDATED
-                     Added 📄 PDF download button per invoice row.
-                ============================================================ -->
                 <div id="admin-accounting" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">الحسابات والأرباح</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
@@ -386,7 +344,6 @@
                     </div>
                 </div>
 
-                <!-- Settings Tab -->
                 <div id="admin-settings" class="admin-tab hidden">
                     <h2 class="text-2xl md:text-3xl font-bold mb-6">الإعدادات</h2>
                     <div class="bg-white p-6 rounded-xl shadow-sm max-w-lg">
@@ -410,7 +367,7 @@
 </footer>
 <a href="#" id="wa-float" class="whatsapp-float pulse" onclick="window.openWhatsApp('مرحباً روبوتك')"><i class="fab fa-whatsapp"></i></a>
 
-<!-- ===== PRODUCT MODAL ===== -->
+<!-- PRODUCT MODAL -->
 <div id="edit-prod-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
     <div class="bg-white p-6 rounded-xl shadow-xl max-w-lg w-full text-right flex flex-col max-h-[95vh]">
         <h3 class="text-xl md:text-2xl font-bold mb-4 border-b pb-2">إضافة/تعديل منتج</h3>
@@ -418,10 +375,8 @@
             <div class="bg-slate-50 p-3 rounded border">
                 <label class="font-bold text-sm block mb-2 text-slate-700">صور المنتج (حتى 3 صور)</label>
                 <div class="grid grid-cols-3 gap-2">
-                    <!-- Slot 0 -->
                     <div class="border rounded p-2 text-center bg-white relative">
-                        <button type="button" id="delete-prod-img-btn-0" onclick="window.clearProductImage(0)"
-                            class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
+                        <button type="button" id="delete-prod-img-btn-0" onclick="window.clearProductImage(0)" class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
                         <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
                             <img id="modal-prod-img-preview-0" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
                             <i id="modal-prod-img-icon-0" class="fas fa-image text-slate-300 text-2xl"></i>
@@ -433,10 +388,8 @@
                         <input type="hidden" id="modal-prod-img-url-0">
                         <div id="upload-status-0" class="text-[10px] mt-1 hidden font-bold"></div>
                     </div>
-                    <!-- Slot 1 -->
                     <div class="border rounded p-2 text-center bg-white relative">
-                        <button type="button" id="delete-prod-img-btn-1" onclick="window.clearProductImage(1)"
-                            class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
+                        <button type="button" id="delete-prod-img-btn-1" onclick="window.clearProductImage(1)" class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
                         <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
                             <img id="modal-prod-img-preview-1" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
                             <i id="modal-prod-img-icon-1" class="fas fa-image text-slate-300 text-2xl"></i>
@@ -448,10 +401,8 @@
                         <input type="hidden" id="modal-prod-img-url-1">
                         <div id="upload-status-1" class="text-[10px] mt-1 hidden font-bold"></div>
                     </div>
-                    <!-- Slot 2 -->
                     <div class="border rounded p-2 text-center bg-white relative">
-                        <button type="button" id="delete-prod-img-btn-2" onclick="window.clearProductImage(2)"
-                            class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
+                        <button type="button" id="delete-prod-img-btn-2" onclick="window.clearProductImage(2)" class="hidden absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-5 h-5 text-xs z-10 font-bold leading-none">✕</button>
                         <div class="w-full h-16 bg-slate-100 rounded mb-2 flex items-center justify-center overflow-hidden">
                             <img id="modal-prod-img-preview-2" class="hidden object-cover w-full h-full" onerror="this.src='https://via.placeholder.com/150?text=Error'">
                             <i id="modal-prod-img-icon-2" class="fas fa-image text-slate-300 text-2xl"></i>
@@ -480,21 +431,19 @@
     </div>
 </div>
 
-<!-- ===== PACKAGE MODAL ===== -->
+<!-- PACKAGE MODAL -->
 <div id="edit-pkg-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-2 md:p-4">
     <div class="bg-white p-4 md:p-6 rounded-xl shadow-xl max-w-2xl w-full text-right flex flex-col max-h-[95vh]">
         <h3 class="text-xl font-bold mb-3 border-b pb-2">بناء الباقة</h3>
         <div class="overflow-y-auto pr-1 md:pr-2 custom-scroll flex-1">
             <div class="mb-3"><label class="font-bold text-sm">اسم الباقة</label><input type="text" id="modal-pkg-name" class="w-full p-2 border rounded font-bold text-blue-600"></div>
-            <!-- Package Image Upload -->
             <div class="mb-4 bg-slate-50 border rounded p-3">
                 <label class="font-bold text-sm block mb-2 text-blue-800"><i class="fas fa-image ml-1"></i> صورة الباقة (اختياري)</label>
                 <div class="flex items-center gap-3">
                     <div class="w-24 h-20 bg-slate-100 rounded-lg flex items-center justify-center overflow-hidden relative border flex-shrink-0">
                         <img id="modal-pkg-img-preview" class="hidden object-cover w-full h-full" onerror="this.classList.add('hidden')">
                         <i id="modal-pkg-img-icon" class="fas fa-image text-slate-300 text-2xl"></i>
-                        <button type="button" id="delete-pkg-img-btn" onclick="window.clearPkgImage()"
-                            class="hidden absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white text-xs w-5 h-5 items-center justify-center z-10 font-bold rounded-bl">✕</button>
+                        <button type="button" id="delete-pkg-img-btn" onclick="window.clearPkgImage()" class="hidden absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white text-xs w-5 h-5 items-center justify-center z-10 font-bold rounded-bl">✕</button>
                     </div>
                     <div class="flex-1">
                         <label class="cursor-pointer bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-2 rounded text-xs font-bold block text-center transition border border-blue-100 mb-1">
@@ -544,23 +493,129 @@
     </div>
 </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-    import { getFirestore, collection, getDocs, getDoc, doc, setDoc, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+<script>
+    // ================================================================
+    // OFFLINE DATA & CONFIGURATION (MOCK FIREBASE)
+    // ================================================================
+    const defaultData = {
+        settings: { whatsappNumber: "201000000000", freeInstall: true, installFee: 500 },
+        invoices: [],
+        products: [
+            { id: "F3vu0PbvUAHnNr0n5fbp", name: "مفتاح ذكي 1 خط", price: 650, costPrice: 450, desc: "للتحكم في خط إضاءة واحد عن بعد", category: "switches", isHidden: false },
+            { id: "ddR8xK1xizGN42fzi7sd", name: "مفتاح ذكي 2 خط", price: 750, costPrice: 500, desc: "للتحكم في خطين إضاءة", category: "switches", isHidden: false },
+            { id: "DLZqHY4tjWt8lrR1qL01", name: "مفتاح ذكي 3 خط", price: 850, costPrice: 600, desc: "للتحكم في 3 خطوط إضاءة", category: "switches", isHidden: false },
+            { id: "gn5sm8evR6bH08DGN8HL", name: "مفتاح سخان ذكي", price: 1200, costPrice: 850, desc: "للتحكم في تشغيل السخان عن بعد وتوفير الكهرباء", category: "switches", isHidden: false },
+            { id: "IGLLKH0NLkHDpaAGvRXs", name: "لوحة تحكم ذكية", price: 3500, costPrice: 2800, desc: "شاشة لمس مركزية للتحكم بالمنزل", category: "panels", isHidden: false },
+            { id: "tC1lMe1iWAh211qQIIWk", name: "حساس حركة", price: 450, costPrice: 300, desc: "لتشغيل الإضاءة أو الإنذار عند استشعار الحركة", category: "sensors", isHidden: false },
+            { id: "2CSzIXlLJSxq913y1rdu", name: "حساس باب ونافذة", price: 350, costPrice: 200, desc: "للتنبيه عند فتح الأبواب والنوافذ", category: "sensors", isHidden: false },
+            { id: "V0eKa5wPD00uoCUYTccn", name: "كاميرا داخلية", price: 1500, costPrice: 1100, desc: "كاميرا مراقبة داخلية 360 درجة", category: "cameras", isHidden: false },
+            { id: "kFAmQa9D9SfsWmjFVbLF", name: "كاميرا خارجية", price: 2500, costPrice: 1900, desc: "كاميرا خارجية مقاومة للماء", category: "cameras", isHidden: false },
+            { id: "NmjIfb1MB7AwnZUjVjAv", name: "قفل ذكي للأبواب", price: 5500, costPrice: 4200, desc: "يفتح بالبصمة، الكارت، والرقم السري", category: "locks", isHidden: false },
+            { id: "fOyfoEPpQrgjivI5lc9W", name: "حساس دخان", price: 600, costPrice: 400, desc: "لإنذار الحريق الذكي", category: "sensors", isHidden: false },
+            { id: "I0uLsYUliufGPHNVItym", name: "حساس غاز", price: 750, costPrice: 500, desc: "يستشعر تسريب الغاز ويعطي إنذار", category: "sensors", isHidden: false },
+            { id: "KOPlB3ICOyKyYY2ertBM", name: "محبس مياه/غاز ذكي", price: 1800, costPrice: 1300, desc: "يغلق تلقائياً عند استشعار التسريب", category: "other", isHidden: false },
+            { id: "tMtTxaXlrWki0vnOIhRe", name: "وحدة تحكم ري ذكية", price: 2100, costPrice: 1600, desc: "للتحكم في ري الحديقة عن بعد وتوفير المياه", category: "other", isHidden: false },
+            { id: "9aoFEqRGb89uvnWnEuLj", name: "حساس تسريب مياه", price: 400, costPrice: 250, desc: "يستشعر تسريب المياه وينبهك", category: "sensors", isHidden: false },
+            { id: "YK8tJ4DFcnL70WqZEx80", name: "وحدة تحكم مكيف ذكي", price: 950, costPrice: 650, desc: "يتحكم في المكيف والتلفزيون عبر الهاتف", category: "other", isHidden: false },
+            { id: "zMy3ZxlaKQ9JDrZVERFf", name: "جهاز تحكم بالستائر", price: 1100, costPrice: 800, desc: "يفتح ويغلق الستائر بضغطة زر", category: "switches", isHidden: false },
+            { id: "Gnc3qqYmZ5yQfgYU2B07", name: "نظام صوتي ذكي", price: 6500, costPrice: 4800, desc: "أمبليفاير للتحكم في الصوتيات وتوزيعها", category: "other", isHidden: false },
+            { id: "b69vkFu5ZqpdDJsZQf0b", name: "سماعة سقف ذكية", price: 850, costPrice: 600, desc: "سماعة مدمجة في السقف بصوت نقي", category: "other", isHidden: false },
+            { id: "rFi0bAuM9WEbzVmfY6BH", name: "شاشة عرض سمارت", price: 4200, costPrice: 3200, desc: "شاشة للتحكم الكامل بأنظمة المنزل", category: "panels", isHidden: false },
+            { id: "Bd8OyaoaWZJhS3T8qwSa", name: "راوتر مقوي شبكة", price: 1800, costPrice: 1400, desc: "موزع واي فاي لتغطية قوية", category: "other", isHidden: false },
+            { id: "2OpjzJfAXsZoYIRV6p3D", name: "جهاز إنذار صوتي", price: 550, costPrice: 350, desc: "يصدر صوتاً قوياً عند اختراق النظام", category: "other", isHidden: false },
+            { id: "Hz3eMyATa5D7oZG1pNRa", name: "وحدة تحكم رئيسية", price: 1200, costPrice: 850, desc: "العقل المدبر لربط الأجهزة الذكية", category: "other", isHidden: false },
+            { id: "TuHv8IhgSDMtSz4v8XBT", name: "كشاف إضاءة ذكي", price: 1400, costPrice: 950, desc: "للأماكن الخارجية، يضيء عند الحركة", category: "other", isHidden: false },
+            { id: "1ZaIU11i2BzBLWnoOvlF", name: "جهاز بصمة حضور", price: 2900, costPrice: 2100, desc: "للمكاتب والشركات", category: "locks", isHidden: false },
+            { id: "OZl34QSJtnNAZIU9cDlS", name: "فيشة ذكية", price: 450, costPrice: 300, desc: "للتحكم في الأجهزة المتصلة بالكهرباء", category: "switches", isHidden: false },
+            { id: "hmPvQ99Burx9rl1uhTXW", name: "شريط إضاءة LED ذكي", price: 900, costPrice: 650, desc: "تغيير الألوان والسطوع بالهاتف", category: "other", isHidden: false },
+            { id: "WvbpdS7Y9kDfuhMgaYS8", name: "موتور ستارة ذكي", price: 2500, costPrice: 1800, desc: "موتور قوي لتحريك الستائر الثقيلة", category: "other", isHidden: false },
+            { id: "nE1SMWOL9AILFx4wRpx3", name: "زر طوارئ ذكي", price: 300, costPrice: 180, desc: "زر استدعاء SOS للمرضى", category: "sensors", isHidden: false },
+            { id: "A6jBvc9GvYcYiKtopx1W", name: "حساس حرارة ورطوبة", price: 450, costPrice: 300, desc: "لقياس جو الغرفة", category: "sensors", isHidden: false },
+            { id: "JHfdtDALMsOX6BbO3f50", name: "نظام انتركم ذكي", price: 4800, costPrice: 3600, desc: "رؤية والتحدث مع الزائر من هاتفك", category: "cameras", isHidden: false },
+            { id: "lur7Vw7QiF30vHrrt3IL", name: "مفتاح إضاءة لاسلكي", price: 350, costPrice: 220, desc: "يعمل بالبطارية كزر إضافي للإضاءة", category: "switches", isHidden: false },
+            { id: "PNxmfbCs9jmvcUZGS9pU", name: "لمبة ذكية RGB", price: 280, costPrice: 180, desc: "لمبة للتحكم في اللون والإضاءة", category: "other", isHidden: false },
+            { id: "ItISDDWwqM3OsVrzQN4Z", name: "حساس إضاءة LDR", price: 250, costPrice: 150, desc: "يستشعر الضوء لتشغيل الأنوار ليلاً", category: "sensors", isHidden: false },
+            { id: "ufaQgffzRsiacIHeeGfi", name: "لوحة سيناريوهات", price: 750, costPrice: 500, desc: "لوحة بأزرار لتشغيل أوضاع جاهزة", category: "switches", isHidden: false },
+            { id: "kJrOiPlfca6nwlqA8c2T", name: "كاشف كسر زجاج", price: 550, costPrice: 380, desc: "ينذر فوراً عند محاولة كسر الزجاج", category: "sensors", isHidden: false },
+            { id: "aAj0UiQ3OTAQGn6saniy", name: "وحدة توسعة إضافية", price: 950, costPrice: 700, desc: "لزيادة تغطية الأجهزة الذكية بالمنزل", category: "other", isHidden: false }
+        ],
+        packages: [
+            {
+                id: "65hYMUfC3AENwfcoBgEF", name: "المنزل المتكامل", desc: "كل أساسيات المنزل الذكي في باقة واحدة توفر الراحة، الأمان، والتوفير.",
+                discountAmount: 108460, price: 162690, imgUrl: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80",
+                products: ["F3vu0PbvUAHnNr0n5fbp", "ddR8xK1xizGN42fzi7sd", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "gn5sm8evR6bH08DGN8HL", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "tC1lMe1iWAh211qQIIWk", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "NmjIfb1MB7AwnZUjVjAv", "fOyfoEPpQrgjivI5lc9W", "fOyfoEPpQrgjivI5lc9W", "I0uLsYUliufGPHNVItym"],
+                target: ["متكامل"]
+            },
+            {
+                id: "ANKJMPm47j5GGRmtKYB3", name: "المنزل الأخضر", desc: "مناسبة للحدائق والمنازل التي تعتمد على الري الذكي مع توفير استهلاك المياه.",
+                discountAmount: 12650, price: 29500, imgUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
+                products: ["KOPlB3ICOyKyYY2ertBM", "tMtTxaXlrWki0vnOIhRe", "9aoFEqRGb89uvnWnEuLj", "YK8tJ4DFcnL70WqZEx80"],
+                target: ["راحة", "توفير"]
+            },
+            {
+                id: "CIsXpbVCnVnER3YjhnNe", name: "الحماية الأساسية", desc: "كل ما تحتاجه لحماية منزلك من المخاطر الأساسية مع تنبيهات مباشرة على هاتفك.",
+                discountAmount: 15000, price: 32750, imgUrl: "https://images.unsplash.com/photo-1557322960-96f30d075252?auto=format&fit=crop&w=600&q=80",
+                products: ["YK8tJ4DFcnL70WqZEx80", "I0uLsYUliufGPHNVItym", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF"],
+                target: ["أمان", "اقتصادية"]
+            },
+            {
+                id: "GU23h9Ti3IvvxAFZVjWy", name: "الأعمال الاحترافية", desc: "حل متكامل للشركات والمعارض والعيادات والمكاتب الإدارية مع إدارة احترافية للأمان والصوت والتحكم.",
+                discountAmount: 98980, price: 148470, imgUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+                products: ["zMy3ZxlaKQ9JDrZVERFf", "Gnc3qqYmZ5yQfgYU2B07", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "Bd8OyaoaWZJhS3T8qwSa", "2OpjzJfAXsZoYIRV6p3D", "2OpjzJfAXsZoYIRV6p3D", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "Hz3eMyATa5D7oZG1pNRa"],
+                target: ["مفتوحة"]
+            },
+            {
+                id: "LEiFGBSQmVlAYGcx88LY", name: "الأمان المتقدم", desc: "منظومة حماية متكاملة تراقب المنزل بالكامل مع التحكم في الأبواب وإيقاف مصادر الخطر تلقائيًا.",
+                discountAmount: 54180, price: 81270, imgUrl: "https://images.unsplash.com/photo-1541889815048-c215d21a2829?auto=format&fit=crop&w=600&q=80",
+                products: ["TuHv8IhgSDMtSz4v8XBT", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "9aoFEqRGb89uvnWnEuLj", "1ZaIU11i2BzBLWnoOvlF"],
+                target: ["أمان", "متوسطة"]
+            },
+            {
+                id: "Me9k0kLyCntgKwpXrgxB", name: "الراحة اليومية", desc: "كل شيء يتم تلقائيًا... الإضاءة، الستائر، الأجهزة، وحتى التحكم الصوتي، لتستمتع بحياة أكثر راحة كل يوم.",
+                discountAmount: 46878, price: 70322, imgUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
+                products: ["YK8tJ4DFcnL70WqZEx80", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "hmPvQ99Burx9rl1uhTXW", "zMy3ZxlaKQ9JDrZVERFf", "ddR8xK1xizGN42fzi7sd", "Hz3eMyATa5D7oZG1pNRa"],
+                target: ["راحة", "متوسطة"]
+            },
+            {
+                id: "OqANr8bJFPW0tg92Yka0", name: "المنزل الترفيهية", desc: "حول منزلك إلى مساحة ترفيهية متكاملة مع صوت احترافي وتحكم ذكي.",
+                discountAmount: 27120, price: 40680, imgUrl: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=600&q=80",
+                products: ["Gnc3qqYmZ5yQfgYU2B07", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "ddR8xK1xizGN42fzi7sd", "zMy3ZxlaKQ9JDrZVERFf"],
+                target: ["راحة"]
+            },
+            {
+                id: "STymDglWo2TW73TvmX9t", name: "الحياة الذكية المطلقة", desc: "أقوى باقة في المنظومة بالكامل، تجمع جميع حلول المنزل الذكي في نظام واحد متكامل يعتني براحتك، يحمي منزلك، ويخفض استهلاك الطاقة. صُممت للمستخدم الذي يريد أفضل تجربة ممكنة دون أي تنازلات.",
+                discountAmount: 406300, price: 609450, imgUrl: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=600&q=80",
+                products: ["TuHv8IhgSDMtSz4v8XBT", "zMy3ZxlaKQ9JDrZVERFf", "zMy3ZxlaKQ9JDrZVERFf", "WvbpdS7Y9kDfuhMgaYS8", "ddR8xK1xizGN42fzi7sd", "ddR8xK1xizGN42fzi7sd", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "F3vu0PbvUAHnNr0n5fbp", "NmjIfb1MB7AwnZUjVjAv", "NmjIfb1MB7AwnZUjVjAv", "YK8tJ4DFcnL70WqZEx80", "YK8tJ4DFcnL70WqZEx80", "YK8tJ4DFcnL70WqZEx80", "nE1SMWOL9AILFx4wRpx3", "nE1SMWOL9AILFx4wRpx3", "Hz3eMyATa5D7oZG1pNRa", "Hz3eMyATa5D7oZG1pNRa", "A6jBvc9GvYcYiKtopx1W", "A6jBvc9GvYcYiKtopx1W", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "2CSzIXlLJSxq913y1rdu", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "9aoFEqRGb89uvnWnEuLj", "9aoFEqRGb89uvnWnEuLj", "JHfdtDALMsOX6BbO3f50", "JHfdtDALMsOX6BbO3f50", "2OpjzJfAXsZoYIRV6p3D", "Gnc3qqYmZ5yQfgYU2B07", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "KOPlB3ICOyKyYY2ertBM"],
+                target: ["راحة", "أمان", "توفير", "متكامل", "مفتوحة"]
+            },
+            {
+                id: "cFhx6DtdItLBbP2y8egQ", name: "التوفير الذكي", desc: "راقب استهلاك الكهرباء والمياه وتحكم في الأجهزة لتقليل الفواتير وتحسين كفاءة الطاقة.",
+                discountAmount: 21680, price: 32520, imgUrl: "https://images.unsplash.com/photo-1510006851064-e6056cd0e3a8?auto=format&fit=crop&w=600&q=80",
+                products: ["tC1lMe1iWAh211qQIIWk", "A6jBvc9GvYcYiKtopx1W", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "9aoFEqRGb89uvnWnEuLj", "KOPlB3ICOyKyYY2ertBM"],
+                target: ["توفير"]
+            },
+            {
+                id: "jDTsbUgL7jAzdSbAjaUi", name: "البداية الذكية", desc: "ابدأ رحلتك في المنزل الذكي بأقل تكلفة مع مجموعة مختارة تمنحك تحكمًا أسهل في الإضاءة والأجهزة اليومية دون الحاجة إلى تغيير كامل للمنزل.",
+                discountAmount: 15500, price: 22000, imgUrl: "https://images.unsplash.com/photo-1557322960-96f30d075252?auto=format&fit=crop&w=600&q=80",
+                products: ["lur7Vw7QiF30vHrrt3IL", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "PNxmfbCs9jmvcUZGS9pU"],
+                target: ["راحة", "اقتصادية"]
+            },
+            {
+                id: "jURH12oO2i9dafEAb8j8", name: "الشركات والمكاتب", desc: "حل متكامل لإدارة المكاتب والتحكم في الإضاءة والأمان والدخول.",
+                discountAmount: 75680, price: 113520, imgUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+                products: ["F3vu0PbvUAHnNr0n5fbp", "1ZaIU11i2BzBLWnoOvlF", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "Hz3eMyATa5D7oZG1pNRa", "Hz3eMyATa5D7oZG1pNRa"],
+                target: ["أمان", "متوسطة"]
+            },
+            {
+                id: "psqwIkeTDhq9Xr0QJYcE", name: "الفيلا الذكية", desc: "مصممة للفيلات والمنازل الكبيرة مع تغطية شاملة لجميع أنظمة المنزل الذكي.",
+                discountAmount: 159140, price: 288710, imgUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80",
+                products: ["TuHv8IhgSDMtSz4v8XBT", "zMy3ZxlaKQ9JDrZVERFf", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "ufaQgffzRsiacIHeeGfi", "ufaQgffzRsiacIHeeGfi", "kJrOiPlfca6nwlqA8c2T", "kJrOiPlfca6nwlqA8c2T", "JHfdtDALMsOX6BbO3f50", "aAj0UiQ3OTAQGn6saniy", "A6jBvc9GvYcYiKtopx1W", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "2CSzIXlLJSxq913y1rdu"],
+                target: ["متكامل", "مفتوحة"]
+            }
+        ]
+    };
 
-    const app = initializeApp({
-        apiKey: "AIzaSyAfC1dhA3-RAlcDFQdaFrah1OitjH2pbyE",
-        authDomain: "auto-4c6fd.firebaseapp.com",
-        projectId: "auto-4c6fd",
-        storageBucket: "auto-4c6fd.firebasestorage.app",
-        messagingSenderId: "976062165745",
-        appId: "1:976062165745:web:c7a83c66e9a944981f6f50"
-    });
-    const auth = getAuth(app);
-    const db   = getFirestore(app);
-
-    window.siteData = { products: [], packages: [], invoices: [], settings: { whatsappNumber: "201000000000", freeInstall: true, installFee: 500 } };
+    window.siteData = {};
     window.tempPkgProducts = {};
     let currProdId = null;
     let currPkgId  = null;
@@ -648,35 +703,48 @@
     };
 
     // ================================================================
-    // CORE
+    // CORE (LOCAL STORAGE DRIVEN)
     // ================================================================
-    window.showPage    = id => { document.querySelectorAll('.page-section').forEach(d => d.classList.add('hidden')); document.getElementById(id)?.classList.remove('hidden'); window.scrollTo(0,0); };
+    window.showPage = id => { document.querySelectorAll('.page-section').forEach(d => d.classList.add('hidden')); document.getElementById(id)?.classList.remove('hidden'); window.scrollTo(0,0); };
     window.openWhatsApp = msg => window.open(`https://wa.me/${window.siteData.settings.whatsappNumber}?text=${encodeURIComponent(msg)}`);
     window.showAdminLogin = () => window.showPage('page-admin-login');
-    window.loginAdmin  = () => { signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value).then(()=>window.showPage('page-admin')).catch(()=>document.getElementById('login-error').classList.remove('hidden')); };
-    window.logoutAdmin = () => signOut(auth).then(()=>window.showPage('page-home'));
-    onAuthStateChanged(auth, u => { if (u) window.showAdminLogin = () => window.showPage('page-admin'); });
+    
+    window.loginAdmin = () => { 
+        if (document.getElementById('admin-email').value === 'admin' && document.getElementById('admin-pass').value === 'admin') {
+            sessionStorage.setItem('adminLoggedIn', 'true');
+            window.showAdminLogin = () => window.showPage('page-admin');
+            window.showPage('page-admin');
+        } else {
+            document.getElementById('login-error').classList.remove('hidden');
+        }
+    };
+    window.logoutAdmin = () => {
+        sessionStorage.removeItem('adminLoggedIn');
+        window.showAdminLogin = () => window.showPage('page-admin-login');
+        window.showPage('page-home');
+    };
 
-    window.fetchData = async () => {
+    window.saveDataLocal = () => {
+        localStorage.setItem('robotechData', JSON.stringify(window.siteData));
+    };
+
+    window.fetchData = () => {
         try {
-            const setDocRef = await getDoc(doc(db, "settings", "general"));
-            if (setDocRef.exists()) {
-                window.siteData.settings = setDocRef.data();
-                document.getElementById('setting-phone')?.setAttribute('value', window.siteData.settings.whatsappNumber || "");
-                const fiEl = document.getElementById('setting-free-install'); if (fiEl) fiEl.checked = window.siteData.settings.freeInstall;
-                const feEl = document.getElementById('setting-install-fee'); if (feEl) feEl.value = window.siteData.settings.installFee || 500;
+            const stored = localStorage.getItem('robotechData');
+            if (stored) {
+                window.siteData = JSON.parse(stored);
+            } else {
+                window.siteData = JSON.parse(JSON.stringify(defaultData)); 
+                window.saveDataLocal();
             }
-            const prodSnap = await getDocs(collection(db, "products"));
-            window.siteData.products = [];
-            prodSnap.forEach(d => window.siteData.products.push({ id: d.id, ...d.data() }));
 
-            const pkgSnap = await getDocs(collection(db, "packages"));
-            window.siteData.packages = [];
-            pkgSnap.forEach(d => window.siteData.packages.push({ id: d.id, ...d.data() }));
+            // Sync UI Elements
+            document.getElementById('setting-phone')?.setAttribute('value', window.siteData.settings.whatsappNumber || "");
+            const fiEl = document.getElementById('setting-free-install'); if (fiEl) fiEl.checked = window.siteData.settings.freeInstall;
+            const feEl = document.getElementById('setting-install-fee'); if (feEl) feEl.value = window.siteData.settings.installFee || 500;
 
-            const invSnap = await getDocs(collection(db, "invoices"));
-            window.siteData.invoices = []; let tS=0, tC=0, tE=0;
-            invSnap.forEach(d => { let v=d.data(); v.id=d.id; window.siteData.invoices.push(v); tS+=v.total||0; tC+=v.cost||0; tE+=v.expenses||0; });
+            let tS=0, tC=0, tE=0;
+            window.siteData.invoices.forEach(v => { tS+=v.total||0; tC+=v.cost||0; tE+=v.expenses||0; });
 
             window.renderAdminProducts();
             window.renderAdminPackages();
@@ -685,8 +753,15 @@
         } catch(e) { console.error("fetchData error:", e); }
     };
 
+    window.onload = () => {
+        if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+            window.showAdminLogin = () => window.showPage('page-admin');
+        }
+        window.fetchData();
+    };
+
     // ================================================================
-    // FRONTEND — Products
+    // FRONTEND — Products & Packages
     // ================================================================
     window.renderFrontendProducts = () => {
         const t = translations[currentLang];
@@ -737,18 +812,17 @@
     };
 
     window.getPackagePrices = pkg => {
-        let originalPrice = 0; const counts = {};
+        const counts = {};
         const prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
         if (Array.isArray(pkg.products)) {
             pkg.products.forEach(pid => {
                 const p = prods.find(x => String(x.id) === String(pid));
-                if (p) { originalPrice += (parseFloat(p.price) || 0); counts[p.name] = (counts[p.name] || 0) + 1; }
+                if (p) { counts[p.name] = (counts[p.name] || 0) + 1; }
+                else { counts["منتج غير معروف"] = (counts["منتج غير معروف"] || 0) + 1; }
             });
         }
-        let finalPrice = originalPrice;
-        if (pkg.discountAmount !== undefined) finalPrice = originalPrice - pkg.discountAmount;
-        else if (pkg.price !== undefined) finalPrice = pkg.price;
-        if (finalPrice < 0) finalPrice = 0;
+        const finalPrice = pkg.price || 0;
+        const originalPrice = finalPrice + (pkg.discountAmount || 0);
         return { originalPrice, finalPrice, counts };
     };
 
@@ -761,7 +835,7 @@
         if (psEl) psEl.classList.remove('hidden');
         visPkgs.forEach(pkg => {
             const pData = window.getPackagePrices(pkg);
-            const saved = pData.originalPrice - pData.finalPrice;
+            const saved = pkg.discountAmount || 0;
             const discountHtml = saved > 0 ? `<div class="absolute top-0 right-0 bg-red-500 text-white font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl text-xs shadow">${t.pkg_save_label} ${saved} ${t.currency}</div>` : '';
             const oldPriceHtml = saved > 0 ? `<span class="line-through text-slate-400 text-sm mr-2 block text-center">${pData.originalPrice} ${t.currency}</span>` : '';
             const pkgImgHtml = pkg.imgUrl ? `<div class="-mx-5 -mt-5 mb-4 h-36 overflow-hidden rounded-t-xl"><img src="${pkg.imgUrl}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none'"></div>` : '';
@@ -786,7 +860,7 @@
     };
 
     // ================================================================
-    // ADMIN PRODUCTS
+    // ADMIN PRODUCTS (LOCAL STORAGE)
     // ================================================================
     window.renderAdminProducts = () => {
         const tb = document.getElementById('admin-products-table'); if (!tb) return; tb.innerHTML = '';
@@ -798,8 +872,17 @@
         });
     };
 
-    window.toggleProdVis = async (id, isHidden) => { try { await updateDoc(doc(db,"products",String(id)),{isHidden:!isHidden}); window.fetchData(); } catch(e){console.error(e);} };
-    window.deleteProduct  = async id => { if (confirm("حذف هذا المنتج نهائياً؟")) { try { await deleteDoc(doc(db,"products",String(id))); window.fetchData(); } catch(e){console.error(e);} } };
+    window.toggleProdVis = (id, isHidden) => { 
+        const idx = window.siteData.products.findIndex(x => x.id === id);
+        if (idx > -1) { window.siteData.products[idx].isHidden = !isHidden; window.saveDataLocal(); window.fetchData(); }
+    };
+    
+    window.deleteProduct = id => { 
+        if (confirm("حذف هذا المنتج نهائياً؟")) { 
+            window.siteData.products = window.siteData.products.filter(x => x.id !== id);
+            window.saveDataLocal(); window.fetchData(); 
+        } 
+    };
 
     window.clearProductImage = idx => {
         const ui = document.getElementById(`modal-prod-img-url-${idx}`); if (ui) ui.value = '';
@@ -810,39 +893,37 @@
     };
 
     window.openEditProdModal = id => {
-        try {
-            currProdId = id ? String(id) : null;
-            for (let i=0; i<3; i++) {
-                const st  = document.getElementById(`upload-status-${i}`); if (st) { st.classList.add('hidden'); st.innerText=''; }
-                const prv = document.getElementById(`modal-prod-img-preview-${i}`); if (prv) { prv.src=''; prv.classList.add('hidden'); }
-                const ic  = document.getElementById(`modal-prod-img-icon-${i}`); if (ic) ic.classList.remove('hidden');
-                const u   = document.getElementById(`modal-prod-img-url-${i}`); if (u) u.value='';
-                const db2 = document.getElementById(`delete-prod-img-btn-${i}`); if (db2) db2.classList.add('hidden');
-            }
-            const prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
-            if (id && prods.length > 0) {
-                const p = prods.find(x => String(x.id) === String(id));
-                if (p) {
-                    const mn=document.getElementById('modal-prod-name'); if(mn)mn.value=p.name||'';
-                    const mc=document.getElementById('modal-prod-cost'); if(mc)mc.value=p.costPrice||0;
-                    const mp=document.getElementById('modal-prod-price'); if(mp)mp.value=p.price||0;
-                    const md=document.getElementById('modal-prod-desc'); if(md)md.value=p.desc||'';
-                    const mt=document.getElementById('modal-prod-cat'); if(mt)mt.value=p.category||'other';
-                    const imgs = p.images && p.images.length > 0 ? p.images : (p.imgUrl ? [p.imgUrl] : []);
-                    for (let i=0; i<Math.min(3,imgs.length); i++) {
-                        if (imgs[i] && typeof imgs[i]==='string') {
-                            const ui=document.getElementById(`modal-prod-img-url-${i}`); if(ui)ui.value=imgs[i];
-                            const pv=document.getElementById(`modal-prod-img-preview-${i}`); if(pv){pv.src=imgs[i];pv.classList.remove('hidden');}
-                            const ic=document.getElementById(`modal-prod-img-icon-${i}`); if(ic)ic.classList.add('hidden');
-                            const db2=document.getElementById(`delete-prod-img-btn-${i}`); if(db2)db2.classList.remove('hidden');
-                        }
+        currProdId = id ? String(id) : null;
+        for (let i=0; i<3; i++) {
+            const st  = document.getElementById(`upload-status-${i}`); if (st) { st.classList.add('hidden'); st.innerText=''; }
+            const prv = document.getElementById(`modal-prod-img-preview-${i}`); if (prv) { prv.src=''; prv.classList.add('hidden'); }
+            const ic  = document.getElementById(`modal-prod-img-icon-${i}`); if (ic) ic.classList.remove('hidden');
+            const u   = document.getElementById(`modal-prod-img-url-${i}`); if (u) u.value='';
+            const db2 = document.getElementById(`delete-prod-img-btn-${i}`); if (db2) db2.classList.add('hidden');
+        }
+        const prods = Array.isArray(window.siteData.products) ? window.siteData.products : [];
+        if (id && prods.length > 0) {
+            const p = prods.find(x => String(x.id) === String(id));
+            if (p) {
+                const mn=document.getElementById('modal-prod-name'); if(mn)mn.value=p.name||'';
+                const mc=document.getElementById('modal-prod-cost'); if(mc)mc.value=p.costPrice||0;
+                const mp=document.getElementById('modal-prod-price'); if(mp)mp.value=p.price||0;
+                const md=document.getElementById('modal-prod-desc'); if(md)md.value=p.desc||'';
+                const mt=document.getElementById('modal-prod-cat'); if(mt)mt.value=p.category||'other';
+                const imgs = p.images && p.images.length > 0 ? p.images : (p.imgUrl ? [p.imgUrl] : []);
+                for (let i=0; i<Math.min(3,imgs.length); i++) {
+                    if (imgs[i] && typeof imgs[i]==='string') {
+                        const ui=document.getElementById(`modal-prod-img-url-${i}`); if(ui)ui.value=imgs[i];
+                        const pv=document.getElementById(`modal-prod-img-preview-${i}`); if(pv){pv.src=imgs[i];pv.classList.remove('hidden');}
+                        const ic=document.getElementById(`modal-prod-img-icon-${i}`); if(ic)ic.classList.add('hidden');
+                        const db2=document.getElementById(`delete-prod-img-btn-${i}`); if(db2)db2.classList.remove('hidden');
                     }
                 }
-            } else {
-                ['modal-prod-name','modal-prod-cost','modal-prod-price','modal-prod-desc'].forEach(id2=>{const el=document.getElementById(id2);if(el)el.value='';});
             }
-            document.getElementById('edit-prod-modal')?.classList.remove('hidden');
-        } catch(e) { console.error("openEditProdModal:", e); alert("حدث خطأ"); }
+        } else {
+            ['modal-prod-name','modal-prod-cost','modal-prod-price','modal-prod-desc'].forEach(id2=>{const el=document.getElementById(id2);if(el)el.value='';});
+        }
+        document.getElementById('edit-prod-modal')?.classList.remove('hidden');
     };
 
     window.uploadImageToImgBB = async (e, idx) => {
@@ -869,26 +950,40 @@
         }
     };
 
-    window.saveProdToFirestore = async () => {
-        try {
-            const btn = document.getElementById('btn-save-prod'); if (btn) btn.innerText="جاري الحفظ...";
-            const imgs = [];
-            for (let i=0; i<3; i++) {
-                const el = document.getElementById(`modal-prod-img-url-${i}`);
-                if (el && el.value && el.value.trim()!=='') imgs.push(el.value.trim());
-            }
-            const mn=document.getElementById('modal-prod-name');
-            const mc=document.getElementById('modal-prod-cost');
-            const mp=document.getElementById('modal-prod-price');
-            const md=document.getElementById('modal-prod-desc');
-            const mt=document.getElementById('modal-prod-cat');
-            const data = { name:(mn?mn.value:"بدون اسم"), costPrice:(mc?parseFloat(mc.value):0)||0, price:(mp?parseFloat(mp.value):0)||0, desc:(md?md.value:""), category:(mt?mt.value:"other"), images:imgs, imgUrl:imgs.length>0?imgs[0]:"" };
-            if (currProdId) await updateDoc(doc(db,"products",String(currProdId)),data);
-            else await addDoc(collection(db,"products"),data);
-            document.getElementById('edit-prod-modal')?.classList.add('hidden');
-            if (btn) btn.innerText="حفظ";
-            window.fetchData();
-        } catch(e) { console.error(e); alert("حدث خطأ أثناء الحفظ."); }
+    window.saveProdToFirestore = () => {
+        const btn = document.getElementById('btn-save-prod'); if (btn) btn.innerText="جاري الحفظ...";
+        const imgs = [];
+        for (let i=0; i<3; i++) {
+            const el = document.getElementById(`modal-prod-img-url-${i}`);
+            if (el && el.value && el.value.trim()!=='') imgs.push(el.value.trim());
+        }
+        const mn=document.getElementById('modal-prod-name');
+        const mc=document.getElementById('modal-prod-cost');
+        const mp=document.getElementById('modal-prod-price');
+        const md=document.getElementById('modal-prod-desc');
+        const mt=document.getElementById('modal-prod-cat');
+        
+        const data = { 
+            id: currProdId || 'PRD' + Date.now(),
+            name:(mn?mn.value:"بدون اسم"), 
+            costPrice:(mc?parseFloat(mc.value):0)||0, 
+            price:(mp?parseFloat(mp.value):0)||0, 
+            desc:(md?md.value:""), 
+            category:(mt?mt.value:"other"), 
+            images:imgs, 
+            imgUrl:imgs.length>0?imgs[0]:"" 
+        };
+        
+        if (currProdId) {
+            const idx = window.siteData.products.findIndex(p => p.id === currProdId);
+            if (idx > -1) window.siteData.products[idx] = { ...window.siteData.products[idx], ...data };
+        } else {
+            window.siteData.products.push(data);
+        }
+        window.saveDataLocal();
+        document.getElementById('edit-prod-modal')?.classList.add('hidden');
+        if (btn) btn.innerText="حفظ";
+        window.fetchData();
     };
 
     // ================================================================
@@ -904,8 +999,17 @@
         });
     };
 
-    window.togglePkgVis = async (id, isHidden) => { try { await updateDoc(doc(db,"packages",String(id)),{isHidden:!isHidden}); window.fetchData(); } catch(e){console.error(e);} };
-    window.deletePackage  = async id => { if (confirm("حذف هذه الباقة نهائياً؟")) { try { await deleteDoc(doc(db,"packages",String(id))); window.fetchData(); } catch(e){console.error(e);} } };
+    window.togglePkgVis = (id, isHidden) => { 
+        const idx = window.siteData.packages.findIndex(x => x.id === id);
+        if (idx > -1) { window.siteData.packages[idx].isHidden = !isHidden; window.saveDataLocal(); window.fetchData(); } 
+    };
+    
+    window.deletePackage = id => { 
+        if (confirm("حذف هذه الباقة نهائياً؟")) { 
+            window.siteData.packages = window.siteData.packages.filter(x => x.id !== id);
+            window.saveDataLocal(); window.fetchData(); 
+        } 
+    };
 
     window.uploadPkgImage = async (e) => {
         const st = document.getElementById('pkg-upload-status');
@@ -940,99 +1044,94 @@
     };
 
     window.openEditPkgModal = id => {
-        try {
-            currPkgId = id ? String(id) : null;
-            window.tempPkgProducts = {};
-            document.querySelectorAll('.pkg-target').forEach(c => c.checked = false);
-            const pList = document.getElementById('modal-pkg-products'); if (pList) pList.innerHTML='';
-            window.clearPkgImage();
-            const pkgs  = Array.isArray(window.siteData.packages)?window.siteData.packages:[];
-            const prods = Array.isArray(window.siteData.products)?window.siteData.products:[];
-            if (id) {
-                const pkg = pkgs.find(x => String(x.id)===String(id));
-                if (pkg) {
-                    const nEl=document.getElementById('modal-pkg-name'); if(nEl)nEl.value=pkg.name||'';
-                    const dEl=document.getElementById('modal-pkg-desc'); if(dEl)dEl.value=pkg.desc||'';
-                    if (Array.isArray(pkg.products)) pkg.products.forEach(pid=>{ const key=String(pid); window.tempPkgProducts[key]=(window.tempPkgProducts[key]||0)+1; });
-                    if (Array.isArray(pkg.target)) pkg.target.forEach(t=>{ const cb=document.querySelector(`.pkg-target[value="${t}"]`); if(cb)cb.checked=true; });
-                    let discount = pkg.discountAmount;
-                    if (discount===undefined && pkg.price!==undefined) {
-                        let tempOrig=0;
-                        if (Array.isArray(pkg.products)) pkg.products.forEach(pid=>{ const pr=prods.find(x=>String(x.id)===String(pid)); if(pr)tempOrig+=(parseFloat(pr.price)||0); });
-                        discount=tempOrig-pkg.price; if(discount<0)discount=0;
-                    }
-                    const dsEl=document.getElementById('modal-pkg-discount'); if(dsEl)dsEl.value=discount||0;
-                    if (pkg.imgUrl) {
-                        const ui=document.getElementById('modal-pkg-img-url'); if(ui)ui.value=pkg.imgUrl;
-                        const pv=document.getElementById('modal-pkg-img-preview'); if(pv){pv.src=pkg.imgUrl;pv.classList.remove('hidden');}
-                        const ic=document.getElementById('modal-pkg-img-icon'); if(ic)ic.classList.add('hidden');
-                        const db2=document.getElementById('delete-pkg-img-btn'); if(db2)db2.classList.remove('hidden');
-                    }
+        currPkgId = id ? String(id) : null;
+        window.tempPkgProducts = {};
+        document.querySelectorAll('.pkg-target').forEach(c => c.checked = false);
+        const pList = document.getElementById('modal-pkg-products'); if (pList) pList.innerHTML='';
+        window.clearPkgImage();
+        const pkgs  = Array.isArray(window.siteData.packages)?window.siteData.packages:[];
+        const prods = Array.isArray(window.siteData.products)?window.siteData.products:[];
+        if (id) {
+            const pkg = pkgs.find(x => String(x.id)===String(id));
+            if (pkg) {
+                const nEl=document.getElementById('modal-pkg-name'); if(nEl)nEl.value=pkg.name||'';
+                const dEl=document.getElementById('modal-pkg-desc'); if(dEl)dEl.value=pkg.desc||'';
+                if (Array.isArray(pkg.products)) pkg.products.forEach(pid=>{ const key=String(pid); window.tempPkgProducts[key]=(window.tempPkgProducts[key]||0)+1; });
+                if (Array.isArray(pkg.target)) pkg.target.forEach(t=>{ const cb=document.querySelector(`.pkg-target[value="${t}"]`); if(cb)cb.checked=true; });
+                const dsEl=document.getElementById('modal-pkg-discount'); if(dsEl)dsEl.value=pkg.discountAmount||0;
+                if (pkg.imgUrl) {
+                    const ui=document.getElementById('modal-pkg-img-url'); if(ui)ui.value=pkg.imgUrl;
+                    const pv=document.getElementById('modal-pkg-img-preview'); if(pv){pv.src=pkg.imgUrl;pv.classList.remove('hidden');}
+                    const ic=document.getElementById('modal-pkg-img-icon'); if(ic)ic.classList.add('hidden');
+                    const db2=document.getElementById('delete-pkg-img-btn'); if(db2)db2.classList.remove('hidden');
                 }
-            } else {
-                const nEl=document.getElementById('modal-pkg-name'); if(nEl)nEl.value='';
-                const dEl=document.getElementById('modal-pkg-desc'); if(dEl)dEl.value='';
-                const dsEl=document.getElementById('modal-pkg-discount'); if(dsEl)dsEl.value=0;
             }
-            if (pList) {
-                prods.forEach(p => {
-                    const key = String(p.id);
-                    const qty = window.tempPkgProducts[key]||0;
-                    const div = document.createElement('div');
-                    div.className="flex justify-between items-center p-2 border-b bg-white";
-                    div.innerHTML=`<div class="truncate text-xs md:text-sm font-bold" title="${p.name}">${p.name} <span class="text-blue-500">(${p.price})</span></div><div class="flex items-center gap-2"><button type="button" onclick="window.changePkgItemQty('${key}',-1)" class="bg-red-50 text-red-500 w-8 h-8 rounded flex items-center justify-center font-bold border border-red-100 cursor-pointer hover:bg-red-200">-</button><span id="pkg-qty-${key}" class="font-bold w-6 text-center text-sm">${qty}</span><button type="button" onclick="window.changePkgItemQty('${key}',1)" class="bg-green-50 text-green-600 w-8 h-8 rounded flex items-center justify-center font-bold border border-green-100 cursor-pointer hover:bg-green-200">+</button></div>`;
-                    pList.appendChild(div);
-                });
-            }
-            window.calcPkgPrices();
-            document.getElementById('edit-pkg-modal')?.classList.remove('hidden');
-        } catch(e) { console.error("openEditPkgModal:", e); alert("حدث خطأ أثناء فتح الباقة."); }
+        } else {
+            const nEl=document.getElementById('modal-pkg-name'); if(nEl)nEl.value='';
+            const dEl=document.getElementById('modal-pkg-desc'); if(dEl)dEl.value='';
+            const dsEl=document.getElementById('modal-pkg-discount'); if(dsEl)dsEl.value=0;
+        }
+        if (pList) {
+            prods.forEach(p => {
+                const key = String(p.id);
+                const qty = window.tempPkgProducts[key]||0;
+                const div = document.createElement('div');
+                div.className="flex justify-between items-center p-2 border-b bg-white";
+                div.innerHTML=`<div class="truncate text-xs md:text-sm font-bold" title="${p.name}">${p.name} <span class="text-blue-500">(${p.price})</span></div><div class="flex items-center gap-2"><button type="button" onclick="window.changePkgItemQty('${key}',-1)" class="bg-red-50 text-red-500 w-8 h-8 rounded flex items-center justify-center font-bold border border-red-100 cursor-pointer hover:bg-red-200">-</button><span id="pkg-qty-${key}" class="font-bold w-6 text-center text-sm">${qty}</span><button type="button" onclick="window.changePkgItemQty('${key}',1)" class="bg-green-50 text-green-600 w-8 h-8 rounded flex items-center justify-center font-bold border border-green-100 cursor-pointer hover:bg-green-200">+</button></div>`;
+                pList.appendChild(div);
+            });
+        }
+        window.calcPkgPrices();
+        document.getElementById('edit-pkg-modal')?.classList.remove('hidden');
     };
 
     window.changePkgItemQty = (pid, change) => {
-        try {
-            const key=String(pid); let current=window.tempPkgProducts[key]||0; let newQty=current+change; if(newQty<0)newQty=0;
-            window.tempPkgProducts[key]=newQty;
-            const qEl=document.getElementById(`pkg-qty-${key}`); if(qEl)qEl.innerText=newQty;
-            window.calcPkgPrices();
-        } catch(e){console.error("changePkgItemQty:",e);}
+        const key=String(pid); let current=window.tempPkgProducts[key]||0; let newQty=current+change; if(newQty<0)newQty=0;
+        window.tempPkgProducts[key]=newQty;
+        const qEl=document.getElementById(`pkg-qty-${key}`); if(qEl)qEl.innerText=newQty;
+        window.calcPkgPrices();
     };
 
     window.calcPkgPrices = () => {
-        try {
-            let orig=0; const prods=Array.isArray(window.siteData.products)?window.siteData.products:[];
-            for (const [pid,qty] of Object.entries(window.tempPkgProducts)) {
-                if (qty>0) { const p=prods.find(x=>String(x.id)===String(pid)); if(p)orig+=(parseFloat(p.price)||0)*qty; }
-            }
-            const oEl=document.getElementById('modal-pkg-original-price'); if(oEl)oEl.innerText=orig;
-            const dEl=document.getElementById('modal-pkg-discount'); const disc=parseFloat(dEl?dEl.value:0)||0;
-            let fin=orig-disc; if(fin<0)fin=0;
-            const fEl=document.getElementById('modal-pkg-final-price'); if(fEl)fEl.innerText=fin;
-        } catch(e){console.error("calcPkgPrices:",e);}
+        let orig=0; const prods=Array.isArray(window.siteData.products)?window.siteData.products:[];
+        for (const [pid,qty] of Object.entries(window.tempPkgProducts)) {
+            if (qty>0) { const p=prods.find(x=>String(x.id)===String(pid)); if(p)orig+=(parseFloat(p.price)||0)*qty; }
+        }
+        const oEl=document.getElementById('modal-pkg-original-price'); if(oEl)oEl.innerText=orig;
+        const dEl=document.getElementById('modal-pkg-discount'); const disc=parseFloat(dEl?dEl.value:0)||0;
+        let fin=orig-disc; if(fin<0)fin=0;
+        const fEl=document.getElementById('modal-pkg-final-price'); if(fEl)fEl.innerText=fin;
     };
 
-    window.savePkgToFirestore = async () => {
-        try {
-            const targets=Array.from(document.querySelectorAll('.pkg-target:checked')).map(c=>c.value);
-            const prodsArray=[]; for (const [pid,qty] of Object.entries(window.tempPkgProducts)){if(qty>0)for(let i=0;i<qty;i++)prodsArray.push(String(pid));}
-            const nEl=document.getElementById('modal-pkg-name');
-            const dEl=document.getElementById('modal-pkg-discount');
-            const deEl=document.getElementById('modal-pkg-desc');
-            const fEl=document.getElementById('modal-pkg-final-price');
-            const iuEl=document.getElementById('modal-pkg-img-url');
-            const d={
-                name:(nEl?nEl.value:"باقة بدون اسم"),
-                discountAmount:parseFloat(dEl?dEl.value:0)||0,
-                desc:(deEl?deEl.value:""),
-                target:targets, products:prodsArray,
-                price:parseFloat(fEl?fEl.innerText:0)||0,
-                imgUrl:(iuEl?iuEl.value.trim():'')
-            };
-            if (currPkgId) await updateDoc(doc(db,"packages",String(currPkgId)),d);
-            else await addDoc(collection(db,"packages"),d);
-            document.getElementById('edit-pkg-modal')?.classList.add('hidden');
-            window.fetchData();
-        } catch(e){console.error(e);alert("حدث خطأ أثناء الحفظ.");}
+    window.savePkgToFirestore = () => {
+        const targets=Array.from(document.querySelectorAll('.pkg-target:checked')).map(c=>c.value);
+        const prodsArray=[]; for (const [pid,qty] of Object.entries(window.tempPkgProducts)){if(qty>0)for(let i=0;i<qty;i++)prodsArray.push(String(pid));}
+        const nEl=document.getElementById('modal-pkg-name');
+        const dEl=document.getElementById('modal-pkg-discount');
+        const deEl=document.getElementById('modal-pkg-desc');
+        const fEl=document.getElementById('modal-pkg-final-price');
+        const iuEl=document.getElementById('modal-pkg-img-url');
+        
+        const d = {
+            id: currPkgId || 'PKG' + Date.now(),
+            name:(nEl?nEl.value:"باقة بدون اسم"),
+            discountAmount:parseFloat(dEl?dEl.value:0)||0,
+            desc:(deEl?deEl.value:""),
+            target:targets, products:prodsArray,
+            price:parseFloat(fEl?fEl.innerText:0)||0,
+            imgUrl:(iuEl?iuEl.value.trim():'')
+        };
+        
+        if (currPkgId) {
+            const idx = window.siteData.packages.findIndex(p => p.id === currPkgId);
+            if (idx > -1) window.siteData.packages[idx] = { ...window.siteData.packages[idx], ...d };
+        } else {
+            window.siteData.packages.push(d);
+        }
+        
+        window.saveDataLocal();
+        document.getElementById('edit-pkg-modal')?.classList.add('hidden');
+        window.fetchData();
     };
 
     // ================================================================
@@ -1060,103 +1159,88 @@
     };
 
     window.calcInvoiceTotal = () => {
-        try {
-            let t=0, c=0;
-            const dEl=document.getElementById('inv-discount'); const d=parseFloat(dEl?dEl.value:0)||0;
-            const eEl=document.getElementById('inv-expenses'); const e=parseFloat(eEl?eEl.value:0)||0;
-            document.querySelectorAll('.inv-sel').forEach(sel => {
-                if (sel.value !== "0") {
-                    const qtyEl=sel.parentElement.querySelector('.inv-qty'); const qty=parseInt(qtyEl?qtyEl.value:1)||1;
-                    t += (parseFloat(sel.options[sel.selectedIndex].dataset.price||0) * qty);
-                    c += (parseFloat(sel.options[sel.selectedIndex].dataset.cost||0) * qty);
-                }
-            });
-            const finalT=t-d;
-            const itEl=document.getElementById('inv-total'); if(itEl)itEl.innerText=finalT;
-            const profit=finalT-c-e;
-            const pEl=document.getElementById('inv-profit');
-            if (pEl) { pEl.dataset.realProfit=profit; pEl.innerText=window.isProfitUnlocked?profit+" ج.م":"**** ج.م"; }
-        } catch(e){console.error(e);}
+        let t=0, c=0;
+        const dEl=document.getElementById('inv-discount'); const d=parseFloat(dEl?dEl.value:0)||0;
+        const eEl=document.getElementById('inv-expenses'); const e=parseFloat(eEl?eEl.value:0)||0;
+        document.querySelectorAll('.inv-sel').forEach(sel => {
+            if (sel.value !== "0") {
+                const qtyEl=sel.parentElement.querySelector('.inv-qty'); const qty=parseInt(qtyEl?qtyEl.value:1)||1;
+                t += (parseFloat(sel.options[sel.selectedIndex].dataset.price||0) * qty);
+                c += (parseFloat(sel.options[sel.selectedIndex].dataset.cost||0) * qty);
+            }
+        });
+        const finalT=t-d;
+        const itEl=document.getElementById('inv-total'); if(itEl)itEl.innerText=finalT;
+        const profit=finalT-c-e;
+        const pEl=document.getElementById('inv-profit');
+        if (pEl) { pEl.dataset.realProfit=profit; pEl.innerText=window.isProfitUnlocked?profit+" ج.م":"**** ج.م"; }
     };
 
-    // ================================================================
-    // SAVE INVOICE — FULL DETAILS PERSISTED TO FIRESTORE
-    // Stores: client, items[], subtotal, discount, expenses, cost,
-    //         total, profit, timestamp.
-    // This enables PDF re-generation from the Accounting tab later.
-    // ================================================================
-    window.saveInvoiceToFirestore = async () => {
-        try {
-            const btn = document.getElementById('btn-save-invoice');
-            if (btn) { btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...'; }
+    window.saveInvoiceToFirestore = () => {
+        const btn = document.getElementById('btn-save-invoice');
+        if (btn) { btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...'; }
 
-            const nEl=document.getElementById('inv-name');
-            const dEl=document.getElementById('inv-discount');
-            const eEl=document.getElementById('inv-expenses');
-            const pEl=document.getElementById('inv-profit');
-            const itEl=document.getElementById('inv-total');
+        const nEl=document.getElementById('inv-name');
+        const dEl=document.getElementById('inv-discount');
+        const eEl=document.getElementById('inv-expenses');
+        const pEl=document.getElementById('inv-profit');
+        const itEl=document.getElementById('inv-total');
 
-            const discount  = parseFloat(dEl?dEl.value:0)  || 0;
-            const expenses  = parseFloat(eEl?eEl.value:0)  || 0;
-            const total     = parseFloat(itEl?itEl.innerText:0);
+        const discount  = parseFloat(dEl?dEl.value:0)  || 0;
+        const expenses  = parseFloat(eEl?eEl.value:0)  || 0;
+        const total     = parseFloat(itEl?itEl.innerText:0);
 
-            if (total <= 0) {
-                alert("الفاتورة فارغة! أضف منتجاً على الأقل.");
-                if (btn) { btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> حفظ الفاتورة في الحسابات'; }
-                return;
-            }
-
-            // Collect detailed line items
-            const items = [];
-            let subtotal = 0;
-            let totalCost = 0;
-
-            document.querySelectorAll('.inv-sel').forEach(sel => {
-                if (sel.value !== "0") {
-                    const qtyEl  = sel.parentElement.querySelector('.inv-qty');
-                    const qty    = parseInt(qtyEl?qtyEl.value:1) || 1;
-                    const price  = parseFloat(sel.options[sel.selectedIndex].dataset.price  || 0);
-                    const cost   = parseFloat(sel.options[sel.selectedIndex].dataset.cost   || 0);
-                    const name   = sel.options[sel.selectedIndex].text.split('(')[0].trim();
-                    const lineTotal = price * qty;
-                    subtotal  += lineTotal;
-                    totalCost += cost * qty;
-                    items.push({ name, qty, price, lineTotal });
-                }
-            });
-
-            const profit = parseFloat(pEl?.dataset?.realProfit ?? 0) || 0;
-
-            await addDoc(collection(db, "invoices"), {
-                client:    (nEl?nEl.value:'عميل نقدي') || 'عميل نقدي',
-                items,          // full line-item array for PDF re-generation
-                subtotal,
-                discount,
-                expenses,
-                cost:      totalCost,
-                total,
-                profit,
-                timestamp: new Date().toLocaleDateString('ar-EG')
-            });
-
-            alert("✅ تم حفظ الفاتورة بنجاح!");
-
-            // Reset POS form
-            const icEl = document.getElementById('invoice-items'); if (icEl) icEl.innerHTML='';
-            if (nEl)  nEl.value  = '';
-            if (dEl)  dEl.value  = 0;
-            if (eEl)  eEl.value  = 0;
-            invRows = [];
-            window.calcInvoiceTotal();
-            window.fetchData();
-
+        if (total <= 0) {
+            alert("الفاتورة فارغة! أضف منتجاً على الأقل.");
             if (btn) { btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> حفظ الفاتورة في الحسابات'; }
-        } catch(e) {
-            console.error("saveInvoice:", e);
-            alert("حدث خطأ أثناء الحفظ!");
-            const btn = document.getElementById('btn-save-invoice');
-            if (btn) { btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> حفظ الفاتورة في الحسابات'; }
+            return;
         }
+
+        const items = [];
+        let subtotal = 0;
+        let totalCost = 0;
+
+        document.querySelectorAll('.inv-sel').forEach(sel => {
+            if (sel.value !== "0") {
+                const qtyEl  = sel.parentElement.querySelector('.inv-qty');
+                const qty    = parseInt(qtyEl?qtyEl.value:1) || 1;
+                const price  = parseFloat(sel.options[sel.selectedIndex].dataset.price  || 0);
+                const cost   = parseFloat(sel.options[sel.selectedIndex].dataset.cost   || 0);
+                const name   = sel.options[sel.selectedIndex].text.split('(')[0].trim();
+                const lineTotal = price * qty;
+                subtotal  += lineTotal;
+                totalCost += cost * qty;
+                items.push({ name, qty, price, lineTotal });
+            }
+        });
+
+        const profit = parseFloat(pEl?.dataset?.realProfit ?? 0) || 0;
+
+        window.siteData.invoices.push({
+            id: 'INV' + Date.now(),
+            client:    (nEl?nEl.value:'عميل نقدي') || 'عميل نقدي',
+            items,
+            subtotal,
+            discount,
+            expenses,
+            cost:      totalCost,
+            total,
+            profit,
+            timestamp: new Date().toLocaleDateString('ar-EG')
+        });
+
+        window.saveDataLocal();
+        alert("✅ تم حفظ الفاتورة بنجاح!");
+
+        const icEl = document.getElementById('invoice-items'); if (icEl) icEl.innerHTML='';
+        if (nEl)  nEl.value  = '';
+        if (dEl)  dEl.value  = 0;
+        if (eEl)  eEl.value  = 0;
+        invRows = [];
+        window.calcInvoiceTotal();
+        window.fetchData();
+
+        if (btn) { btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> حفظ الفاتورة في الحسابات'; }
     };
 
     // ================================================================
@@ -1182,15 +1266,14 @@
         }
     };
 
-    window.deleteInvoice = async id => {
+    window.deleteInvoice = id => {
         if (!window.isProfitUnlocked) { alert("يجب فك قفل الأرباح أولاً!"); return; }
         if (confirm("مسح الفاتورة نهائياً؟")) {
-            try { await deleteDoc(doc(db,"invoices",String(id))); window.fetchData(); }
-            catch(e) { console.error(e); }
+            window.siteData.invoices = window.siteData.invoices.filter(x => x.id !== id);
+            window.saveDataLocal(); window.fetchData();
         }
     };
 
-    // renderAccounting — now includes a PDF download button per row
     window.renderAccounting = (ts, tc, te) => {
         const sEl=document.getElementById('acc-sales'); if(sEl) sEl.innerText=ts+" ج.م";
         const ec=document.getElementById('acc-cost');
@@ -1207,20 +1290,12 @@
                         <br><span class="text-xs text-slate-400">${i.timestamp}</span>
                     </td>
                     <td class="p-3 font-bold text-blue-700">${i.total} ج.م</td>
-                    <td class="p-3 text-green-600 font-bold blurred-text"
-                        data-real-profit="${i.profit||(i.total-i.expenses)}">${pStr}</td>
+                    <td class="p-3 text-green-600 font-bold blurred-text" data-real-profit="${i.profit||(i.total-i.expenses)}">${pStr}</td>
                     <td class="p-3 text-center whitespace-nowrap">
-                        <button type="button"
-                            id="pdf-dl-btn-${i.id}"
-                            onclick="window.downloadPastInvoicePDF('${i.id}')"
-                            title="تحميل فاتورة PDF"
-                            class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 hover:bg-blue-100 font-bold text-xs px-3 py-2 rounded-lg border border-blue-100 transition ml-2">
+                        <button type="button" id="pdf-dl-btn-${i.id}" onclick="window.downloadPastInvoicePDF('${i.id}')" title="تحميل فاتورة PDF" class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 hover:bg-blue-100 font-bold text-xs px-3 py-2 rounded-lg border border-blue-100 transition ml-2">
                             <i class="fas fa-file-pdf"></i> PDF
                         </button>
-                        <button type="button"
-                            onclick="window.deleteInvoice('${i.id}')"
-                            title="حذف الفاتورة"
-                            class="inline-flex items-center text-red-500 hover:bg-red-50 p-2 rounded-lg transition">
+                        <button type="button" onclick="window.deleteInvoice('${i.id}')" title="حذف الفاتورة" class="inline-flex items-center text-red-500 hover:bg-red-50 p-2 rounded-lg transition">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -1228,34 +1303,21 @@
         });
     };
 
-    // ================================================================
-    // PDF GENERATION FROM ACCOUNTING TABLE
-    // Populates the hidden #pdf-invoice-template, then calls html2pdf.
-    // Handles both new invoices (with items[]) and legacy invoices
-    // (which only have a total).
-    // ================================================================
     window.downloadPastInvoicePDF = async (invoiceId) => {
         const btn = document.getElementById(`pdf-dl-btn-${invoiceId}`);
         const originalBtnHTML = btn ? btn.innerHTML : '';
         try {
             const inv = (window.siteData.invoices || []).find(i => String(i.id) === String(invoiceId));
             if (!inv) { alert("لم يتم العثور على الفاتورة!"); return; }
-
-            // Show loading state on the button
             if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...'; btn.disabled = true; }
-
+            
             const template = document.getElementById('pdf-invoice-template');
-            if (!template) { alert("خطأ: قالب الفاتورة غير موجود!"); return; }
-
-            // Helper to safely set text
             const setT = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = String(val ?? ''); };
 
-            // Populate meta fields
             setT('pdf-inv-client', inv.client || 'عميل نقدي');
             setT('pdf-inv-id',     String(invoiceId).slice(-8).toUpperCase());
             setT('pdf-inv-date',   inv.timestamp || new Date().toLocaleDateString('ar-EG'));
 
-            // Populate items table
             const tbody = document.getElementById('pdf-inv-items');
             if (tbody) {
                 tbody.innerHTML = '';
@@ -1277,56 +1339,35 @@
                     });
                     setT('pdf-inv-subtotal', inv.subtotal ?? subtotalCalc);
                 } else {
-                    // Legacy invoice: no line items stored
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="5"
-                                style="padding:18px 12px; text-align:center; color:#94a3b8; font-style:italic; font-size:13px;">
-                                تفاصيل البنود غير متوفرة (فاتورة قديمة)
-                            </td>
-                        </tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" style="padding:18px 12px; text-align:center; color:#94a3b8; font-style:italic; font-size:13px;">تفاصيل البنود غير متوفرة (فاتورة قديمة)</td></tr>`;
                     setT('pdf-inv-subtotal', inv.subtotal ?? inv.total ?? 0);
                 }
             }
-
-            // Discount row — show/hide based on value
             const discount    = inv.discount ?? 0;
             const discountRow = document.getElementById('pdf-discount-row');
             if (discountRow) discountRow.style.display = discount > 0 ? 'table-row' : 'none';
             setT('pdf-inv-discount', discount);
             setT('pdf-inv-total', inv.total ?? 0);
 
-            // Make template visible off-screen for html2canvas capture
             template.style.display   = 'block';
             template.style.position  = 'fixed';
             template.style.left      = '-9999px';
             template.style.top       = '0';
 
-            // Wait for fonts before rendering
             await document.fonts.ready;
-
             const clientName = (inv.client || 'عميل').replace(/[^\w\u0600-\u06FF]/g, '_');
             const opt = {
                 margin:     [12, 10, 12, 10],
                 filename:   `فاتورة_روبوتك_${clientName}.pdf`,
                 image:      { type: 'jpeg', quality: 0.97 },
-                html2canvas: {
-                    scale:         2,
-                    useCORS:       true,
-                    allowTaint:    false,
-                    letterRendering: true,
-                    windowWidth:   900
-                },
+                html2canvas: { scale: 2, useCORS: true, allowTaint: false, letterRendering: true, windowWidth: 900 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-
             await html2pdf().set(opt).from(template).save();
-
         } catch(e) {
-            console.error("downloadPastInvoicePDF error:", e);
+            console.error(e);
             alert("حدث خطأ أثناء توليد الـ PDF. يرجى المحاولة مرة أخرى.");
         } finally {
-            // Always hide the template and restore button
             const template = document.getElementById('pdf-invoice-template');
             if (template) template.style.display = 'none';
             if (btn) { btn.innerHTML = originalBtnHTML; btn.disabled = false; }
@@ -1336,14 +1377,13 @@
     // ================================================================
     // SETTINGS
     // ================================================================
-    window.saveSettingsFirestore = async () => {
-        try {
-            const pEl=document.getElementById('setting-phone');
-            const fEl=document.getElementById('setting-free-install');
-            const iEl=document.getElementById('setting-install-fee');
-            await setDoc(doc(db,"settings","general"),{ whatsappNumber:pEl?pEl.value:"", freeInstall:fEl?fEl.checked:false, installFee:parseFloat(iEl?iEl.value:0)||0 });
-            alert("تم حفظ الإعدادات!"); window.fetchData();
-        } catch(e){console.error(e);}
+    window.saveSettingsFirestore = () => {
+        const pEl=document.getElementById('setting-phone');
+        const fEl=document.getElementById('setting-free-install');
+        const iEl=document.getElementById('setting-install-fee');
+        window.siteData.settings = { whatsappNumber:pEl?pEl.value:"", freeInstall:fEl?fEl.checked:false, installFee:parseFloat(iEl?iEl.value:0)||0 };
+        window.saveDataLocal();
+        alert("تم حفظ الإعدادات!"); window.fetchData();
     };
 
     // ================================================================
@@ -1428,8 +1468,6 @@
     window.sendQuizWhatsApp = () => {
         window.openWhatsApp(`مرحباً روبوتك.\nالنتيجة المرشحة: *(${window.recommendedPkgName})*\nالإجابات: ${userAns.q1}, ${userAns.q2}, ${userAns.q3}, ${userAns.q4}\nمطلوب معاينة.`);
     };
-
-    window.onload = () => window.fetchData();
 </script>
 </body>
 </html>
