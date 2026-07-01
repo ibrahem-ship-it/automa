@@ -177,6 +177,14 @@
         </div>
     </div>
 
+    <!-- PACKAGE DETAILS -->
+    <div id="page-package-details" class="hidden page-section py-16 bg-white min-h-screen">
+        <div class="container mx-auto px-4">
+            <button type="button" onclick="window.showPage('page-home'); setTimeout(()=> document.getElementById('packages-section').scrollIntoView(), 100);" class="mb-6 text-blue-600 font-semibold flex items-center gap-2"><i class="fas fa-arrow-right"></i> العودة للباقات</button>
+            <div class="flex flex-col md:flex-row gap-8" id="package-details-content"></div>
+        </div>
+    </div>
+
     <!-- QUIZ -->
     <div id="page-quiz" class="hidden page-section py-12 md:py-16 bg-slate-50 min-h-screen">
         <div class="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg m-4" id="quiz-container">
@@ -501,114 +509,125 @@
         settings: { whatsappNumber: "201000000000", freeInstall: true, installFee: 500 },
         invoices: [],
         products: [
-            { id: "F3vu0PbvUAHnNr0n5fbp", name: "مفتاح ذكي 1 خط", price: 650, costPrice: 450, desc: "للتحكم في خط إضاءة واحد عن بعد", category: "switches", isHidden: false },
-            { id: "ddR8xK1xizGN42fzi7sd", name: "مفتاح ذكي 2 خط", price: 750, costPrice: 500, desc: "للتحكم في خطين إضاءة", category: "switches", isHidden: false },
-            { id: "DLZqHY4tjWt8lrR1qL01", name: "مفتاح ذكي 3 خط", price: 850, costPrice: 600, desc: "للتحكم في 3 خطوط إضاءة", category: "switches", isHidden: false },
-            { id: "gn5sm8evR6bH08DGN8HL", name: "مفتاح سخان ذكي", price: 1200, costPrice: 850, desc: "للتحكم في تشغيل السخان عن بعد وتوفير الكهرباء", category: "switches", isHidden: false },
-            { id: "IGLLKH0NLkHDpaAGvRXs", name: "لوحة تحكم ذكية", price: 3500, costPrice: 2800, desc: "شاشة لمس مركزية للتحكم بالمنزل", category: "panels", isHidden: false },
-            { id: "tC1lMe1iWAh211qQIIWk", name: "حساس حركة", price: 450, costPrice: 300, desc: "لتشغيل الإضاءة أو الإنذار عند استشعار الحركة", category: "sensors", isHidden: false },
-            { id: "2CSzIXlLJSxq913y1rdu", name: "حساس باب ونافذة", price: 350, costPrice: 200, desc: "للتنبيه عند فتح الأبواب والنوافذ", category: "sensors", isHidden: false },
-            { id: "V0eKa5wPD00uoCUYTccn", name: "كاميرا داخلية", price: 1500, costPrice: 1100, desc: "كاميرا مراقبة داخلية 360 درجة", category: "cameras", isHidden: false },
-            { id: "kFAmQa9D9SfsWmjFVbLF", name: "كاميرا خارجية", price: 2500, costPrice: 1900, desc: "كاميرا خارجية مقاومة للماء", category: "cameras", isHidden: false },
-            { id: "NmjIfb1MB7AwnZUjVjAv", name: "قفل ذكي للأبواب", price: 5500, costPrice: 4200, desc: "يفتح بالبصمة، الكارت، والرقم السري", category: "locks", isHidden: false },
-            { id: "fOyfoEPpQrgjivI5lc9W", name: "حساس دخان", price: 600, costPrice: 400, desc: "لإنذار الحريق الذكي", category: "sensors", isHidden: false },
-            { id: "I0uLsYUliufGPHNVItym", name: "حساس غاز", price: 750, costPrice: 500, desc: "يستشعر تسريب الغاز ويعطي إنذار", category: "sensors", isHidden: false },
-            { id: "KOPlB3ICOyKyYY2ertBM", name: "محبس مياه/غاز ذكي", price: 1800, costPrice: 1300, desc: "يغلق تلقائياً عند استشعار التسريب", category: "other", isHidden: false },
-            { id: "tMtTxaXlrWki0vnOIhRe", name: "وحدة تحكم ري ذكية", price: 2100, costPrice: 1600, desc: "للتحكم في ري الحديقة عن بعد وتوفير المياه", category: "other", isHidden: false },
-            { id: "9aoFEqRGb89uvnWnEuLj", name: "حساس تسريب مياه", price: 400, costPrice: 250, desc: "يستشعر تسريب المياه وينبهك", category: "sensors", isHidden: false },
-            { id: "YK8tJ4DFcnL70WqZEx80", name: "وحدة تحكم مكيف ذكي", price: 950, costPrice: 650, desc: "يتحكم في المكيف والتلفزيون عبر الهاتف", category: "other", isHidden: false },
-            { id: "zMy3ZxlaKQ9JDrZVERFf", name: "جهاز تحكم بالستائر", price: 1100, costPrice: 800, desc: "يفتح ويغلق الستائر بضغطة زر", category: "switches", isHidden: false },
-            { id: "Gnc3qqYmZ5yQfgYU2B07", name: "نظام صوتي ذكي", price: 6500, costPrice: 4800, desc: "أمبليفاير للتحكم في الصوتيات وتوزيعها", category: "other", isHidden: false },
-            { id: "b69vkFu5ZqpdDJsZQf0b", name: "سماعة سقف ذكية", price: 850, costPrice: 600, desc: "سماعة مدمجة في السقف بصوت نقي", category: "other", isHidden: false },
-            { id: "rFi0bAuM9WEbzVmfY6BH", name: "شاشة عرض سمارت", price: 4200, costPrice: 3200, desc: "شاشة للتحكم الكامل بأنظمة المنزل", category: "panels", isHidden: false },
-            { id: "Bd8OyaoaWZJhS3T8qwSa", name: "راوتر مقوي شبكة", price: 1800, costPrice: 1400, desc: "موزع واي فاي لتغطية قوية", category: "other", isHidden: false },
-            { id: "2OpjzJfAXsZoYIRV6p3D", name: "جهاز إنذار صوتي", price: 550, costPrice: 350, desc: "يصدر صوتاً قوياً عند اختراق النظام", category: "other", isHidden: false },
-            { id: "Hz3eMyATa5D7oZG1pNRa", name: "وحدة تحكم رئيسية", price: 1200, costPrice: 850, desc: "العقل المدبر لربط الأجهزة الذكية", category: "other", isHidden: false },
-            { id: "TuHv8IhgSDMtSz4v8XBT", name: "كشاف إضاءة ذكي", price: 1400, costPrice: 950, desc: "للأماكن الخارجية، يضيء عند الحركة", category: "other", isHidden: false },
-            { id: "1ZaIU11i2BzBLWnoOvlF", name: "جهاز بصمة حضور", price: 2900, costPrice: 2100, desc: "للمكاتب والشركات", category: "locks", isHidden: false },
-            { id: "OZl34QSJtnNAZIU9cDlS", name: "فيشة ذكية", price: 450, costPrice: 300, desc: "للتحكم في الأجهزة المتصلة بالكهرباء", category: "switches", isHidden: false },
-            { id: "hmPvQ99Burx9rl1uhTXW", name: "شريط إضاءة LED ذكي", price: 900, costPrice: 650, desc: "تغيير الألوان والسطوع بالهاتف", category: "other", isHidden: false },
-            { id: "WvbpdS7Y9kDfuhMgaYS8", name: "موتور ستارة ذكي", price: 2500, costPrice: 1800, desc: "موتور قوي لتحريك الستائر الثقيلة", category: "other", isHidden: false },
-            { id: "nE1SMWOL9AILFx4wRpx3", name: "زر طوارئ ذكي", price: 300, costPrice: 180, desc: "زر استدعاء SOS للمرضى", category: "sensors", isHidden: false },
-            { id: "A6jBvc9GvYcYiKtopx1W", name: "حساس حرارة ورطوبة", price: 450, costPrice: 300, desc: "لقياس جو الغرفة", category: "sensors", isHidden: false },
-            { id: "JHfdtDALMsOX6BbO3f50", name: "نظام انتركم ذكي", price: 4800, costPrice: 3600, desc: "رؤية والتحدث مع الزائر من هاتفك", category: "cameras", isHidden: false },
-            { id: "lur7Vw7QiF30vHrrt3IL", name: "مفتاح إضاءة لاسلكي", price: 350, costPrice: 220, desc: "يعمل بالبطارية كزر إضافي للإضاءة", category: "switches", isHidden: false },
-            { id: "PNxmfbCs9jmvcUZGS9pU", name: "لمبة ذكية RGB", price: 280, costPrice: 180, desc: "لمبة للتحكم في اللون والإضاءة", category: "other", isHidden: false },
-            { id: "ItISDDWwqM3OsVrzQN4Z", name: "حساس إضاءة LDR", price: 250, costPrice: 150, desc: "يستشعر الضوء لتشغيل الأنوار ليلاً", category: "sensors", isHidden: false },
-            { id: "ufaQgffzRsiacIHeeGfi", name: "لوحة سيناريوهات", price: 750, costPrice: 500, desc: "لوحة بأزرار لتشغيل أوضاع جاهزة", category: "switches", isHidden: false },
-            { id: "kJrOiPlfca6nwlqA8c2T", name: "كاشف كسر زجاج", price: 550, costPrice: 380, desc: "ينذر فوراً عند محاولة كسر الزجاج", category: "sensors", isHidden: false },
-            { id: "aAj0UiQ3OTAQGn6saniy", name: "وحدة توسعة إضافية", price: 950, costPrice: 700, desc: "لزيادة تغطية الأجهزة الذكية بالمنزل", category: "other", isHidden: false }
+            { id: "1ZaIU11i2BzBLWnoOvlF", category: "other", costPrice: 8750, desc: "ارتقِ بتجربة استقبال الزوار مع نظام تواصل مرئي متطور يجمع بين الأمان، الوضوح، وسهولة الاستخدام. يمنحك إمكانية رؤية الزائر والتحدث معه بوضوح قبل فتح الباب، مما يوفر مستوى أعلى من الحماية والراحة لجميع أفراد الأسرة. يتميز بشاشة داخلية كبيرة وكاميرا خارجية عالية الدقة، ليقدم صورة واضحة وصوتًا نقيًا في مختلف الأوقات، مع تصميم عصري يناسب المنازل، الفيلات، والمباني السكنية الحديثة.", images: ["https://i.ibb.co/B2jXd4qV/Whats-App-Image-2026-06-27-at-12-30-12-PM-6.jpg", "https://i.ibb.co/YB0xJWR4/Whats-App-Image-2026-06-27-at-12-30-13-PM-4.jpg"], imgUrl: "https://i.ibb.co/B2jXd4qV/Whats-App-Image-2026-06-27-at-12-30-12-PM-6.jpg", name: "بوابة التواصل الذكية", price: 33500 },
+            { id: "2CSzIXlLJSxq913y1rdu", category: "sensors", costPrice: 1650, desc: "امنح منزلك طبقة إضافية من الأمان مع جهاز ذكي مصمم لاكتشاف الدخان في مراحله الأولى، ليمنحك الوقت الكافي للتصرف قبل تفاقم الموقف. يعمل على مراقبة المكان باستمرار، وعند اكتشاف أي مؤشرات غير طبيعية، يصدر إنذارًا فوريًا ويرسل إشعارات مباشرة إلى هاتفك أينما كنت.", images: ["https://i.ibb.co/d0mF6FDh/Whats-App-Image-2026-06-27-at-12-30-11-PM-10.jpg", "https://i.ibb.co/gb8ZkGDr/Whats-App-Image-2026-06-27-at-12-30-13-PM-15.jpg", "https://i.ibb.co/8nYcqbnq/Whats-App-Image-2026-06-27-at-12-30-15-PM-13.jpg"], imgUrl: "https://i.ibb.co/d0mF6FDh/Whats-App-Image-2026-06-27-at-12-30-11-PM-10.jpg", name: "حارس الحريق الذكي", price: 9900 },
+            { id: "2OpjzJfAXsZoYIRV6p3D", category: "locks", costPrice: 6000, desc: "امنح منزلك أو مكان عملك مستوى جديدًا من الأمان والراحة مع نظام دخول ذكي يجمع بين التصميم العصري وسهولة الاستخدام. يوفر لك عدة وسائل للدخول لتناسب احتياجاتك اليومية، مع إمكانية إدارة الباب والتحكم به من خلال الهاتف.", images: ["https://i.ibb.co/DfTb17v6/Whats-App-Image-2026-06-27-at-12-30-15-PM-2.jpg", "https://i.ibb.co/Jw3zWKS2/Whats-App-Image-2026-06-27-at-12-30-11-PM-3.jpg"], imgUrl: "https://i.ibb.co/DfTb17v6/Whats-App-Image-2026-06-27-at-12-30-15-PM-2.jpg", name: "بوابة الوصول الذكية", price: 22000 },
+            { id: "9aoFEqRGb89uvnWnEuLj", category: "other", costPrice: 2500, desc: "ارفع مستوى الأمان في منزلك مع وحدة ذكية تمنحك تحكمًا كاملاً في صمامات المياه أو الغاز من أي مكان. صُممت لتساعدك على الاستجابة السريعة في حالات الطوارئ أو عند نسيان إغلاق الصمام.", images: ["https://i.ibb.co/RTdQh3yy/Whats-App-Image-2026-06-27-at-12-30-15-PM-14.jpg", "https://i.ibb.co/SDfXfJBd/Whats-App-Image-2026-06-27-at-12-30-13-PM-9.jpg"], imgUrl: "https://i.ibb.co/RTdQh3yy/Whats-App-Image-2026-06-27-at-12-30-15-PM-14.jpg", name: "وحدة الإغلاق الذكية للحماية", price: 9000 },
+            { id: "A6jBvc9GvYcYiKtopx1W", category: "other", costPrice: 2150, desc: "راقب استهلاك الكهرباء بدقة واتخذ قرارات أفضل لإدارة الطاقة داخل منزلك أو مكان عملك. تمنحك هذه الوحدة الذكية رؤية واضحة لاستهلاك الأجهزة والدوائر الكهربائية لحظة بلحظة.", images: ["https://i.ibb.co/gFHs7P7X/Whats-App-Image-2026-06-27-at-12-30-10-PM-3.jpg", "https://i.ibb.co/wrCrVFVc/Whats-App-Image-2026-06-27-at-12-30-13-PM-2.jpg"], imgUrl: "https://i.ibb.co/gFHs7P7X/Whats-App-Image-2026-06-27-at-12-30-10-PM-3.jpg", name: "مركز متابعة الطاقة الذكي", price: 12900 },
+            { id: "Bd8OyaoaWZJhS3T8qwSa", category: "locks", costPrice: 5000, desc: "اجعل حماية منزلك أو مكتبك أكثر ذكاءً وراحة مع نظام دخول متطور يجمع بين الأمان، السرعة، وسهولة الاستخدام. يوفر لك عدة وسائل للدخول لتختار الطريقة الأنسب في كل مرة.", images: ["https://i.ibb.co/3yc4DFL5/Whats-App-Image-2026-06-27-at-12-30-15-PM-20.jpg", "https://i.ibb.co/xq7TpzxS/Whats-App-Image-2026-06-27-at-12-30-15-PM-4.jpg"], imgUrl: "https://i.ibb.co/3yc4DFL5/Whats-App-Image-2026-06-27-at-12-30-15-PM-20.jpg", name: "بوابة الأمان الذكية", price: 30000 },
+            { id: "DLZqHY4tjWt8lrR1qL01", category: "switches", costPrice: 2200, desc: "استمتع بتجربة تحكم استثنائية تجمع بين التصميم الفاخر والتقنيات الذكية في لوحة واحدة. بواجهة لمس كاملة وتأثيرات ضوئية محيطية تضفي لمسة راقية على المكان.", images: ["https://i.ibb.co/RVXknqG/Whats-App-Image-2026-06-27-at-12-30-14-PM-6.jpg", "https://i.ibb.co/5XkwM6Bt/Whats-App-Image-2026-06-27-at-12-30-09-PM-2.jpg", "https://i.ibb.co/FqB8QyLw/Whats-App-Image-2026-06-27-at-12-30-09-PM-3.jpg"], imgUrl: "https://i.ibb.co/RVXknqG/Whats-App-Image-2026-06-27-at-12-30-14-PM-6.jpg", name: "لوحة اللمس الذكية التفاعلية", price: 13200 },
+            { id: "F3vu0PbvUAHnNr0n5fbp", category: "panels", costPrice: 16000, desc: "ارتقِ بتجربة منزلك الذكي مع لوحة تحكم متطورة تجمع إدارة جميع الأجهزة في شاشة واحدة أنيقة وسهلة الاستخدام. بفضل شاشة عالية الوضوح وتقنيات الاتصال المتعددة، يمكنك التحكم في كل شيء بسهولة.", images: ["https://i.ibb.co/qMfTGJ0C/Whats-App-Image-2026-06-27-at-12-30-12-PM-3.jpg"], imgUrl: "https://i.ibb.co/qMfTGJ0C/Whats-App-Image-2026-06-27-at-12-30-12-PM-3.jpg", name: "مركز القيادة الذكي", price: 54300 },
+            { id: "Gnc3qqYmZ5yQfgYU2B07", category: "other", costPrice: 2450, desc: "استمتع بتجربة صوتية راقية في جميع أنحاء منزلك مع وحدة صوت ذكية مدمجة تجمع بين التصميم الأنيق وجودة الصوت العالية. صُممت لتندمج داخل الحائط لتمنحك مظهرًا عصريًا.", images: ["https://i.ibb.co/Jw8jjq5C/Whats-App-Image-2026-06-27-at-12-30-13-PM-5.jpg"], imgUrl: "https://i.ibb.co/Jw8jjq5C/Whats-App-Image-2026-06-27-at-12-30-13-PM-5.jpg", name: "نظام الصوت الذكي المدمج", price: 14750 },
+            { id: "Hz3eMyATa5D7oZG1pNRa", category: "switches", costPrice: 3300, desc: "اجمع بين إدارة أجهزتك الكهربائية والشحن السريع في وحدة واحدة بتصميم عصري يوفر الراحة والأداء. تمنحك هذه الوحدة إمكانية التحكم الذكي في الأجهزة، إلى جانب منفذ شحن عالي الكفاءة.", images: ["https://i.ibb.co/4nqK8wwG/Whats-App-Image-2026-06-27-at-12-30-11-PM-9.jpg", "https://i.ibb.co/0VDvVFf2/Whats-App-Image-2026-06-27-at-12-30-14-PM-3.jpg"], imgUrl: "https://i.ibb.co/4nqK8wwG/Whats-App-Image-2026-06-27-at-12-30-11-PM-9.jpg", name: "محطة الشحن والتحكم الذكية", price: 19800 },
+            { id: "I0uLsYUliufGPHNVItym", category: "sensors", costPrice: 850, desc: "اجعل منزلك أكثر أمانًا مع مستشعر ذكي يراقب حالة الأبواب والنوافذ على مدار الساعة. بمجرد فتح أو إغلاق أي باب أو نافذة، يصلك إشعار فوري على هاتفك.", images: ["https://i.ibb.co/LX30w9Jt/Whats-App-Image-2026-06-27-at-12-30-15-PM-15.jpg"], imgUrl: "https://i.ibb.co/LX30w9Jt/Whats-App-Image-2026-06-27-at-12-30-15-PM-15.jpg", name: "عين الحماية الذكية", price: 4500 },
+            { id: "IGLLKH0NLkHDpaAGvRXs", category: "switches", costPrice: 1000, desc: "امنح أجهزتك مستوى جديدًا من الذكاء والتحكم مع وحدة تشغيل ذكية تتيح لك إدارة الأجهزة الكهربائية بسهولة من أي مكان. يمكنك متابعة استهلاك الكهرباء لحظة بلحظة.", images: ["https://i.ibb.co/v61qrSYn/Whats-App-Image-2026-06-27-at-12-30-09-PM-7.jpg"], imgUrl: "https://i.ibb.co/v61qrSYn/Whats-App-Image-2026-06-27-at-12-30-09-PM-7.jpg", name: "وحدة التحكم الذكية بالطاقة", price: 6000 },
+            { id: "ItISDDWwqM3OsVrzQN4Z", category: "switches", costPrice: 3500, desc: "ارتقِ بتجربة التحكم في الإضاءة مع لوحة ذكية تجمع بين التصميم العصري والتقنيات المتقدمة. تتميز بشاشة تفاعلية أنيقة تعرض أسماء الوظائف بشكل واضح.", images: ["https://i.ibb.co/9jQg7vn/Whats-App-Image-2026-06-27-at-12-30-08-PM.jpg", "https://i.ibb.co/WvH9pbh0/Whats-App-Image-2026-06-27-at-12-30-09-PM-1.jpg"], imgUrl: "https://i.ibb.co/9jQg7vn/Whats-App-Image-2026-06-27-at-12-30-08-PM.jpg", name: "لوحة التحكم الذكية بالشاشة التفاعلية", price: 21000 },
+            { id: "J0eEexbCE8ZJAOQw6SX8", category: "switches", costPrice: 2100, desc: "ارتقِ بتجربة التحكم في سخان المياه من خلال وحدة ذكية تجمع بين الأناقة وسهولة الاستخدام. تتيح لك تشغيل السخان وإيقافه عن بُعد بكل راحة.", images: ["https://i.ibb.co/TDtLMnh0/Whats-App-Image-2026-06-27-at-12-30-10-PM.jpg", "https://i.ibb.co/HfmCyZVs/Whats-App-Image-2026-06-27-at-12-30-12-PM-7.jpg"], imgUrl: "https://i.ibb.co/TDtLMnh0/Whats-App-Image-2026-06-27-at-12-30-10-PM.jpg", name: "وحدة إدارة السخان", price: 8500 },
+            { id: "JHfdtDALMsOX6BbO3f50", category: "locks", costPrice: 14500, desc: "استمتع بتجربة أمان متكاملة تجمع بين تقنيات الدخول الذكية والمراقبة الفورية في جهاز واحد. يمنحك هذا النظام القدرة على معرفة من يقف أمام الباب والتواصل معه.", images: ["https://i.ibb.co/k2ytSNqB/Whats-App-Image-2026-06-27-at-12-30-15-PM-21.jpg"], imgUrl: "https://i.ibb.co/k2ytSNqB/Whats-App-Image-2026-06-27-at-12-30-15-PM-21.jpg", name: "نظام الحماية الذكي بالرؤية المباشرة", price: 54000 },
+            { id: "KOPlB3ICOyKyYY2ertBM", category: "other", costPrice: 2800, desc: "امنح نباتاتك العناية التي تستحقها مع نظام ري ذكي يتولى إدارة مواعيد الري بدقة دون الحاجة إلى المتابعة اليومية. سواء كنت في المنزل أو خارجه، يمكنك التحكم بسهولة.", images: ["https://i.ibb.co/wrWjv9vn/Whats-App-Image-2026-06-27-at-12-30-09-PM-5.jpg", "https://i.ibb.co/Df3nZbc0/Whats-App-Image-2026-06-27-at-12-30-12-PM-9.jpg", "https://i.ibb.co/67n132Sy/Whats-App-Image-2026-06-27-at-12-30-12-PM-8.jpg"], imgUrl: "https://i.ibb.co/wrWjv9vn/Whats-App-Image-2026-06-27-at-12-30-09-PM-5.jpg", name: "مدير الري الذكي", price: 12200 },
+            { id: "NmjIfb1MB7AwnZUjVjAv", category: "switches", costPrice: 1400, desc: "اجعل التحكم في سخان المياه أكثر سهولة وأمانًا مع وحدة ذكية تمنحك القدرة على تشغيله وإيقافه في أي وقت ومن أي مكان.", images: ["https://i.ibb.co/3mwvKdT7/Whats-App-Image-2026-06-27-at-12-30-13-PM-18.jpg", "https://i.ibb.co/yc0Tdtv7/Whats-App-Image-2026-06-27-at-12-30-13-PM-14.jpg", "https://i.ibb.co/5xn7L8HF/Whats-App-Image-2026-06-27-at-12-30-13-PM-8.jpg"], imgUrl: "https://i.ibb.co/3mwvKdT7/Whats-App-Image-2026-06-27-at-12-30-13-PM-18.jpg", name: "مركز الإدارة الذكي للسخان", price: 8400 },
+            { id: "OZl34QSJtnNAZIU9cDlS", category: "switches", costPrice: 1750, desc: "حوّل تجربة التحكم في إضاءة منزلك إلى مستوى أكثر تطورًا مع لوحة تحكم عصرية تجمع بين الأناقة والذكاء في تصميم واحد.", images: ["https://i.ibb.co/S4WD53Wr/Whats-App-Image-2026-06-27-at-12-30-13-PM-10.jpg", "https://i.ibb.co/rffzF9W4/Whats-App-Image-2026-06-27-at-12-30-13-PM-13.jpg"], imgUrl: "https://i.ibb.co/S4WD53Wr/Whats-App-Image-2026-06-27-at-12-30-13-PM-10.jpg", name: "لوحة الإضاءة الذكية متعددة المناطق", price: 10500 },
+            { id: "PNxmfbCs9jmvcUZGS9pU", category: "switches", costPrice: 1500, desc: "ارتقِ بتجربة الإضاءة في منزلك دون تغيير شكل المفاتيح الحالية. تمنحك هذه الوحدة المدمجة تحكمًا دقيقًا في شدة الإضاءة.", images: ["https://i.ibb.co/rKR5QKmK/Whats-App-Image-2026-06-27-at-12-30-12-PM-2.jpg", "https://i.ibb.co/DDDj9TmG/Whats-App-Image-2026-06-27-at-12-30-14-PM-4.jpg"], imgUrl: "https://i.ibb.co/rKR5QKmK/Whats-App-Image-2026-06-27-at-12-30-12-PM-2.jpg", name: "وحدة الإضاءة الذكية المخفية", price: 9000 },
+            { id: "SiJTLx9FD2SmZfSSd10V", category: "locks", costPrice: 14900, desc: "احمِ مداخل منزلك أو بوابتك الرئيسية بحل أمني متطور صُمم خصيصًا للعمل في البيئات الخارجية. يجمع بين المتانة، والتقنيات الذكية، وسهولة الاستخدام.", images: ["https://i.ibb.co/q3kJ3SxS/Whats-App-Image-2026-06-27-at-12-30-14-PM-7.jpg"], imgUrl: "https://i.ibb.co/q3kJ3SxS/Whats-App-Image-2026-06-27-at-12-30-14-PM-7.jpg", name: "نظام الحماية الذكي الخارجي", price: 45000 },
+            { id: "SjVzLKhqOCXvyF3Coh1p", category: "locks", costPrice: 10700, desc: "استمتع بتجربة دخول أكثر أمانًا وسهولة مع نظام ذكي يجمع بين الحجم الأنيق والأداء الموثوق. صُمم ليمنحك وصولًا سريعًا إلى منزلك دون الحاجة إلى المفاتيح التقليدية.", images: ["https://i.ibb.co/LdScfKtd/Whats-App-Image-2026-06-27-at-12-30-13-PM-24.jpg", "https://i.ibb.co/27vTXgZg/Whats-App-Image-2026-06-27-at-12-30-10-PM-6.jpg", "https://i.ibb.co/sd9C4mYS/Whats-App-Image-2026-06-27-at-12-30-10-PM-5.jpg"], imgUrl: "https://i.ibb.co/LdScfKtd/Whats-App-Image-2026-06-27-at-12-30-13-PM-24.jpg", name: "نظام الدخول الذكي المدمج", price: 32100 },
+            { id: "TuHv8IhgSDMtSz4v8XBT", category: "other", costPrice: 7850, desc: "اجمع جميع أجهزة منزلك الذكي في نظام واحد يعمل بسرعة، استقرار، وخصوصية عالية. توفر هذه الوحدة مركز تحكم احترافي يربط مختلف الأجهزة الذكية.", images: ["https://i.ibb.co/4wsBxs4L/Whats-App-Image-2026-06-27-at-12-30-13-PM-21.jpg", "https://i.ibb.co/chWDZFhd/Whats-App-Image-2026-06-27-at-12-30-11-PM.jpg"], imgUrl: "https://i.ibb.co/4wsBxs4L/Whats-App-Image-2026-06-27-at-12-30-13-PM-21.jpg", name: "العقل المركزي للمنزل الذكي", price: 47050 },
+            { id: "UpAcMKDEfdNpi9nwGDV1", category: "switches", costPrice: 1350, desc: "حوّل الإضاءة التقليدية إلى تجربة ذكية دون الحاجة إلى استبدال المفاتيح الحالية. صُممت هذه الوحدة الصغيرة ليتم تركيبها داخل علبة المفتاح.", images: ["https://i.ibb.co/xqTwDCtv/Whats-App-Image-2026-06-27-at-12-30-15-PM-10.jpg"], imgUrl: "https://i.ibb.co/xqTwDCtv/Whats-App-Image-2026-06-27-at-12-30-15-PM-10.jpg", name: "وحدة التعتيم الذكية المخفية", price: 8100 },
+            { id: "V0eKa5wPD00uoCUYTccn", category: "sensors", costPrice: 2700, desc: "عزز أمان منزلك أو مكان عملك مع نظام ذكي مصمم لاكتشاف تسربات الغاز ومراقبة درجة الحرارة على مدار الساعة.", images: ["https://i.ibb.co/qMGWmqvH/Whats-App-Image-2026-06-27-at-12-30-12-PM-4.jpg", "https://i.ibb.co/KzNp5GVt/Whats-App-Image-2026-06-27-at-12-30-13-PM-11.jpg"], imgUrl: "https://i.ibb.co/qMGWmqvH/Whats-App-Image-2026-06-27-at-12-30-12-PM-4.jpg", name: "حارس الغاز الذكي", price: 11000 },
+            { id: "WvbpdS7Y9kDfuhMgaYS8", category: "panels", costPrice: 3900, desc: "حوّل منزلك إلى مساحة أكثر ذكاءً مع لوحة تحكم متطورة تمنحك إدارة كاملة لجميع أجهزتك من شاشة لمس واحدة.", images: ["https://i.ibb.co/23cWrBsc/Whats-App-Image-2026-06-27-at-12-30-15-PM-18.jpg", "https://i.ibb.co/0p9sbhSb/Whats-App-Image-2026-06-27-at-12-30-15-PM-7.jpg", "https://i.ibb.co/cp3Gs5n/Whats-App-Image-2026-06-27-at-12-30-15-PM-6.jpg"], imgUrl: "https://i.ibb.co/23cWrBsc/Whats-App-Image-2026-06-27-at-12-30-15-PM-18.jpg", name: "لوحة التحكم الذكية المركزية", price: 16700 },
+            { id: "YK8tJ4DFcnL70WqZEx80", category: "other", costPrice: 3000, desc: "اجعل جميع أجهزتك الذكية تعمل بتناغم من خلال وحدة مركزية تجمعها في نظام واحد سهل الإدارة.", images: ["https://i.ibb.co/xSyVXzFQ/Whats-App-Image-2026-06-27-at-12-30-15-PM-8.jpg", "https://i.ibb.co/prLcdhfw/Whats-App-Image-2026-06-27-at-12-30-13-PM-17.jpg"], imgUrl: "https://i.ibb.co/xSyVXzFQ/Whats-App-Image-2026-06-27-at-12-30-15-PM-8.jpg", name: "مركز الربط الذكي", price: 14350 },
+            { id: "aAj0UiQ3OTAQGn6saniy", category: "switches", costPrice: 4250, desc: "احصل على مستوى جديد من الأمان والتحكم في الدوائر الكهربائية مع وحدة ذكية تتيح لك إدارة تشغيل وفصل الطاقة بسهولة من أي مكان.", images: ["https://i.ibb.co/0y9BRsmn/Whats-App-Image-2026-06-27-at-12-30-13-PM-3.jpg", "https://i.ibb.co/nstFPyFs/Whats-App-Image-2026-06-27-at-12-30-13-PM-1.jpg"], imgUrl: "https://i.ibb.co/0y9BRsmn/Whats-App-Image-2026-06-27-at-12-30-13-PM-3.jpg", name: "وحدة الحماية والتحكم الذكية", price: 25500 },
+            { id: "b69vkFu5ZqpdDJsZQf0b", category: "other", costPrice: 950, desc: "استمتع بتجربة صوتية نقية مع سماعة سقفية مصممة لتندمج بانسيابية مع ديكور المكان دون التأثير على جماله.", images: ["https://i.ibb.co/HLg8rtqy/Whats-App-Image-2026-06-27-at-12-30-13-PM-20.jpg"], imgUrl: "https://i.ibb.co/HLg8rtqy/Whats-App-Image-2026-06-27-at-12-30-13-PM-20.jpg", name: "سماعة السقف المخفية", price: 5700 },
+            { id: "ddR8xK1xizGN42fzi7sd", category: "other", costPrice: 5450, desc: "اجعل منزلك أكثر ذكاءً وتفاعلاً مع جهاز يجمع بين جودة الصوت الممتازة والتحكم الذكي في جميع أجهزتك.", images: ["https://i.ibb.co/Xk85XwFk/Whats-App-Image-2026-06-27-at-12-30-10-PM-1.jpg"], imgUrl: "https://i.ibb.co/Xk85XwFk/Whats-App-Image-2026-06-27-at-12-30-10-PM-1.jpg", name: "المساعد الصوتي الذكي", price: 22150 },
+            { id: "fOyfoEPpQrgjivI5lc9W", category: "switches", costPrice: 2900, desc: "استمتع بتحكم أكثر مرونة في أجهزتك الكهربائية مع وحدة حائطية ذكية تجمع بين الأناقة والعملية في تصميم واحد.", images: ["https://i.ibb.co/fVQkdD80/Whats-App-Image-2026-06-27-at-12-30-12-PM-5.jpg"], imgUrl: "https://i.ibb.co/fVQkdD80/Whats-App-Image-2026-06-27-at-12-30-12-PM-5.jpg", name: "مركز الطاقة الذكي المزدوج", price: 17400 },
+            { id: "gn5sm8evR6bH08DGN8HL", category: "switches", costPrice: 1800, desc: "اصنع الأجواء التي تناسب كل لحظة مع لوحة تحكم ذكية تمنحك حرية ضبط شدة الإضاءة بدقة، سواء كنت تحتاج إلى إضاءة قوية للعمل أو إضاءة هادئة للاسترخاء.", images: ["https://i.ibb.co/4RH9HmvP/Whats-App-Image-2026-06-27-at-12-30-10-PM-7.jpg", "https://i.ibb.co/FZ8pLhr/Whats-App-Image-2026-06-27-at-12-30-13-PM-7.jpg", "https://i.ibb.co/v6TDM7mc/Whats-App-Image-2026-06-27-at-12-30-14-PM-1.jpg"], imgUrl: "https://i.ibb.co/4RH9HmvP/Whats-App-Image-2026-06-27-at-12-30-10-PM-7.jpg", name: "لوحة التحكم الذكية بدرجات الإضاءة", price: 10800 },
+            { id: "hmPvQ99Burx9rl1uhTXW", category: "switches", costPrice: 1800, desc: "استمتع بتجربة أكثر راحة وأناقة مع وحدة تحكم متطورة تمنحك إدارة سلسة للستائر الكهربائية وأنظمة الفتح والإغلاق الآلية.", images: ["https://i.ibb.co/7dXm0WFk/Whats-App-Image-2026-06-27-at-12-30-14-PM-5.jpg"], imgUrl: "https://i.ibb.co/7dXm0WFk/Whats-App-Image-2026-06-27-at-12-30-14-PM-5.jpg", name: "وحدة التحكم الذكية للحركة الآلية", price: 10800 },
+            { id: "hwLMgpEwWe5cDeL9Zptw", category: "locks", costPrice: 22250, desc: "ارتقِ بمستوى الأمان والرفاهية مع نظام دخول ذكي يجمع أحدث تقنيات التعرف الحيوي في تصميم فاخر يناسب المنازل الراقية، الفيلات، والمكاتب التنفيذية.", images: ["https://i.ibb.co/hFWw0Xtt/Whats-App-Image-2026-06-27-at-12-30-15-PM.jpg"], imgUrl: "https://i.ibb.co/hFWw0Xtt/Whats-App-Image-2026-06-27-at-12-30-15-PM.jpg", name: "بوابة الحماية الذكية المتقدمة", price: 66750 },
+            { id: "kFAmQa9D9SfsWmjFVbLF", category: "sensors", costPrice: 2300, desc: "احمِ منزلك من الأضرار غير المتوقعة مع نظام ذكي مصمم لاكتشاف أي تسرب للمياه فور حدوثه. بفضل حجمه الصغير وسهولة تركيبه.", images: ["https://i.ibb.co/M5j2LBhn/Whats-App-Image-2026-06-27-at-12-30-11-PM-11.jpg", "https://i.ibb.co/5hH5ZJJm/Whats-App-Image-2026-06-27-at-12-30-09-PM-4.jpg", "https://i.ibb.co/8LNdvZS0/Whats-App-Image-2026-06-27-at-12-30-10-PM-2.jpg"], imgUrl: "https://i.ibb.co/M5j2LBhn/Whats-App-Image-2026-06-27-at-12-30-11-PM-11.jpg", name: "حارس المياه الذكي", price: 8000 },
+            { id: "kJrOiPlfca6nwlqA8c2T", category: "other", costPrice: 1400, desc: "أنشئ منظومة منزل ذكي أكثر سرعة واستقرارًا مع وحدة مركزية تربط جميع أجهزتك في شبكة واحدة متكاملة.", images: ["https://i.ibb.co/xqfkBmvN/Whats-App-Image-2026-06-27-at-12-30-15-PM-3.jpg", "https://i.ibb.co/JRr04XT2/Whats-App-Image-2026-06-27-at-12-30-15-PM-11.jpg"], imgUrl: "https://i.ibb.co/xqfkBmvN/Whats-App-Image-2026-06-27-at-12-30-15-PM-3.jpg", name: "بوابة الاتصال الذكية", price: 8400 },
+            { id: "lur7Vw7QiF30vHrrt3IL", category: "switches", costPrice: 1250, desc: "حوّل مفاتيحك التقليدية إلى نظام ذكي بكل سهولة دون الحاجة إلى تغيير شكلها الخارجي. بفضل تصميمها الصغير، يمكن تركيب هذه الوحدة داخل علبة المفتاح.", images: ["https://i.ibb.co/whScVfC5/Whats-App-Image-2026-06-27-at-12-30-08-PM-1.jpg"], imgUrl: "https://i.ibb.co/whScVfC5/Whats-App-Image-2026-06-27-at-12-30-08-PM-1.jpg", name: "وحدة التشغيل الذكية المخفية", price: 7500 },
+            { id: "m5vsiNUgX49OAbMwqczB", category: "switches", costPrice: 1150, desc: "اجعل التحكم في أجهزتك الكهربائية أكثر سهولة وذكاءً مع وحدة حائطية متطورة تجمع بين تشغيل الأجهزة وشحن الهواتف والأجهزة الإلكترونية في مكان واحد.", images: ["https://i.ibb.co/kVmnkkMb/Whats-App-Image-2026-06-27-at-12-30-15-PM-9.jpg", "https://i.ibb.co/jv5gs9Zh/S01bc6346002c4258bb1c4418da6d8516-W.webp"], imgUrl: "https://i.ibb.co/kVmnkkMb/Whats-App-Image-2026-06-27-at-12-30-15-PM-9.jpg", name: "محطة الطاقة الذكية متعددة الاستخدامات", price: 7000 },
+            { id: "n6LQp3pRrg1f1pK4PGoY", category: "locks", costPrice: 12050, desc: "ارتقِ بمستوى الأمان في منزلك أو مكتبك مع نظام دخول ذكي يجمع بين التكنولوجيا المتقدمة والتصميم الأنيق. يمنحك عدة وسائل للدخول.", images: ["https://i.ibb.co/Q7MYyX3m/Whats-App-Image-2026-06-27-at-12-30-13-PM-23.jpg"], imgUrl: "https://i.ibb.co/Q7MYyX3m/Whats-App-Image-2026-06-27-at-12-30-13-PM-23.jpg", name: "نظام الدخول الذكي المتكامل", price: 50700 },
+            { id: "nDhf74GmX63IbM124qre", category: "sensors", costPrice: 950, desc: "حافظ على منزلك أو مكان عملك من الأضرار الناتجة عن تسرب المياه مع مستشعر ذكي يعمل على مراقبة المناطق المعرضة للتسرب على مدار الساعة.", images: ["https://i.ibb.co/X9WKZb9/Whats-App-Image-2026-06-27-at-12-30-15-PM-17.jpg", "https://i.ibb.co/ymbCSVVB/Whats-App-Image-2026-06-27-at-12-30-10-PM-4.jpg"], imgUrl: "https://i.ibb.co/X9WKZb9/Whats-App-Image-2026-06-27-at-12-30-15-PM-17.jpg", name: "حارس التسرب اللاسلكي", price: 5700 },
+            { id: "nE1SMWOL9AILFx4wRpx3", category: "sensors", costPrice: 2700, desc: "اجمع بين التحكم في أجهزتك المنزلية ومتابعة أجواء المكان من خلال وحدة ذكية متعددة الوظائف. تدير الأجهزة وتراقب الحرارة والرطوبة.", images: ["https://i.ibb.co/qFsVNVHV/Whats-App-Image-2026-06-27-at-12-30-11-PM-2.jpg", "https://i.ibb.co/tTy5Tkym/Whats-App-Image-2026-06-27-at-12-30-14-PM-2.jpg", "https://i.ibb.co/67VqN7H9/Whats-App-Image-2026-06-27-at-12-30-15-PM-5.jpg"], imgUrl: "https://i.ibb.co/qFsVNVHV/Whats-App-Image-2026-06-27-at-12-30-11-PM-2.jpg", name: "المساعد الذكي للتحكم بالمناخ والأجهزة", price: 13800 },
+            { id: "pZCshX04ICsOhkEtNc40", category: "switches", costPrice: 800, desc: "حوّل مروحة السقف والإضاءة التقليدية إلى نظام ذكي يمنحك راحة وتحكمًا كاملين دون الحاجة إلى استبدال الأجهزة الموجودة.", images: ["https://i.ibb.co/s9Cx79pb/Whats-App-Image-2026-06-27-at-12-30-13-PM.jpg", "https://i.ibb.co/QS0WDTt/Whats-App-Image-2026-06-27-at-12-30-11-PM-8.jpg"], imgUrl: "https://i.ibb.co/s9Cx79pb/Whats-App-Image-2026-06-27-at-12-30-13-PM.jpg", name: "مركز التحكم الذكي للمراوح والإضاءة", price: 4800 },
+            { id: "rFi0bAuM9WEbzVmfY6BH", category: "other", costPrice: 5600, desc: "احصل على تغطية صوتية قوية ومتوازنة في المساحات الداخلية والخارجية مع سماعة مصممة لتقديم أداء ثابت وجودة صوت عالية حتى في البيئات الصعبة.", images: ["https://i.ibb.co/cKf7s4BM/Whats-App-Image-2026-06-27-at-12-30-14-PM.jpg"], imgUrl: "https://i.ibb.co/cKf7s4BM/Whats-App-Image-2026-06-27-at-12-30-14-PM.jpg", name: "سماعة الأعمدة الاحترافية", price: 33600 },
+            { id: "t56FI8yha9pVXkjKxetT", category: "other", costPrice: 800, desc: "ضف لمسة من الإبداع والحيوية إلى أي مساحة مع شريط إضاءة ذكي يمنحك حرية تصميم الأجواء التي تناسب كل لحظة.", images: ["https://i.ibb.co/4R7C2k29/Whats-App-Image-2026-06-27-at-12-30-15-PM-16.jpg", "https://i.ibb.co/ks8RddB6/Whats-App-Image-2026-06-27-at-12-30-13-PM-12.jpg", "https://i.ibb.co/yF95dTS0/Whats-App-Image-2026-06-27-at-12-30-11-PM-12.jpg"], imgUrl: "https://i.ibb.co/4R7C2k29/Whats-App-Image-2026-06-27-at-12-30-15-PM-16.jpg", name: "شريط الأجواء الضوئية الذكي", price: 4800 },
+            { id: "tC1lMe1iWAh211qQIIWk", category: "switches", costPrice: 1350, desc: "ارتقِ بإدارة استهلاك الكهرباء داخل منزلك أو مشروعك مع وحدة ذكية مصممة للتعامل مع الأحمال الكهربائية العالية بكفاءة وأمان.", images: ["https://i.ibb.co/nN5Y29zG/Whats-App-Image-2026-06-27-at-12-30-11-PM-4.jpg"], imgUrl: "https://i.ibb.co/nN5Y29zG/Whats-App-Image-2026-06-27-at-12-30-11-PM-4.jpg", name: "وحدة إدارة الطاقة الذكية", price: 8100 },
+            { id: "tMtTxaXlrWki0vnOIhRe", category: "sensors", costPrice: 1100, desc: "احمِ منزلك من الأضرار الناتجة عن تسرب المياه أو تغير مستوى المياه مع مستشعر ذكي يعمل على المراقبة المستمرة وإرسال تنبيهات فورية.", images: ["https://i.ibb.co/8gky9Wyx/Whats-App-Image-2026-06-27-at-12-30-15-PM-19.jpg", "https://i.ibb.co/k66rSq4v/Whats-App-Image-2026-06-27-at-12-30-11-PM-7.jpg"], imgUrl: "https://i.ibb.co/8gky9Wyx/Whats-App-Image-2026-06-27-at-12-30-15-PM-19.jpg", name: "درع الحماية المائي الذكي", price: 6600 },
+            { id: "ufaQgffzRsiacIHeeGfi", category: "cameras", costPrice: 1850, desc: "راقب منزلك أو مكتبك بكل وضوح واطمئنان من أي مكان في العالم مع كاميرا ذكية تجمع بين جودة الصورة العالية، والتتبع الذكي، والتواصل المباشر.", images: ["https://i.ibb.co/T9nw7m2/Whats-App-Image-2026-06-27-at-12-30-13-PM-6.jpg", "https://i.ibb.co/qYk2f8m7/Whats-App-Image-2026-06-27-at-12-30-09-PM.jpg"], imgUrl: "https://i.ibb.co/T9nw7m2/Whats-App-Image-2026-06-27-at-12-30-13-PM-6.jpg", name: "العين الذكية للمراقبة", price: 11100 },
+            { id: "uy6h6a9yD7Ex5FmTz4hT", category: "switches", costPrice: 1800, desc: "أضف أجواءً مميزة إلى أي مساحة مع شريط إضاءة ذكي يمنحك حرية كاملة في تخصيص الألوان والتأثيرات بما يناسب كل مناسبة.", images: ["https://i.ibb.co/4R7C2k29/Whats-App-Image-2026-06-27-at-12-30-15-PM-16.jpg", "https://i.ibb.co/ks8RddB6/Whats-App-Image-2026-06-27-at-12-30-13-PM-12.jpg"], imgUrl: "https://i.ibb.co/4R7C2k29/Whats-App-Image-2026-06-27-at-12-30-15-PM-16.jpg", name: "شريط الإضاءة الذكي متعدد الألوان (5 متر)", price: 10800 },
+            { id: "zMy3ZxlaKQ9JDrZVERFf", category: "other", costPrice: 1700, desc: "تخلص من تعدد أجهزة التحكم واستمتع بإدارة جميع أجهزتك المنزلية من مكان واحد. يتيح لك هذا المركز الذكي التحكم في مختلف الأجهزة عبر الهاتف.", images: [], imgUrl: "", name: "جهاز تحكم ذكي شامل", price: 3400 }
         ],
         packages: [
             {
                 id: "65hYMUfC3AENwfcoBgEF", name: "المنزل المتكامل", desc: "كل أساسيات المنزل الذكي في باقة واحدة توفر الراحة، الأمان، والتوفير.",
-                discountAmount: 108460, price: 162690, imgUrl: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 108460, price: 162690, imgUrl: "",
                 products: ["F3vu0PbvUAHnNr0n5fbp", "ddR8xK1xizGN42fzi7sd", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "gn5sm8evR6bH08DGN8HL", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "tC1lMe1iWAh211qQIIWk", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "NmjIfb1MB7AwnZUjVjAv", "fOyfoEPpQrgjivI5lc9W", "fOyfoEPpQrgjivI5lc9W", "I0uLsYUliufGPHNVItym"],
                 target: ["متكامل"]
             },
             {
                 id: "ANKJMPm47j5GGRmtKYB3", name: "المنزل الأخضر", desc: "مناسبة للحدائق والمنازل التي تعتمد على الري الذكي مع توفير استهلاك المياه.",
-                discountAmount: 12650, price: 29500, imgUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 12650, price: 29500, imgUrl: "",
                 products: ["KOPlB3ICOyKyYY2ertBM", "tMtTxaXlrWki0vnOIhRe", "9aoFEqRGb89uvnWnEuLj", "YK8tJ4DFcnL70WqZEx80"],
                 target: ["راحة", "توفير"]
             },
             {
                 id: "CIsXpbVCnVnER3YjhnNe", name: "الحماية الأساسية", desc: "كل ما تحتاجه لحماية منزلك من المخاطر الأساسية مع تنبيهات مباشرة على هاتفك.",
-                discountAmount: 15000, price: 32750, imgUrl: "https://images.unsplash.com/photo-1557322960-96f30d075252?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 15000, price: 32750, imgUrl: "",
                 products: ["YK8tJ4DFcnL70WqZEx80", "I0uLsYUliufGPHNVItym", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF"],
                 target: ["أمان", "اقتصادية"]
             },
             {
                 id: "GU23h9Ti3IvvxAFZVjWy", name: "الأعمال الاحترافية", desc: "حل متكامل للشركات والمعارض والعيادات والمكاتب الإدارية مع إدارة احترافية للأمان والصوت والتحكم.",
-                discountAmount: 98980, price: 148470, imgUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 98980, price: 148470, imgUrl: "",
                 products: ["zMy3ZxlaKQ9JDrZVERFf", "Gnc3qqYmZ5yQfgYU2B07", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "Bd8OyaoaWZJhS3T8qwSa", "2OpjzJfAXsZoYIRV6p3D", "2OpjzJfAXsZoYIRV6p3D", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "Hz3eMyATa5D7oZG1pNRa"],
                 target: ["مفتوحة"]
             },
             {
                 id: "LEiFGBSQmVlAYGcx88LY", name: "الأمان المتقدم", desc: "منظومة حماية متكاملة تراقب المنزل بالكامل مع التحكم في الأبواب وإيقاف مصادر الخطر تلقائيًا.",
-                discountAmount: 54180, price: 81270, imgUrl: "https://images.unsplash.com/photo-1541889815048-c215d21a2829?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 54180, price: 81270, imgUrl: "",
                 products: ["TuHv8IhgSDMtSz4v8XBT", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "9aoFEqRGb89uvnWnEuLj", "1ZaIU11i2BzBLWnoOvlF"],
                 target: ["أمان", "متوسطة"]
             },
             {
                 id: "Me9k0kLyCntgKwpXrgxB", name: "الراحة اليومية", desc: "كل شيء يتم تلقائيًا... الإضاءة، الستائر، الأجهزة، وحتى التحكم الصوتي، لتستمتع بحياة أكثر راحة كل يوم.",
-                discountAmount: 46878, price: 70322, imgUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 46878, price: 70322, imgUrl: "",
                 products: ["YK8tJ4DFcnL70WqZEx80", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "hmPvQ99Burx9rl1uhTXW", "zMy3ZxlaKQ9JDrZVERFf", "ddR8xK1xizGN42fzi7sd", "Hz3eMyATa5D7oZG1pNRa"],
                 target: ["راحة", "متوسطة"]
             },
             {
                 id: "OqANr8bJFPW0tg92Yka0", name: "المنزل الترفيهية", desc: "حول منزلك إلى مساحة ترفيهية متكاملة مع صوت احترافي وتحكم ذكي.",
-                discountAmount: 27120, price: 40680, imgUrl: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 27120, price: 40680, imgUrl: "",
                 products: ["Gnc3qqYmZ5yQfgYU2B07", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "ddR8xK1xizGN42fzi7sd", "zMy3ZxlaKQ9JDrZVERFf"],
                 target: ["راحة"]
             },
             {
                 id: "STymDglWo2TW73TvmX9t", name: "الحياة الذكية المطلقة", desc: "أقوى باقة في المنظومة بالكامل، تجمع جميع حلول المنزل الذكي في نظام واحد متكامل يعتني براحتك، يحمي منزلك، ويخفض استهلاك الطاقة. صُممت للمستخدم الذي يريد أفضل تجربة ممكنة دون أي تنازلات.",
-                discountAmount: 406300, price: 609450, imgUrl: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 406300, price: 609450, imgUrl: "",
                 products: ["TuHv8IhgSDMtSz4v8XBT", "zMy3ZxlaKQ9JDrZVERFf", "zMy3ZxlaKQ9JDrZVERFf", "WvbpdS7Y9kDfuhMgaYS8", "ddR8xK1xizGN42fzi7sd", "ddR8xK1xizGN42fzi7sd", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "F3vu0PbvUAHnNr0n5fbp", "NmjIfb1MB7AwnZUjVjAv", "NmjIfb1MB7AwnZUjVjAv", "YK8tJ4DFcnL70WqZEx80", "YK8tJ4DFcnL70WqZEx80", "YK8tJ4DFcnL70WqZEx80", "nE1SMWOL9AILFx4wRpx3", "nE1SMWOL9AILFx4wRpx3", "Hz3eMyATa5D7oZG1pNRa", "Hz3eMyATa5D7oZG1pNRa", "A6jBvc9GvYcYiKtopx1W", "A6jBvc9GvYcYiKtopx1W", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "2CSzIXlLJSxq913y1rdu", "2CSzIXlLJSxq913y1rdu", "V0eKa5wPD00uoCUYTccn", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "9aoFEqRGb89uvnWnEuLj", "9aoFEqRGb89uvnWnEuLj", "JHfdtDALMsOX6BbO3f50", "JHfdtDALMsOX6BbO3f50", "2OpjzJfAXsZoYIRV6p3D", "Gnc3qqYmZ5yQfgYU2B07", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "b69vkFu5ZqpdDJsZQf0b", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "rFi0bAuM9WEbzVmfY6BH", "KOPlB3ICOyKyYY2ertBM"],
                 target: ["راحة", "أمان", "توفير", "متكامل", "مفتوحة"]
             },
             {
                 id: "cFhx6DtdItLBbP2y8egQ", name: "التوفير الذكي", desc: "راقب استهلاك الكهرباء والمياه وتحكم في الأجهزة لتقليل الفواتير وتحسين كفاءة الطاقة.",
-                discountAmount: 21680, price: 32520, imgUrl: "https://images.unsplash.com/photo-1510006851064-e6056cd0e3a8?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 21680, price: 32520, imgUrl: "",
                 products: ["tC1lMe1iWAh211qQIIWk", "A6jBvc9GvYcYiKtopx1W", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "9aoFEqRGb89uvnWnEuLj", "KOPlB3ICOyKyYY2ertBM"],
                 target: ["توفير"]
             },
             {
                 id: "jDTsbUgL7jAzdSbAjaUi", name: "البداية الذكية", desc: "ابدأ رحلتك في المنزل الذكي بأقل تكلفة مع مجموعة مختارة تمنحك تحكمًا أسهل في الإضاءة والأجهزة اليومية دون الحاجة إلى تغيير كامل للمنزل.",
-                discountAmount: 15500, price: 22000, imgUrl: "https://images.unsplash.com/photo-1557322960-96f30d075252?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 15500, price: 22000, imgUrl: "",
                 products: ["lur7Vw7QiF30vHrrt3IL", "OZl34QSJtnNAZIU9cDlS", "OZl34QSJtnNAZIU9cDlS", "PNxmfbCs9jmvcUZGS9pU"],
                 target: ["راحة", "اقتصادية"]
             },
             {
                 id: "jURH12oO2i9dafEAb8j8", name: "الشركات والمكاتب", desc: "حل متكامل لإدارة المكاتب والتحكم في الإضاءة والأمان والدخول.",
-                discountAmount: 75680, price: 113520, imgUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 75680, price: 113520, imgUrl: "",
                 products: ["F3vu0PbvUAHnNr0n5fbp", "1ZaIU11i2BzBLWnoOvlF", "I0uLsYUliufGPHNVItym", "I0uLsYUliufGPHNVItym", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "DLZqHY4tjWt8lrR1qL01", "Hz3eMyATa5D7oZG1pNRa", "Hz3eMyATa5D7oZG1pNRa"],
                 target: ["أمان", "متوسطة"]
             },
             {
                 id: "psqwIkeTDhq9Xr0QJYcE", name: "الفيلا الذكية", desc: "مصممة للفيلات والمنازل الكبيرة مع تغطية شاملة لجميع أنظمة المنزل الذكي.",
-                discountAmount: 159140, price: 288710, imgUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80",
+                discountAmount: 159140, price: 288710, imgUrl: "",
                 products: ["TuHv8IhgSDMtSz4v8XBT", "zMy3ZxlaKQ9JDrZVERFf", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "ItISDDWwqM3OsVrzQN4Z", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "hmPvQ99Burx9rl1uhTXW", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "IGLLKH0NLkHDpaAGvRXs", "ufaQgffzRsiacIHeeGfi", "ufaQgffzRsiacIHeeGfi", "kJrOiPlfca6nwlqA8c2T", "kJrOiPlfca6nwlqA8c2T", "JHfdtDALMsOX6BbO3f50", "aAj0UiQ3OTAQGn6saniy", "A6jBvc9GvYcYiKtopx1W", "V0eKa5wPD00uoCUYTccn", "kFAmQa9D9SfsWmjFVbLF", "kFAmQa9D9SfsWmjFVbLF", "2CSzIXlLJSxq913y1rdu"],
                 target: ["متكامل", "مفتوحة"]
             }
@@ -725,12 +744,12 @@
     };
 
     window.saveDataLocal = () => {
-        localStorage.setItem('robotechData', JSON.stringify(window.siteData));
+        localStorage.setItem('robotechData_v6', JSON.stringify(window.siteData));
     };
 
     window.fetchData = () => {
         try {
-            const stored = localStorage.getItem('robotechData');
+            const stored = localStorage.getItem('robotechData_v6');
             if (stored) {
                 window.siteData = JSON.parse(stored);
             } else {
@@ -844,14 +863,54 @@
             for (let i=0; i<Math.min(3,itemsArr.length); i++) itemsHtml += `<div class="text-xs text-slate-600 mb-1 truncate"><i class="fas fa-check text-green-500 ml-1"></i> ${itemsArr[i][0]} <span class="font-bold text-blue-500">(x${itemsArr[i][1]})</span></div>`;
             if (itemsArr.length > 3) itemsHtml += `<div class="text-xs text-blue-500 font-bold mt-2">+ ${itemsArr.length - 3} ${t.pkg_more}</div>`;
             cont.innerHTML += `
-                <div class="bg-white rounded-xl shadow-sm border border-blue-100 flex flex-col relative transform hover:-translate-y-1 transition p-5 hover:shadow-md">
+                <div onclick="window.showPackageDetails('${pkg.id}')" class="cursor-pointer bg-white rounded-xl shadow-sm border border-blue-100 flex flex-col relative transform hover:-translate-y-1 transition p-5 hover:shadow-md">
                     ${discountHtml}${pkgImgHtml}
                     <div class="text-center mb-3 ${pkg.imgUrl ? '' : 'mt-2'}">${iconHtml}<h3 class="font-bold text-lg text-slate-800">${pkg.name}</h3><p class="text-xs text-slate-500 mt-1">${pkg.desc || ''}</p></div>
                     <div class="bg-slate-50 p-3 rounded mb-4 flex-1 border border-slate-100"><b class="text-xs mb-2 block border-b pb-1 text-slate-700">${t.pkg_contents_label}</b>${itemsHtml}</div>
                     <div class="mt-auto border-t pt-4"><div class="text-center mb-3">${oldPriceHtml}<span class="text-2xl font-bold text-green-600">${pData.finalPrice} ${t.currency}</span></div>
-                    <button type="button" onclick="window.openWhatsApp('${t.wa_pkg_prefix}${pkg.name}')" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 rounded-lg transition text-sm"><i class="fab fa-whatsapp"></i> ${t.btn_order_pkg}</button></div>
+                    <button type="button" onclick="event.stopPropagation(); window.openWhatsApp('${t.wa_pkg_prefix}${pkg.name}')" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2 rounded-lg transition text-sm"><i class="fab fa-whatsapp"></i> ${t.btn_order_pkg}</button></div>
                 </div>`;
         });
+    };
+
+    window.showPackageDetails = id => {
+        const t = translations[currentLang];
+        const pkg = (Array.isArray(window.siteData.packages) ? window.siteData.packages : []).find(x => String(x.id) === String(id));
+        if (!pkg) return;
+        
+        const pData = window.getPackagePrices(pkg);
+        const saved = pkg.discountAmount || 0;
+        
+        const imgGallery = pkg.imgUrl 
+            ? `<div class="w-full bg-white h-64 md:h-80 flex items-center justify-center p-2 border rounded-xl shadow-sm overflow-hidden"><img src="${pkg.imgUrl}" class="w-full h-full object-cover rounded" onerror="this.onerror=null;this.src='https://via.placeholder.com/150?text=Error';"></div>`
+            : `<div class="w-full bg-white h-64 md:h-80 flex items-center justify-center p-2 border rounded-xl shadow-sm overflow-hidden"><i class="fas fa-layer-group text-9xl text-blue-300"></i></div>`;
+            
+        let itemsHtml = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">';
+        for (const [pName, qty] of Object.entries(pData.counts)) {
+            itemsHtml += `<div class="text-slate-700 bg-white p-2 rounded border border-slate-200 shadow-sm text-sm"><i class="fas fa-check text-green-500 ml-1"></i> ${pName} <span class="text-blue-600 font-bold">(x${qty})</span></div>`;
+        }
+        itemsHtml += '</div>';
+
+        const pcEl = document.getElementById('package-details-content');
+        if (pcEl) {
+            pcEl.innerHTML = `
+                <div class="w-full md:w-1/2">${imgGallery}</div>
+                <div class="w-full md:w-1/2 flex flex-col justify-center">
+                    <h1 class="text-2xl md:text-3xl font-bold mb-4 text-slate-800">${pkg.name}</h1>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="text-3xl text-green-600 font-bold bg-green-50 inline-block p-2 rounded w-max">${pData.finalPrice} ${t.currency}</div>
+                        ${saved > 0 ? `<span class="text-xl text-slate-400 line-through">${pData.originalPrice} ${t.currency}</span>` : ''}
+                    </div>
+                    ${saved > 0 ? `<div class="text-red-500 font-bold mb-4 bg-red-50 p-2 rounded inline-block">وفرت ${saved} ${t.currency} مع هذه الباقة!</div>` : ''}
+                    <p class="mb-6 leading-relaxed text-slate-600 text-sm md:text-base whitespace-pre-line">${pkg.desc||''}</p>
+                    <div class="bg-slate-50 p-4 rounded-xl border mb-6">
+                        <h3 class="font-bold text-lg text-slate-800 border-b border-slate-200 pb-2">محتويات الباقة:</h3>
+                        ${itemsHtml}
+                    </div>
+                    <button type="button" onclick="window.openWhatsApp('${t.wa_pkg_prefix}${pkg.name}')" class="bg-slate-800 text-white font-bold py-4 rounded-xl text-lg shadow-md hover:bg-slate-900 transition"><i class="fab fa-whatsapp"></i> ${t.btn_order_pkg}</button>
+                </div>`;
+            window.showPage('page-package-details');
+        }
     };
 
     window.switchAdminTab = t => {
